@@ -1,0 +1,119 @@
+﻿@page
+    <div>
+        <div id="optionsPanel" class="panel">
+            <button id="enterPatientIdButton" onclick="app.openModal('modalPatientId');" style="width: 300px;">Enter patient id</button>
+
+            <select name="application" id="application" onchange="app.changeApplication(this)">
+                <option value="anaesthesia">Anaesthesia</option>
+                <option value="postOperative">PostOperative</option>
+                <option value="icu">ICU</option>
+                <option value="infants">Infants</option>
+                <option value="withdrawal">Withdrawal</option>
+                <option value="neuralBlock">Neural Block</option>
+            </select>
+
+            <div id="skinCondDataMonitor"></div>
+
+            <div style="width: 300px; display: inline-block;">
+                <button id="closeApplicationButton" style="width: 60px;" onclick="app.closeApplication()">Close</button>
+                <button id="createCommentButton" style="width: 115px;" onclick="app.createComment()">Comment</button>
+                <button id="zoomSC" style="width: 115px;" onclick="app.zoom()">Zoom <i id="testIcon" class="fa fa-angle-down" style="font-size: 16px; color: #c5e3ee; padding-left: 15px;"></i></button>
+            </div>
+            <div style="width: 120px; display: inline-block; float: right;">
+                <div id="xButtons">
+                    <button id="zoomInX" class="zoomSkinCond hideZoomButtons" value="15" onclick="app.skinCondDataGraphChangeZoom(this.value)"><span>x-axis</span> 15 s zoom</button>
+                    <button id="zoomOutX" class="zoomSkinCond hideZoomButtons" value="30" onclick="app.skinCondDataGraphChangeZoom(this.value)"><span>x-axis</span> 30 s zoom</button>
+                </div>
+            </div>
+
+            <button id="connectMonitorButton" onclick="app.connectToMonitor()">Connect monitor</button>
+            <button id="disconnectMonitorButton" onclick="app.disconnectMonitor()">Disconnect monitor</button>
+
+            <button id="connectButton" onclick="app.startMonitor()">Connect</button>
+            <button id="disconnectButton" onclick="app.stopMonitor()">Disconnect</button>
+        </div>
+
+        <div id="monitorPanel" class="panel">
+            <div id="monitor"></div>
+        </div>
+
+        <img id="logo" src="~/images/logo_medstorm.png" alt="Logo">
+
+
+        <!-- Modal for adding comment -->
+        <div id="modalComment" class="modal">
+            <div class="modal-content">
+                <div>
+                    <span id="closeModal">&times</span>
+                </div>
+                <div>
+                    <p>Time: </p>
+                    <p id="commentTimeString"></p><p id="commentTimestamp"></p>
+                </div>
+                <div>
+                    <p>Comment: </p>
+                </div>
+                <div>
+                    <textarea rows="4" cols="35" id="commentTextarea"></textarea>
+                </div>
+                <div>
+                    <button id="addCommentButton" onclick="app.addComment();">Add Comment</button>
+                </div>
+            </div>
+        </div>
+        <!-- End of modal -->
+        <!-- Modal for closing application -->
+        <div id="modalCloseApplication" class="modal">
+            <div class="modal-content">
+                <div id="closeApplicationWrapper">
+                    <p>Program exited.</p><p>You can now close the browser.</p>
+                </div>
+                <div>
+                    <button onclick="app.closeModal('modalCloseApplication');">OK</button>
+                </div>
+            </div>
+        </div>
+        <!-- End of modal -->
+        <!-- Modal for saving data to file -->
+        <div id="modalSaveData" class="modal">
+            <div class="modal-content">
+                <div style="text-align: center; margin: 20px;">
+                    <p>Do you want to store the data?</p>
+                </div>
+                <div>
+                    <p>Patient id:</p>
+                    <p id="notificationText">You have to enter patient id!</p>
+                </div>
+                <div>
+                    <input type="text" id="patientIdConfirm" />
+                </div>
+
+                <div style="position: absolute; bottom: 10px; right: 10px;">
+                    <button onclick="app.onSaveClick(true);">Yes</button>
+                    <button onclick="app.onSaveClick(false);">No</button>
+                </div>
+            </div>
+        </div>
+        <!-- End of modal -->
+        <!-- Modal for entering patient id-->
+        <div id="modalPatientId" class="modal">
+            <div class="modal-content">
+                <div>
+                    <span id="closeModal" onclick="app.closeModal('modalPatientId');">&times</span>
+                </div>
+                <div>
+                    <p>Enter patient id:</p>
+                </div>
+                <div>
+                    <input type="text" id="patientId" name="patientId">
+                </div>
+                <div>
+                    <button onclick="app.enterPatientId(patientId.value);">OK</button>
+                </div>
+            </div>
+        </div>
+        <!-- End of modal-->
+    </div>
+
+
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BleCSharpServerCore.BluetoothBLE": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

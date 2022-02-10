@@ -1,0 +1,3699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UnitConversion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://intellibridge.bbl.ms.philips.com/Conversion">
+  <UnitConversionEntry>
+    <UnitCode>1</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1297</code>
+    </TYPE>
+    <TextId>263441</TextId>
+    <VariableString xml:lang="en">cm</VariableString>
+    <VariableString xml:lang="de">cm</VariableString>
+    <VariableString xml:lang="fr">cm</VariableString>
+    <VariableString xml:lang="it">cm</VariableString>
+    <VariableString xml:lang="es">cm</VariableString>
+    <VariableString xml:lang="nl">cm</VariableString>
+    <VariableString xml:lang="sv">cm</VariableString>
+    <VariableString xml:lang="fi">cm</VariableString>
+    <VariableString xml:lang="no">cm</VariableString>
+    <VariableString xml:lang="da">cm</VariableString>
+    <VariableString xml:lang="ja">cm</VariableString>
+    <VariableString xml:lang="zh-TW">cm</VariableString>
+    <VariableString xml:lang="zh-CN">cm</VariableString>
+    <VariableString xml:lang="pt">cm</VariableString>
+    <VariableString xml:lang="ru">см</VariableString>
+    <VariableString xml:lang="el">cm</VariableString>
+    <VariableString xml:lang="pl">cm</VariableString>
+    <VariableString xml:lang="cs">cm</VariableString>
+    <VariableString xml:lang="sk">cm</VariableString>
+    <VariableString xml:lang="hu">cm</VariableString>
+    <VariableString xml:lang="ro">cm</VariableString>
+    <VariableString xml:lang="tr">cm</VariableString>
+    <VariableString xml:lang="et">cm</VariableString>
+    <Definition>cm</Definition>
+    <Description>centimeter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>2</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1731</code>
+    </TYPE>
+    <TextId>263875</TextId>
+    <VariableString xml:lang="en">kg</VariableString>
+    <VariableString xml:lang="de">kg</VariableString>
+    <VariableString xml:lang="fr">kg</VariableString>
+    <VariableString xml:lang="it">kg</VariableString>
+    <VariableString xml:lang="es">kg</VariableString>
+    <VariableString xml:lang="nl">kg</VariableString>
+    <VariableString xml:lang="sv">kg</VariableString>
+    <VariableString xml:lang="fi">kg</VariableString>
+    <VariableString xml:lang="no">kg</VariableString>
+    <VariableString xml:lang="da">kg</VariableString>
+    <VariableString xml:lang="ja">kg</VariableString>
+    <VariableString xml:lang="zh-TW">kg</VariableString>
+    <VariableString xml:lang="zh-CN">kg</VariableString>
+    <VariableString xml:lang="pt">kg</VariableString>
+    <VariableString xml:lang="ru">кг</VariableString>
+    <VariableString xml:lang="el">kg</VariableString>
+    <VariableString xml:lang="pl">kg</VariableString>
+    <VariableString xml:lang="cs">kg</VariableString>
+    <VariableString xml:lang="sk">kg</VariableString>
+    <VariableString xml:lang="hu">kg</VariableString>
+    <VariableString xml:lang="ro">kg</VariableString>
+    <VariableString xml:lang="tr">kg</VariableString>
+    <VariableString xml:lang="et">kg</VariableString>
+    <Definition>kg</Definition>
+    <Description>kilogram</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>3</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4530</code>
+    </TYPE>
+    <TextId>266674</TextId>
+    <VariableString xml:lang="en">mOsm</VariableString>
+    <VariableString xml:lang="de">mOsm</VariableString>
+    <VariableString xml:lang="fr">mOsm</VariableString>
+    <VariableString xml:lang="it">mOsm</VariableString>
+    <VariableString xml:lang="es">mOsm</VariableString>
+    <VariableString xml:lang="nl">mOsm</VariableString>
+    <VariableString xml:lang="sv">mOsm</VariableString>
+    <VariableString xml:lang="fi">mOsm</VariableString>
+    <VariableString xml:lang="no">mOsm</VariableString>
+    <VariableString xml:lang="da">mOsm</VariableString>
+    <VariableString xml:lang="ja">mOsm</VariableString>
+    <VariableString xml:lang="zh-TW">mOsm</VariableString>
+    <VariableString xml:lang="zh-CN">mOsm</VariableString>
+    <VariableString xml:lang="pt">mOsm</VariableString>
+    <VariableString xml:lang="ru">мосм</VariableString>
+    <VariableString xml:lang="el">mOsm</VariableString>
+    <VariableString xml:lang="pl">mOsm</VariableString>
+    <VariableString xml:lang="cs">mOsm</VariableString>
+    <VariableString xml:lang="sk">mOsm</VariableString>
+    <VariableString xml:lang="hu">mOsm</VariableString>
+    <VariableString xml:lang="ro">mOsm</VariableString>
+    <VariableString xml:lang="tr">mOsm</VariableString>
+    <VariableString xml:lang="et">mOsm</VariableString>
+    <Definition>mOsm</Definition>
+    <Description>milli osmoles</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>4</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2240</code>
+    </TYPE>
+    <TextId>264384</TextId>
+    <VariableString xml:lang="en">hours</VariableString>
+    <VariableString xml:lang="de">h</VariableString>
+    <VariableString xml:lang="fr">heures</VariableString>
+    <VariableString xml:lang="it">ore</VariableString>
+    <VariableString xml:lang="es">h</VariableString>
+    <VariableString xml:lang="nl">uur</VariableString>
+    <VariableString xml:lang="sv">timmar</VariableString>
+    <VariableString xml:lang="fi">h</VariableString>
+    <VariableString xml:lang="no">timer</VariableString>
+    <VariableString xml:lang="da">timer</VariableString>
+    <VariableString xml:lang="ja">hours</VariableString>
+    <VariableString xml:lang="zh-TW">小﻿時﻿</VariableString>
+    <VariableString xml:lang="zh-CN">小﻿时﻿</VariableString>
+    <VariableString xml:lang="pt">h</VariableString>
+    <VariableString xml:lang="ru">ч</VariableString>
+    <VariableString xml:lang="el">ώρες</VariableString>
+    <VariableString xml:lang="pl">godzin</VariableString>
+    <VariableString xml:lang="cs">hod</VariableString>
+    <VariableString xml:lang="sk">hours</VariableString>
+    <VariableString xml:lang="hu">óra</VariableString>
+    <VariableString xml:lang="ro">hours</VariableString>
+    <VariableString xml:lang="tr">hours</VariableString>
+    <VariableString xml:lang="et">hours</VariableString>
+    <Definition>hours</Definition>
+    <Description>hours</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>5</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3072</code>
+    </TYPE>
+    <TextId>265216</TextId>
+    <VariableString xml:lang="en">l/min</VariableString>
+    <VariableString xml:lang="de">l/min</VariableString>
+    <VariableString xml:lang="fr">l/min</VariableString>
+    <VariableString xml:lang="it">l/min</VariableString>
+    <VariableString xml:lang="es">l/min</VariableString>
+    <VariableString xml:lang="nl">l/min</VariableString>
+    <VariableString xml:lang="sv">l/min</VariableString>
+    <VariableString xml:lang="fi">l/min</VariableString>
+    <VariableString xml:lang="no">l/min</VariableString>
+    <VariableString xml:lang="da">l/min</VariableString>
+    <VariableString xml:lang="ja">l/min</VariableString>
+    <VariableString xml:lang="zh-TW">l/min</VariableString>
+    <VariableString xml:lang="zh-CN">l/min</VariableString>
+    <VariableString xml:lang="pt">l/min</VariableString>
+    <VariableString xml:lang="ru">л/мин</VariableString>
+    <VariableString xml:lang="el">l/min</VariableString>
+    <VariableString xml:lang="pl">l/min</VariableString>
+    <VariableString xml:lang="cs">l/min</VariableString>
+    <VariableString xml:lang="sk">l/min</VariableString>
+    <VariableString xml:lang="hu">l/perc</VariableString>
+    <VariableString xml:lang="ro">l/min</VariableString>
+    <VariableString xml:lang="tr">l/min</VariableString>
+    <VariableString xml:lang="et">l/min</VariableString>
+    <Definition>l/min</Definition>
+    <Description>liters per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>6</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1618</code>
+    </TYPE>
+    <TextId>263762</TextId>
+    <VariableString xml:lang="en">ml</VariableString>
+    <VariableString xml:lang="de">ml</VariableString>
+    <VariableString xml:lang="fr">ml</VariableString>
+    <VariableString xml:lang="it">ml</VariableString>
+    <VariableString xml:lang="es">ml</VariableString>
+    <VariableString xml:lang="nl">ml</VariableString>
+    <VariableString xml:lang="sv">ml</VariableString>
+    <VariableString xml:lang="fi">ml</VariableString>
+    <VariableString xml:lang="no">ml</VariableString>
+    <VariableString xml:lang="da">ml</VariableString>
+    <VariableString xml:lang="ja">ml</VariableString>
+    <VariableString xml:lang="zh-TW">ml</VariableString>
+    <VariableString xml:lang="zh-CN">ml</VariableString>
+    <VariableString xml:lang="pt">ml</VariableString>
+    <VariableString xml:lang="ru">мл</VariableString>
+    <VariableString xml:lang="el">ml</VariableString>
+    <VariableString xml:lang="pl">ml</VariableString>
+    <VariableString xml:lang="cs">ml</VariableString>
+    <VariableString xml:lang="sk">ml</VariableString>
+    <VariableString xml:lang="hu">ml</VariableString>
+    <VariableString xml:lang="ro">ml</VariableString>
+    <VariableString xml:lang="tr">ml</VariableString>
+    <VariableString xml:lang="et">ml</VariableString>
+    <Definition>ml</Definition>
+    <Description>milli liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>7</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4128</code>
+    </TYPE>
+    <TextId>266272</TextId>
+    <VariableString xml:lang="en">DS/cm⁵</VariableString>
+    <VariableString xml:lang="de">DS/cm⁵</VariableString>
+    <VariableString xml:lang="fr">DS/cm⁵</VariableString>
+    <VariableString xml:lang="it">DS/cm⁵</VariableString>
+    <VariableString xml:lang="es">DS/cm⁵</VariableString>
+    <VariableString xml:lang="nl">DS/cm⁵</VariableString>
+    <VariableString xml:lang="sv">DS/cm⁵</VariableString>
+    <VariableString xml:lang="fi">DS/cm⁵</VariableString>
+    <VariableString xml:lang="no">DS/cm⁵</VariableString>
+    <VariableString xml:lang="da">DS/cm⁵</VariableString>
+    <VariableString xml:lang="ja">DS/cm⁵</VariableString>
+    <VariableString xml:lang="zh-TW">DS/cm⁵</VariableString>
+    <VariableString xml:lang="zh-CN">DS/cm⁵</VariableString>
+    <VariableString xml:lang="pt">DS/cm⁵</VariableString>
+    <VariableString xml:lang="ru">дин*с/см⁵</VariableString>
+    <VariableString xml:lang="el">DS/cm⁵</VariableString>
+    <VariableString xml:lang="pl">DS/cm⁵</VariableString>
+    <VariableString xml:lang="cs">DS/cm⁵</VariableString>
+    <VariableString xml:lang="sk">DS/cm⁵</VariableString>
+    <VariableString xml:lang="hu">DS/cm⁵</VariableString>
+    <VariableString xml:lang="ro">DS/cm⁵</VariableString>
+    <VariableString xml:lang="tr">DS/cm⁵</VariableString>
+    <VariableString xml:lang="et">DS/cm⁵</VariableString>
+    <Definition>DS/cm_^5</Definition>
+    <Description>dyne-seconds per centimeter⁵</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>8</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1859</code>
+    </TYPE>
+    <TextId>264003</TextId>
+    <VariableString xml:lang="en">kg-m</VariableString>
+    <VariableString xml:lang="de">kg-m</VariableString>
+    <VariableString xml:lang="fr">kg-m</VariableString>
+    <VariableString xml:lang="it">kg-m</VariableString>
+    <VariableString xml:lang="es">kg-m</VariableString>
+    <VariableString xml:lang="nl">kg.m</VariableString>
+    <VariableString xml:lang="sv">kg-m</VariableString>
+    <VariableString xml:lang="fi">kg-m</VariableString>
+    <VariableString xml:lang="no">kg-m</VariableString>
+    <VariableString xml:lang="da">kg-m</VariableString>
+    <VariableString xml:lang="ja">kg-m</VariableString>
+    <VariableString xml:lang="zh-TW">kg-m</VariableString>
+    <VariableString xml:lang="zh-CN">kg-m</VariableString>
+    <VariableString xml:lang="pt">kg-m</VariableString>
+    <VariableString xml:lang="ru">кг*м</VariableString>
+    <VariableString xml:lang="el">kg-m</VariableString>
+    <VariableString xml:lang="pl">kg-m</VariableString>
+    <VariableString xml:lang="cs">kg-m</VariableString>
+    <VariableString xml:lang="sk">kg-m</VariableString>
+    <VariableString xml:lang="hu">kg-m</VariableString>
+    <VariableString xml:lang="ro">kg-m</VariableString>
+    <VariableString xml:lang="tr">kg-m</VariableString>
+    <VariableString xml:lang="et">kg-m</VariableString>
+    <Definition>kg-m</Definition>
+    <Description>kilogram-meter; used for LCW, RCW</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>9</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1856</code>
+    </TYPE>
+    <TextId>264000</TextId>
+    <VariableString xml:lang="en">g-m</VariableString>
+    <VariableString xml:lang="de">g-m</VariableString>
+    <VariableString xml:lang="fr">g-m</VariableString>
+    <VariableString xml:lang="it">g-m</VariableString>
+    <VariableString xml:lang="es">g-m</VariableString>
+    <VariableString xml:lang="nl">g.m</VariableString>
+    <VariableString xml:lang="sv">g-m</VariableString>
+    <VariableString xml:lang="fi">g-m</VariableString>
+    <VariableString xml:lang="no">g-m</VariableString>
+    <VariableString xml:lang="da">g-m</VariableString>
+    <VariableString xml:lang="ja">g-m</VariableString>
+    <VariableString xml:lang="zh-TW">g-m</VariableString>
+    <VariableString xml:lang="zh-CN">g-m</VariableString>
+    <VariableString xml:lang="pt">g-m</VariableString>
+    <VariableString xml:lang="ru">г*м</VariableString>
+    <VariableString xml:lang="el">g-m</VariableString>
+    <VariableString xml:lang="pl">g-m</VariableString>
+    <VariableString xml:lang="cs">g-m</VariableString>
+    <VariableString xml:lang="sk">g-m</VariableString>
+    <VariableString xml:lang="hu">g-m</VariableString>
+    <VariableString xml:lang="ro">g-m</VariableString>
+    <VariableString xml:lang="tr">g-m</VariableString>
+    <VariableString xml:lang="et">g-m</VariableString>
+    <Definition>g-m</Definition>
+    <Description>gram-meter; used for LVSW, RVSW</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>10</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1472</code>
+    </TYPE>
+    <TextId>263616</TextId>
+    <VariableString xml:lang="en">m²</VariableString>
+    <VariableString xml:lang="de">m²</VariableString>
+    <VariableString xml:lang="fr">m²</VariableString>
+    <VariableString xml:lang="it">m²</VariableString>
+    <VariableString xml:lang="es">m²</VariableString>
+    <VariableString xml:lang="nl">m²</VariableString>
+    <VariableString xml:lang="sv">m²</VariableString>
+    <VariableString xml:lang="fi">m²</VariableString>
+    <VariableString xml:lang="no">m²</VariableString>
+    <VariableString xml:lang="da">m²</VariableString>
+    <VariableString xml:lang="ja">m²</VariableString>
+    <VariableString xml:lang="zh-TW">m²</VariableString>
+    <VariableString xml:lang="zh-CN">m²</VariableString>
+    <VariableString xml:lang="pt">m²</VariableString>
+    <VariableString xml:lang="ru">м²</VariableString>
+    <VariableString xml:lang="el">m²</VariableString>
+    <VariableString xml:lang="pl">m²</VariableString>
+    <VariableString xml:lang="cs">m²</VariableString>
+    <VariableString xml:lang="sk">m²</VariableString>
+    <VariableString xml:lang="hu">m²</VariableString>
+    <VariableString xml:lang="ro">m²</VariableString>
+    <VariableString xml:lang="tr">m²</VariableString>
+    <VariableString xml:lang="et">m²</VariableString>
+    <Definition>m_^2</Definition>
+    <Description>square meter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>11</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2720</code>
+    </TYPE>
+    <TextId>264864</TextId>
+    <VariableString xml:lang="en">bpm</VariableString>
+    <VariableString xml:lang="de">/min</VariableString>
+    <VariableString xml:lang="fr">bpm</VariableString>
+    <VariableString xml:lang="it">bpm</VariableString>
+    <VariableString xml:lang="es">lpm</VariableString>
+    <VariableString xml:lang="nl">spm</VariableString>
+    <VariableString xml:lang="sv">spm</VariableString>
+    <VariableString xml:lang="fi">bpm</VariableString>
+    <VariableString xml:lang="no">slag/min</VariableString>
+    <VariableString xml:lang="da">bpm</VariableString>
+    <VariableString xml:lang="ja">bpm</VariableString>
+    <VariableString xml:lang="zh-TW">bpm</VariableString>
+    <VariableString xml:lang="zh-CN">bpm</VariableString>
+    <VariableString xml:lang="pt">bpm</VariableString>
+    <VariableString xml:lang="ru">уд./мин</VariableString>
+    <VariableString xml:lang="el">bpm</VariableString>
+    <VariableString xml:lang="pl">bpm</VariableString>
+    <VariableString xml:lang="cs">tepů/min</VariableString>
+    <VariableString xml:lang="sk">bpm</VariableString>
+    <VariableString xml:lang="hu">bpm</VariableString>
+    <VariableString xml:lang="ro">bpm</VariableString>
+    <VariableString xml:lang="tr">bpm</VariableString>
+    <VariableString xml:lang="et">bpm</VariableString>
+    <Definition>bpm</Definition>
+    <Description>beats per minute; used for HR, PULSE</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>12</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3872</code>
+    </TYPE>
+    <TextId>266016</TextId>
+    <VariableString xml:lang="en">mmHg</VariableString>
+    <VariableString xml:lang="de">mmHg</VariableString>
+    <VariableString xml:lang="fr">mmHg</VariableString>
+    <VariableString xml:lang="it">mmHg</VariableString>
+    <VariableString xml:lang="es">mmHg</VariableString>
+    <VariableString xml:lang="nl">mmHg</VariableString>
+    <VariableString xml:lang="sv">mmHg</VariableString>
+    <VariableString xml:lang="fi">mmHg</VariableString>
+    <VariableString xml:lang="no">mmHg</VariableString>
+    <VariableString xml:lang="da">mmHg</VariableString>
+    <VariableString xml:lang="ja">mmHg</VariableString>
+    <VariableString xml:lang="zh-TW">mmHg</VariableString>
+    <VariableString xml:lang="zh-CN">mmHg</VariableString>
+    <VariableString xml:lang="pt">mmHg</VariableString>
+    <VariableString xml:lang="ru">мм рт.ст.</VariableString>
+    <VariableString xml:lang="el">mmHg</VariableString>
+    <VariableString xml:lang="pl">mmHg</VariableString>
+    <VariableString xml:lang="cs">mmHg</VariableString>
+    <VariableString xml:lang="sk">mmHg</VariableString>
+    <VariableString xml:lang="hu">Hgmm</VariableString>
+    <VariableString xml:lang="ro">mmHg</VariableString>
+    <VariableString xml:lang="tr">mmHg</VariableString>
+    <VariableString xml:lang="et">mmHg</VariableString>
+    <Definition>mmHg</Definition>
+    <Description>milli meter mercury column</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>13</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>512</code>
+    </TYPE>
+    <TextId>262656</TextId>
+    <VariableString xml:lang="en"/>
+    <VariableString xml:lang="de"/>
+    <VariableString xml:lang="fr"/>
+    <VariableString xml:lang="it"/>
+    <VariableString xml:lang="es"/>
+    <VariableString xml:lang="nl"/>
+    <VariableString xml:lang="sv"/>
+    <VariableString xml:lang="fi"/>
+    <VariableString xml:lang="no"/>
+    <VariableString xml:lang="da"/>
+    <VariableString xml:lang="ja"/>
+    <VariableString xml:lang="zh-TW"/>
+    <VariableString xml:lang="zh-CN"/>
+    <VariableString xml:lang="pt"/>
+    <VariableString xml:lang="ru"/>
+    <VariableString xml:lang="el"/>
+    <VariableString xml:lang="pl"/>
+    <VariableString xml:lang="cs"/>
+    <VariableString xml:lang="sk"/>
+    <VariableString xml:lang="hu"/>
+    <VariableString xml:lang="ro"/>
+    <VariableString xml:lang="tr"/>
+    <VariableString xml:lang="et"/>
+    <Definition/>
+    <Description>unitless fraction = blank string</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>14</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>544</code>
+    </TYPE>
+    <TextId>262688</TextId>
+    <VariableString xml:lang="en">%</VariableString>
+    <VariableString xml:lang="de">%</VariableString>
+    <VariableString xml:lang="fr">%</VariableString>
+    <VariableString xml:lang="it">%</VariableString>
+    <VariableString xml:lang="es">%</VariableString>
+    <VariableString xml:lang="nl">%</VariableString>
+    <VariableString xml:lang="sv">%</VariableString>
+    <VariableString xml:lang="fi">%</VariableString>
+    <VariableString xml:lang="no">%</VariableString>
+    <VariableString xml:lang="da">%</VariableString>
+    <VariableString xml:lang="ja">%</VariableString>
+    <VariableString xml:lang="zh-TW">%</VariableString>
+    <VariableString xml:lang="zh-CN">%</VariableString>
+    <VariableString xml:lang="pt">%</VariableString>
+    <VariableString xml:lang="ru">%</VariableString>
+    <VariableString xml:lang="el">%</VariableString>
+    <VariableString xml:lang="pl">%</VariableString>
+    <VariableString xml:lang="cs">%</VariableString>
+    <VariableString xml:lang="sk">%</VariableString>
+    <VariableString xml:lang="hu">%</VariableString>
+    <VariableString xml:lang="ro">%</VariableString>
+    <VariableString xml:lang="tr">%</VariableString>
+    <VariableString xml:lang="et">%</VariableString>
+    <Definition>%</Definition>
+    <Description>percentage</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>15</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2112</code>
+    </TYPE>
+    <TextId>264256</TextId>
+    <VariableString xml:lang="en">g/dl</VariableString>
+    <VariableString xml:lang="de">g/dl</VariableString>
+    <VariableString xml:lang="fr">g/dl</VariableString>
+    <VariableString xml:lang="it">g/dl</VariableString>
+    <VariableString xml:lang="es">g/dl</VariableString>
+    <VariableString xml:lang="nl">g/dl</VariableString>
+    <VariableString xml:lang="sv">g/dl</VariableString>
+    <VariableString xml:lang="fi">g/dl</VariableString>
+    <VariableString xml:lang="no">g/dl</VariableString>
+    <VariableString xml:lang="da">g/dl</VariableString>
+    <VariableString xml:lang="ja">g/dl</VariableString>
+    <VariableString xml:lang="zh-TW">g/dl</VariableString>
+    <VariableString xml:lang="zh-CN">g/dl</VariableString>
+    <VariableString xml:lang="pt">g/dl</VariableString>
+    <VariableString xml:lang="ru">г/дл</VariableString>
+    <VariableString xml:lang="el">g/dl</VariableString>
+    <VariableString xml:lang="pl">g/dl</VariableString>
+    <VariableString xml:lang="cs">g/dl</VariableString>
+    <VariableString xml:lang="sk">g/dl</VariableString>
+    <VariableString xml:lang="hu">g/dl</VariableString>
+    <VariableString xml:lang="ro">g/dl</VariableString>
+    <VariableString xml:lang="tr">g/dl</VariableString>
+    <VariableString xml:lang="et">g/dl</VariableString>
+    <Definition>g/dl</Definition>
+    <Description>gram per deciliter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>16</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6418</code>
+    </TYPE>
+    <TextId>268562</TextId>
+    <VariableString xml:lang="en">ml/dl</VariableString>
+    <VariableString xml:lang="de">ml/dl</VariableString>
+    <VariableString xml:lang="fr">ml/dl</VariableString>
+    <VariableString xml:lang="it">ml/dl</VariableString>
+    <VariableString xml:lang="es">ml/dl</VariableString>
+    <VariableString xml:lang="nl">ml/dl</VariableString>
+    <VariableString xml:lang="sv">ml/dl</VariableString>
+    <VariableString xml:lang="fi">ml/dl</VariableString>
+    <VariableString xml:lang="no">ml/dl</VariableString>
+    <VariableString xml:lang="da">ml/dl</VariableString>
+    <VariableString xml:lang="ja">ml/dl</VariableString>
+    <VariableString xml:lang="zh-TW">ml/dl</VariableString>
+    <VariableString xml:lang="zh-CN">ml/dl</VariableString>
+    <VariableString xml:lang="pt">ml/dl</VariableString>
+    <VariableString xml:lang="ru">мл/дл</VariableString>
+    <VariableString xml:lang="el">ml/dl</VariableString>
+    <VariableString xml:lang="pl">ml/dl</VariableString>
+    <VariableString xml:lang="cs">ml/dl</VariableString>
+    <VariableString xml:lang="sk">ml/dl</VariableString>
+    <VariableString xml:lang="hu">ml/dl</VariableString>
+    <VariableString xml:lang="ro">ml/dl</VariableString>
+    <VariableString xml:lang="tr">ml/dl</VariableString>
+    <VariableString xml:lang="et">ml/dl</VariableString>
+    <Definition>ml/dl</Definition>
+    <Description>milli liter per dezi liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>17</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3090</code>
+    </TYPE>
+    <TextId>265234</TextId>
+    <VariableString xml:lang="en">ml/min</VariableString>
+    <VariableString xml:lang="de">ml/min</VariableString>
+    <VariableString xml:lang="fr">ml/min</VariableString>
+    <VariableString xml:lang="it">ml/min</VariableString>
+    <VariableString xml:lang="es">ml/min</VariableString>
+    <VariableString xml:lang="nl">ml/min</VariableString>
+    <VariableString xml:lang="sv">ml/min</VariableString>
+    <VariableString xml:lang="fi">ml/min</VariableString>
+    <VariableString xml:lang="no">ml/min</VariableString>
+    <VariableString xml:lang="da">ml/min</VariableString>
+    <VariableString xml:lang="ja">ml/min</VariableString>
+    <VariableString xml:lang="zh-TW">ml/min</VariableString>
+    <VariableString xml:lang="zh-CN">ml/min</VariableString>
+    <VariableString xml:lang="pt">ml/min</VariableString>
+    <VariableString xml:lang="ru">мл/мин</VariableString>
+    <VariableString xml:lang="el">ml/min</VariableString>
+    <VariableString xml:lang="pl">ml/min</VariableString>
+    <VariableString xml:lang="cs">ml/min</VariableString>
+    <VariableString xml:lang="sk">ml/min</VariableString>
+    <VariableString xml:lang="hu">ml/perc</VariableString>
+    <VariableString xml:lang="ro">ml/min</VariableString>
+    <VariableString xml:lang="tr">ml/min</VariableString>
+    <VariableString xml:lang="et">ml/min</VariableString>
+    <Definition>ml/min</Definition>
+    <Description>milli liter per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>18</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3904</code>
+    </TYPE>
+    <TextId>266048</TextId>
+    <VariableString xml:lang="en">cmH₂O</VariableString>
+    <VariableString xml:lang="de">cmH₂O</VariableString>
+    <VariableString xml:lang="fr">cmH₂O</VariableString>
+    <VariableString xml:lang="it">cmH₂O</VariableString>
+    <VariableString xml:lang="es">cmH₂O</VariableString>
+    <VariableString xml:lang="nl">cmH₂O</VariableString>
+    <VariableString xml:lang="sv">cmH₂O</VariableString>
+    <VariableString xml:lang="fi">cmH₂O</VariableString>
+    <VariableString xml:lang="no">cmH₂O</VariableString>
+    <VariableString xml:lang="da">cmH₂O</VariableString>
+    <VariableString xml:lang="ja">cmH₂O</VariableString>
+    <VariableString xml:lang="zh-TW">cmH₂O</VariableString>
+    <VariableString xml:lang="zh-CN">cmH₂O</VariableString>
+    <VariableString xml:lang="pt">cmH₂O</VariableString>
+    <VariableString xml:lang="ru">см H₂O</VariableString>
+    <VariableString xml:lang="el">cmH₂O</VariableString>
+    <VariableString xml:lang="pl">cmH₂O</VariableString>
+    <VariableString xml:lang="cs">cmH₂O</VariableString>
+    <VariableString xml:lang="sk">cmH₂O</VariableString>
+    <VariableString xml:lang="hu">H₂Ocm</VariableString>
+    <VariableString xml:lang="ro">cmH₂O</VariableString>
+    <VariableString xml:lang="tr">cmH₂O</VariableString>
+    <VariableString xml:lang="et">cmH₂O</VariableString>
+    <Definition>cmH_2O</Definition>
+    <Description>centimeter water column</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>19</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2784</code>
+    </TYPE>
+    <TextId>264928</TextId>
+    <VariableString xml:lang="en">rpm</VariableString>
+    <VariableString xml:lang="de">/min</VariableString>
+    <VariableString xml:lang="fr">rpm</VariableString>
+    <VariableString xml:lang="it">rpm</VariableString>
+    <VariableString xml:lang="es">rpm</VariableString>
+    <VariableString xml:lang="nl">rpm</VariableString>
+    <VariableString xml:lang="sv">rpm</VariableString>
+    <VariableString xml:lang="fi">rpm</VariableString>
+    <VariableString xml:lang="no">resp/min</VariableString>
+    <VariableString xml:lang="da">rpm</VariableString>
+    <VariableString xml:lang="ja">rpm</VariableString>
+    <VariableString xml:lang="zh-TW">rpm</VariableString>
+    <VariableString xml:lang="zh-CN">rpm</VariableString>
+    <VariableString xml:lang="pt">rpm</VariableString>
+    <VariableString xml:lang="ru">вдох/мин</VariableString>
+    <VariableString xml:lang="el">rpm</VariableString>
+    <VariableString xml:lang="pl">rpm</VariableString>
+    <VariableString xml:lang="cs">rpm</VariableString>
+    <VariableString xml:lang="sk">rpm</VariableString>
+    <VariableString xml:lang="hu">rpm</VariableString>
+    <VariableString xml:lang="ro">rpm</VariableString>
+    <VariableString xml:lang="tr">rpm</VariableString>
+    <VariableString xml:lang="et">rpm</VariableString>
+    <Definition>rpm</Definition>
+    <Description>respirations per minute; used for RESP</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>21</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>5906</code>
+    </TYPE>
+    <TextId>268050</TextId>
+    <VariableString xml:lang="en">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="de">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="fr">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="it">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="es">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="nl">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="sv">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="fi">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="no">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="da">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="ja">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="zh-TW">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="zh-CN">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="pt">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="ru">мл/см H₂O</VariableString>
+    <VariableString xml:lang="el">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="pl">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="cs">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="sk">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="hu">ml/H₂Ocm</VariableString>
+    <VariableString xml:lang="ro">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="tr">ml/cmH₂O</VariableString>
+    <VariableString xml:lang="et">ml/cmH₂O</VariableString>
+    <Definition>ml/cmH_2O</Definition>
+    <Description>milli liter per centimeter water column</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>22</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4850</code>
+    </TYPE>
+    <TextId>266994</TextId>
+    <VariableString xml:lang="en">mEq/l</VariableString>
+    <VariableString xml:lang="de">mEq/l</VariableString>
+    <VariableString xml:lang="fr">mEq/l</VariableString>
+    <VariableString xml:lang="it">mEq/l</VariableString>
+    <VariableString xml:lang="es">mEq/l</VariableString>
+    <VariableString xml:lang="nl">mEq/l</VariableString>
+    <VariableString xml:lang="sv">mEq/l</VariableString>
+    <VariableString xml:lang="fi">mEq/l</VariableString>
+    <VariableString xml:lang="no">mEq/l</VariableString>
+    <VariableString xml:lang="da">mEq/l</VariableString>
+    <VariableString xml:lang="ja">mEq/l</VariableString>
+    <VariableString xml:lang="zh-TW">mEq/l</VariableString>
+    <VariableString xml:lang="zh-CN">mEq/l</VariableString>
+    <VariableString xml:lang="pt">mEq/l</VariableString>
+    <VariableString xml:lang="ru">мэкв/л</VariableString>
+    <VariableString xml:lang="el">mEq/l</VariableString>
+    <VariableString xml:lang="pl">mEq/l</VariableString>
+    <VariableString xml:lang="cs">mEq/l</VariableString>
+    <VariableString xml:lang="sk">mEq/l</VariableString>
+    <VariableString xml:lang="hu">mEq/l</VariableString>
+    <VariableString xml:lang="ro">mEq/l</VariableString>
+    <VariableString xml:lang="tr">mEq/l</VariableString>
+    <VariableString xml:lang="et">mEq/l</VariableString>
+    <Definition>mEq/l</Definition>
+    <Description>milli equivalents per liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>23</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2130</code>
+    </TYPE>
+    <TextId>264274</TextId>
+    <VariableString xml:lang="en">mg/dl</VariableString>
+    <VariableString xml:lang="de">mg/dl</VariableString>
+    <VariableString xml:lang="fr">mg/dl</VariableString>
+    <VariableString xml:lang="it">mg/dl</VariableString>
+    <VariableString xml:lang="es">mg/dl</VariableString>
+    <VariableString xml:lang="nl">mg/dl</VariableString>
+    <VariableString xml:lang="sv">mg/dl</VariableString>
+    <VariableString xml:lang="fi">mg/dl</VariableString>
+    <VariableString xml:lang="no">mg/dl</VariableString>
+    <VariableString xml:lang="da">mg/dl</VariableString>
+    <VariableString xml:lang="ja">mg/dl</VariableString>
+    <VariableString xml:lang="zh-TW">mg/dl</VariableString>
+    <VariableString xml:lang="zh-CN">mg/dl</VariableString>
+    <VariableString xml:lang="pt">mg/dl</VariableString>
+    <VariableString xml:lang="ru">мг/дл</VariableString>
+    <VariableString xml:lang="el">mg/dl</VariableString>
+    <VariableString xml:lang="pl">mg/dl</VariableString>
+    <VariableString xml:lang="cs">mg/dl</VariableString>
+    <VariableString xml:lang="sk">mg/dl</VariableString>
+    <VariableString xml:lang="hu">mg/dl</VariableString>
+    <VariableString xml:lang="ro">mg/dl</VariableString>
+    <VariableString xml:lang="tr">mg/dl</VariableString>
+    <VariableString xml:lang="et">mg/dl</VariableString>
+    <Definition>mg/dl</Definition>
+    <Description>milligram per deciliter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>24</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4626</code>
+    </TYPE>
+    <TextId>266770</TextId>
+    <VariableString xml:lang="en">mOsm/l</VariableString>
+    <VariableString xml:lang="de">mOsm/l</VariableString>
+    <VariableString xml:lang="fr">mOsm/l</VariableString>
+    <VariableString xml:lang="it">mOsm/l</VariableString>
+    <VariableString xml:lang="es">mOsm/l</VariableString>
+    <VariableString xml:lang="nl">mOsm/l</VariableString>
+    <VariableString xml:lang="sv">mOsm/l</VariableString>
+    <VariableString xml:lang="fi">mOsm/l</VariableString>
+    <VariableString xml:lang="no">mOsm/l</VariableString>
+    <VariableString xml:lang="da">mOsm/l</VariableString>
+    <VariableString xml:lang="ja">mOsm/l</VariableString>
+    <VariableString xml:lang="zh-TW">mOsm/l</VariableString>
+    <VariableString xml:lang="zh-CN">mOsm/l</VariableString>
+    <VariableString xml:lang="pt">mOsm/l</VariableString>
+    <VariableString xml:lang="ru">мосм/л</VariableString>
+    <VariableString xml:lang="el">mOsm/l</VariableString>
+    <VariableString xml:lang="pl">mOsm/l</VariableString>
+    <VariableString xml:lang="cs">mOsm/l</VariableString>
+    <VariableString xml:lang="sk">mOsm/l</VariableString>
+    <VariableString xml:lang="hu">mOsm/l</VariableString>
+    <VariableString xml:lang="ro">mOsm/l</VariableString>
+    <VariableString xml:lang="tr">mOsm/l</VariableString>
+    <VariableString xml:lang="et">mOsm/l</VariableString>
+    <Definition>mOsm/l</Definition>
+    <Description>milli osmoles per liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>25</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3154</code>
+    </TYPE>
+    <TextId>265298</TextId>
+    <VariableString xml:lang="en">ml/day</VariableString>
+    <VariableString xml:lang="de">ml/Tag</VariableString>
+    <VariableString xml:lang="fr">ml/jour</VariableString>
+    <VariableString xml:lang="it">ml/giorno</VariableString>
+    <VariableString xml:lang="es">ml/día</VariableString>
+    <VariableString xml:lang="nl">ml/dag</VariableString>
+    <VariableString xml:lang="sv">ml/dag</VariableString>
+    <VariableString xml:lang="fi">ml/päivä</VariableString>
+    <VariableString xml:lang="no">ml/dag</VariableString>
+    <VariableString xml:lang="da">ml/dag</VariableString>
+    <VariableString xml:lang="ja">ml/day</VariableString>
+    <VariableString xml:lang="zh-TW">ml/day</VariableString>
+    <VariableString xml:lang="zh-CN">ml/day</VariableString>
+    <VariableString xml:lang="pt">ml/dia</VariableString>
+    <VariableString xml:lang="ru">мл/день</VariableString>
+    <VariableString xml:lang="el">ml/ημέρα</VariableString>
+    <VariableString xml:lang="pl">ml/dzień</VariableString>
+    <VariableString xml:lang="cs">ml/den</VariableString>
+    <VariableString xml:lang="sk">ml/day</VariableString>
+    <VariableString xml:lang="hu">ml/nap</VariableString>
+    <VariableString xml:lang="ro">ml/day</VariableString>
+    <VariableString xml:lang="tr">ml/day</VariableString>
+    <VariableString xml:lang="et">ml/day</VariableString>
+    <Definition>ml/day</Definition>
+    <Description>milli liter per day</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>26</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>5202</code>
+    </TYPE>
+    <TextId>267346</TextId>
+    <VariableString xml:lang="en">mEq/day</VariableString>
+    <VariableString xml:lang="de">mEq/Tag</VariableString>
+    <VariableString xml:lang="fr">mEq/jour</VariableString>
+    <VariableString xml:lang="it">mEq/d</VariableString>
+    <VariableString xml:lang="es">mEq/día</VariableString>
+    <VariableString xml:lang="nl">mEq/dag</VariableString>
+    <VariableString xml:lang="sv">mEq/dag</VariableString>
+    <VariableString xml:lang="fi">mEq/päivä</VariableString>
+    <VariableString xml:lang="no">mEq/dag</VariableString>
+    <VariableString xml:lang="da">mEq/dag</VariableString>
+    <VariableString xml:lang="ja">mEq/day</VariableString>
+    <VariableString xml:lang="zh-TW">mEq/day</VariableString>
+    <VariableString xml:lang="zh-CN">mEq/day</VariableString>
+    <VariableString xml:lang="pt">mEq/dia</VariableString>
+    <VariableString xml:lang="ru">мэкв/день</VariableString>
+    <VariableString xml:lang="el">mEq/ημέρα</VariableString>
+    <VariableString xml:lang="pl">mEq/dzień</VariableString>
+    <VariableString xml:lang="cs">mEq/den</VariableString>
+    <VariableString xml:lang="sk">mEq/day</VariableString>
+    <VariableString xml:lang="hu">mEq/nap</VariableString>
+    <VariableString xml:lang="ro">mEq/day</VariableString>
+    <VariableString xml:lang="tr">mEq/day</VariableString>
+    <VariableString xml:lang="et">mEq/day</VariableString>
+    <Definition>mEq/day</Definition>
+    <Description>milli equivalents per day</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>27</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2866</code>
+    </TYPE>
+    <TextId>265010</TextId>
+    <VariableString xml:lang="en">ml/min/m²</VariableString>
+    <VariableString xml:lang="de">ml/min/m²</VariableString>
+    <VariableString xml:lang="fr">ml/min/m²</VariableString>
+    <VariableString xml:lang="it">ml/min/m²</VariableString>
+    <VariableString xml:lang="es">ml/min/m²</VariableString>
+    <VariableString xml:lang="nl">ml/min/m²</VariableString>
+    <VariableString xml:lang="sv">ml/min/m²</VariableString>
+    <VariableString xml:lang="fi">ml/min/m²</VariableString>
+    <VariableString xml:lang="no">ml/min/m²</VariableString>
+    <VariableString xml:lang="da">ml/min/m²</VariableString>
+    <VariableString xml:lang="ja">ml/min/m²</VariableString>
+    <VariableString xml:lang="zh-TW">ml/min/m²</VariableString>
+    <VariableString xml:lang="zh-CN">ml/min/m²</VariableString>
+    <VariableString xml:lang="pt">ml/min/m²</VariableString>
+    <VariableString xml:lang="ru">мл/мин/м²</VariableString>
+    <VariableString xml:lang="el">ml/min/m²</VariableString>
+    <VariableString xml:lang="pl">ml/min/m²</VariableString>
+    <VariableString xml:lang="cs">ml/min/m²</VariableString>
+    <VariableString xml:lang="sk">ml/min/m²</VariableString>
+    <VariableString xml:lang="hu">ml/p/m²</VariableString>
+    <VariableString xml:lang="ro">ml/min/m²</VariableString>
+    <VariableString xml:lang="tr">ml/min/m²</VariableString>
+    <VariableString xml:lang="et">ml/min/m²</VariableString>
+    <Definition>m_l/min/m_^2</Definition>
+    <Description>milli liter per minute per square meter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>28</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6048</code>
+    </TYPE>
+    <TextId>268192</TextId>
+    <VariableString xml:lang="en">°C</VariableString>
+    <VariableString xml:lang="de">°C</VariableString>
+    <VariableString xml:lang="fr">°C</VariableString>
+    <VariableString xml:lang="it">°C</VariableString>
+    <VariableString xml:lang="es">°C</VariableString>
+    <VariableString xml:lang="nl">°C</VariableString>
+    <VariableString xml:lang="sv">C</VariableString>
+    <VariableString xml:lang="fi">°C</VariableString>
+    <VariableString xml:lang="no">°C</VariableString>
+    <VariableString xml:lang="da">°C</VariableString>
+    <VariableString xml:lang="ja">°C</VariableString>
+    <VariableString xml:lang="zh-TW">°C</VariableString>
+    <VariableString xml:lang="zh-CN">°C</VariableString>
+    <VariableString xml:lang="pt">°C</VariableString>
+    <VariableString xml:lang="ru">°C</VariableString>
+    <VariableString xml:lang="el">°C</VariableString>
+    <VariableString xml:lang="pl">°C</VariableString>
+    <VariableString xml:lang="cs">°C</VariableString>
+    <VariableString xml:lang="sk">°C</VariableString>
+    <VariableString xml:lang="hu">°C</VariableString>
+    <VariableString xml:lang="ro">°C</VariableString>
+    <VariableString xml:lang="tr">°C</VariableString>
+    <VariableString xml:lang="et">°C</VariableString>
+    <Definition>_C</Definition>
+    <Description>degrees Celsius</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>29</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3843</code>
+    </TYPE>
+    <TextId>265987</TextId>
+    <VariableString xml:lang="en">kPa</VariableString>
+    <VariableString xml:lang="de">kPa</VariableString>
+    <VariableString xml:lang="fr">kPa</VariableString>
+    <VariableString xml:lang="it">kPa</VariableString>
+    <VariableString xml:lang="es">kPa</VariableString>
+    <VariableString xml:lang="nl">kPa</VariableString>
+    <VariableString xml:lang="sv">kPa</VariableString>
+    <VariableString xml:lang="fi">kPa</VariableString>
+    <VariableString xml:lang="no">kPa</VariableString>
+    <VariableString xml:lang="da">kPa</VariableString>
+    <VariableString xml:lang="ja">kPa</VariableString>
+    <VariableString xml:lang="zh-TW">kPa</VariableString>
+    <VariableString xml:lang="zh-CN">kPa</VariableString>
+    <VariableString xml:lang="pt">kPa</VariableString>
+    <VariableString xml:lang="ru">кПа</VariableString>
+    <VariableString xml:lang="el">kPa</VariableString>
+    <VariableString xml:lang="pl">kPa</VariableString>
+    <VariableString xml:lang="cs">kPa</VariableString>
+    <VariableString xml:lang="sk">kPa</VariableString>
+    <VariableString xml:lang="hu">kPa</VariableString>
+    <VariableString xml:lang="ro">kPa</VariableString>
+    <VariableString xml:lang="tr">kPa</VariableString>
+    <VariableString xml:lang="et">kPa</VariableString>
+    <Definition>kPa</Definition>
+    <Description>kilo Pascal</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>30</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3842</code>
+    </TYPE>
+    <TextId>265986</TextId>
+    <VariableString xml:lang="en">hPa</VariableString>
+    <VariableString xml:lang="de">hPa</VariableString>
+    <VariableString xml:lang="fr">hPa</VariableString>
+    <VariableString xml:lang="it">hPa</VariableString>
+    <VariableString xml:lang="es">hPa</VariableString>
+    <VariableString xml:lang="nl">hPa</VariableString>
+    <VariableString xml:lang="sv">hPa</VariableString>
+    <VariableString xml:lang="fi">hPa</VariableString>
+    <VariableString xml:lang="no">hPa</VariableString>
+    <VariableString xml:lang="da">hPa</VariableString>
+    <VariableString xml:lang="ja">hPa</VariableString>
+    <VariableString xml:lang="zh-TW">hPa</VariableString>
+    <VariableString xml:lang="zh-CN">hPa</VariableString>
+    <VariableString xml:lang="pt">hPa</VariableString>
+    <VariableString xml:lang="ru">гПа</VariableString>
+    <VariableString xml:lang="el">hPa</VariableString>
+    <VariableString xml:lang="pl">hPa</VariableString>
+    <VariableString xml:lang="cs">hPa</VariableString>
+    <VariableString xml:lang="sk">hPa</VariableString>
+    <VariableString xml:lang="hu">hPa</VariableString>
+    <VariableString xml:lang="ro">hPa</VariableString>
+    <VariableString xml:lang="tr">hPa</VariableString>
+    <VariableString xml:lang="et">hPa</VariableString>
+    <Definition>hPa</Definition>
+    <Description>hecto Pascal</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>31</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3954</code>
+    </TYPE>
+    <TextId>266098</TextId>
+    <VariableString xml:lang="en">mbar</VariableString>
+    <VariableString xml:lang="de">mbar</VariableString>
+    <VariableString xml:lang="fr">mbar</VariableString>
+    <VariableString xml:lang="it">mbar</VariableString>
+    <VariableString xml:lang="es">mbar</VariableString>
+    <VariableString xml:lang="nl">mbar</VariableString>
+    <VariableString xml:lang="sv">mbar</VariableString>
+    <VariableString xml:lang="fi">mbar</VariableString>
+    <VariableString xml:lang="no">mbar</VariableString>
+    <VariableString xml:lang="da">mbar</VariableString>
+    <VariableString xml:lang="ja">mbar</VariableString>
+    <VariableString xml:lang="zh-TW">mbar</VariableString>
+    <VariableString xml:lang="zh-CN">mbar</VariableString>
+    <VariableString xml:lang="pt">mbar</VariableString>
+    <VariableString xml:lang="ru">мбар</VariableString>
+    <VariableString xml:lang="el">mbar</VariableString>
+    <VariableString xml:lang="pl">mbar</VariableString>
+    <VariableString xml:lang="cs">mbar</VariableString>
+    <VariableString xml:lang="sk">mbar</VariableString>
+    <VariableString xml:lang="hu">mbar</VariableString>
+    <VariableString xml:lang="ro">mbar</VariableString>
+    <VariableString xml:lang="tr">mbar</VariableString>
+    <VariableString xml:lang="et">mbar</VariableString>
+    <Definition>mbar</Definition>
+    <Description>milli bar</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>32</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4722</code>
+    </TYPE>
+    <TextId>266866</TextId>
+    <VariableString xml:lang="en">mmol/l</VariableString>
+    <VariableString xml:lang="de">mmol/l</VariableString>
+    <VariableString xml:lang="fr">mmol/l</VariableString>
+    <VariableString xml:lang="it">mmol/l</VariableString>
+    <VariableString xml:lang="es">mmol/l</VariableString>
+    <VariableString xml:lang="nl">mmol/l</VariableString>
+    <VariableString xml:lang="sv">mmol/l</VariableString>
+    <VariableString xml:lang="fi">mmol/l</VariableString>
+    <VariableString xml:lang="no">mmol/l</VariableString>
+    <VariableString xml:lang="da">mmol/l</VariableString>
+    <VariableString xml:lang="ja">mmol/l</VariableString>
+    <VariableString xml:lang="zh-TW">mmol/l</VariableString>
+    <VariableString xml:lang="zh-CN">mmol/l</VariableString>
+    <VariableString xml:lang="pt">mmol/l</VariableString>
+    <VariableString xml:lang="ru">ммоль/л</VariableString>
+    <VariableString xml:lang="el">mmol/l</VariableString>
+    <VariableString xml:lang="pl">mmol/l</VariableString>
+    <VariableString xml:lang="cs">mmol/l</VariableString>
+    <VariableString xml:lang="sk">mmol/l</VariableString>
+    <VariableString xml:lang="hu">mmol/l</VariableString>
+    <VariableString xml:lang="ro">mmol/l</VariableString>
+    <VariableString xml:lang="tr">mmol/l</VariableString>
+    <VariableString xml:lang="et">mmol/l</VariableString>
+    <Definition>mmol/l</Definition>
+    <Description>milli moles per liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>33</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4416</code>
+    </TYPE>
+    <TextId>266560</TextId>
+    <VariableString xml:lang="en">°F</VariableString>
+    <VariableString xml:lang="de">°F</VariableString>
+    <VariableString xml:lang="fr">°F</VariableString>
+    <VariableString xml:lang="it">°F</VariableString>
+    <VariableString xml:lang="es">°F</VariableString>
+    <VariableString xml:lang="nl">°F</VariableString>
+    <VariableString xml:lang="sv">F</VariableString>
+    <VariableString xml:lang="fi">°F</VariableString>
+    <VariableString xml:lang="no">°F</VariableString>
+    <VariableString xml:lang="da">°F</VariableString>
+    <VariableString xml:lang="ja">°F</VariableString>
+    <VariableString xml:lang="zh-TW">°F</VariableString>
+    <VariableString xml:lang="zh-CN">°F</VariableString>
+    <VariableString xml:lang="pt">°F</VariableString>
+    <VariableString xml:lang="ru">°F</VariableString>
+    <VariableString xml:lang="el">°F</VariableString>
+    <VariableString xml:lang="pl">°F</VariableString>
+    <VariableString xml:lang="cs">°F</VariableString>
+    <VariableString xml:lang="sk">°F</VariableString>
+    <VariableString xml:lang="hu">°F</VariableString>
+    <VariableString xml:lang="ro">°F</VariableString>
+    <VariableString xml:lang="tr">°F</VariableString>
+    <VariableString xml:lang="et">°F</VariableString>
+    <Definition>_F</Definition>
+    <Description>degrees Fahrenheit</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>34</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3122</code>
+    </TYPE>
+    <TextId>265266</TextId>
+    <VariableString xml:lang="en">ml/hour</VariableString>
+    <VariableString xml:lang="de">ml/h</VariableString>
+    <VariableString xml:lang="fr">ml/heure</VariableString>
+    <VariableString xml:lang="it">ml/ora</VariableString>
+    <VariableString xml:lang="es">ml/h</VariableString>
+    <VariableString xml:lang="nl">ml/uur</VariableString>
+    <VariableString xml:lang="sv">ml/timme</VariableString>
+    <VariableString xml:lang="fi">ml/h</VariableString>
+    <VariableString xml:lang="no">ml/time</VariableString>
+    <VariableString xml:lang="da">ml/time</VariableString>
+    <VariableString xml:lang="ja">ml/hour</VariableString>
+    <VariableString xml:lang="zh-TW">ml/hour</VariableString>
+    <VariableString xml:lang="zh-CN">ml/hour</VariableString>
+    <VariableString xml:lang="pt">ml/hora</VariableString>
+    <VariableString xml:lang="ru">мл/ч</VariableString>
+    <VariableString xml:lang="el">ml/ώρα</VariableString>
+    <VariableString xml:lang="pl">ml/h</VariableString>
+    <VariableString xml:lang="cs">ml/hod</VariableString>
+    <VariableString xml:lang="sk">ml/hour</VariableString>
+    <VariableString xml:lang="hu">ml/óra</VariableString>
+    <VariableString xml:lang="ro">ml/hour</VariableString>
+    <VariableString xml:lang="tr">ml/hour</VariableString>
+    <VariableString xml:lang="et">ml/hour</VariableString>
+    <Definition>ml/h</Definition>
+    <Description>milli liters per hour</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>35</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1792</code>
+    </TYPE>
+    <TextId>263936</TextId>
+    <VariableString xml:lang="en">oz</VariableString>
+    <VariableString xml:lang="de">oz</VariableString>
+    <VariableString xml:lang="fr">oz</VariableString>
+    <VariableString xml:lang="it">oz</VariableString>
+    <VariableString xml:lang="es">oz</VariableString>
+    <VariableString xml:lang="nl">oz</VariableString>
+    <VariableString xml:lang="sv">oz</VariableString>
+    <VariableString xml:lang="fi">oz</VariableString>
+    <VariableString xml:lang="no">oz</VariableString>
+    <VariableString xml:lang="da">oz</VariableString>
+    <VariableString xml:lang="ja">oz</VariableString>
+    <VariableString xml:lang="zh-TW">oz</VariableString>
+    <VariableString xml:lang="zh-CN">oz</VariableString>
+    <VariableString xml:lang="pt">oz</VariableString>
+    <VariableString xml:lang="ru">унция</VariableString>
+    <VariableString xml:lang="el">oz</VariableString>
+    <VariableString xml:lang="pl">oz</VariableString>
+    <VariableString xml:lang="cs">oz</VariableString>
+    <VariableString xml:lang="sk">oz</VariableString>
+    <VariableString xml:lang="hu">oz</VariableString>
+    <VariableString xml:lang="ro">oz</VariableString>
+    <VariableString xml:lang="tr">oz</VariableString>
+    <VariableString xml:lang="et">oz</VariableString>
+    <Definition>oz</Definition>
+    <Description>ounce</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>36</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1760</code>
+    </TYPE>
+    <TextId>263904</TextId>
+    <VariableString xml:lang="en">lb</VariableString>
+    <VariableString xml:lang="de">lb</VariableString>
+    <VariableString xml:lang="fr">lb</VariableString>
+    <VariableString xml:lang="it">lb</VariableString>
+    <VariableString xml:lang="es">lb</VariableString>
+    <VariableString xml:lang="nl">lb</VariableString>
+    <VariableString xml:lang="sv">lb</VariableString>
+    <VariableString xml:lang="fi">lb</VariableString>
+    <VariableString xml:lang="no">lb</VariableString>
+    <VariableString xml:lang="da">lb</VariableString>
+    <VariableString xml:lang="ja">lb</VariableString>
+    <VariableString xml:lang="zh-TW">lb</VariableString>
+    <VariableString xml:lang="zh-CN">lb</VariableString>
+    <VariableString xml:lang="pt">lb</VariableString>
+    <VariableString xml:lang="ru">фунт</VariableString>
+    <VariableString xml:lang="el">lb</VariableString>
+    <VariableString xml:lang="pl">lb</VariableString>
+    <VariableString xml:lang="cs">lb</VariableString>
+    <VariableString xml:lang="sk">lb</VariableString>
+    <VariableString xml:lang="hu">lb</VariableString>
+    <VariableString xml:lang="ro">lb</VariableString>
+    <VariableString xml:lang="tr">lb</VariableString>
+    <VariableString xml:lang="et">lb</VariableString>
+    <Definition>lb</Definition>
+    <Description>pound</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>37</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1376</code>
+    </TYPE>
+    <TextId>263520</TextId>
+    <VariableString xml:lang="en">in</VariableString>
+    <VariableString xml:lang="de">in</VariableString>
+    <VariableString xml:lang="fr">in</VariableString>
+    <VariableString xml:lang="it">in</VariableString>
+    <VariableString xml:lang="es">in</VariableString>
+    <VariableString xml:lang="nl">in</VariableString>
+    <VariableString xml:lang="sv">tum</VariableString>
+    <VariableString xml:lang="fi">in</VariableString>
+    <VariableString xml:lang="no">in</VariableString>
+    <VariableString xml:lang="da">inch</VariableString>
+    <VariableString xml:lang="ja">in</VariableString>
+    <VariableString xml:lang="zh-TW">in</VariableString>
+    <VariableString xml:lang="zh-CN">in</VariableString>
+    <VariableString xml:lang="pt">pol</VariableString>
+    <VariableString xml:lang="ru">дюйм</VariableString>
+    <VariableString xml:lang="el">in</VariableString>
+    <VariableString xml:lang="pl">in</VariableString>
+    <VariableString xml:lang="cs">in</VariableString>
+    <VariableString xml:lang="sk">in</VariableString>
+    <VariableString xml:lang="hu">in</VariableString>
+    <VariableString xml:lang="ro">in</VariableString>
+    <VariableString xml:lang="tr">in</VariableString>
+    <VariableString xml:lang="et">in</VariableString>
+    <Definition>in</Definition>
+    <Description>inch</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>38</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2848</code>
+    </TYPE>
+    <TextId>264992</TextId>
+    <VariableString xml:lang="en">l/min/m²</VariableString>
+    <VariableString xml:lang="de">l/min/m²</VariableString>
+    <VariableString xml:lang="fr">l/min/m²</VariableString>
+    <VariableString xml:lang="it">l/min/m²</VariableString>
+    <VariableString xml:lang="es">l/min/m²</VariableString>
+    <VariableString xml:lang="nl">l/min/m²</VariableString>
+    <VariableString xml:lang="sv">l/min/m²</VariableString>
+    <VariableString xml:lang="fi">l/min/m²</VariableString>
+    <VariableString xml:lang="no">l/min/m²</VariableString>
+    <VariableString xml:lang="da">l/min/m²</VariableString>
+    <VariableString xml:lang="ja">l/min/m²</VariableString>
+    <VariableString xml:lang="zh-TW">l/min/m²</VariableString>
+    <VariableString xml:lang="zh-CN">l/min/m²</VariableString>
+    <VariableString xml:lang="pt">l/min/m²</VariableString>
+    <VariableString xml:lang="ru">л/мин/м²</VariableString>
+    <VariableString xml:lang="el">l/min/m²</VariableString>
+    <VariableString xml:lang="pl">l/min/m²</VariableString>
+    <VariableString xml:lang="cs">l/min/m²</VariableString>
+    <VariableString xml:lang="sk">l/min/m²</VariableString>
+    <VariableString xml:lang="hu">l/perc/m²</VariableString>
+    <VariableString xml:lang="ro">l/min/m²</VariableString>
+    <VariableString xml:lang="tr">l/min/m²</VariableString>
+    <VariableString xml:lang="et">l/min/m²</VariableString>
+    <Definition>l/min/m_^2</Definition>
+    <Description>liter per minute per square meter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>39</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1426</code>
+    </TYPE>
+    <TextId>263570</TextId>
+    <VariableString xml:lang="en">ml/m²</VariableString>
+    <VariableString xml:lang="de">ml/m²</VariableString>
+    <VariableString xml:lang="fr">ml/m²</VariableString>
+    <VariableString xml:lang="it">ml/m²</VariableString>
+    <VariableString xml:lang="es">ml/m²</VariableString>
+    <VariableString xml:lang="nl">ml/m²</VariableString>
+    <VariableString xml:lang="sv">ml/m²</VariableString>
+    <VariableString xml:lang="fi">ml/m²</VariableString>
+    <VariableString xml:lang="no">ml/m²</VariableString>
+    <VariableString xml:lang="da">ml/m²</VariableString>
+    <VariableString xml:lang="ja">ml/m²</VariableString>
+    <VariableString xml:lang="zh-TW">ml/m²</VariableString>
+    <VariableString xml:lang="zh-CN">ml/m²</VariableString>
+    <VariableString xml:lang="pt">ml/m²</VariableString>
+    <VariableString xml:lang="ru">мл/м²</VariableString>
+    <VariableString xml:lang="el">ml/m²</VariableString>
+    <VariableString xml:lang="pl">ml/m²</VariableString>
+    <VariableString xml:lang="cs">ml/m²</VariableString>
+    <VariableString xml:lang="sk">ml/m²</VariableString>
+    <VariableString xml:lang="hu">ml/m²</VariableString>
+    <VariableString xml:lang="ro">ml/m²</VariableString>
+    <VariableString xml:lang="tr">ml/m²</VariableString>
+    <VariableString xml:lang="et">ml/m²</VariableString>
+    <Definition>ml/m_^2</Definition>
+    <Description>milli liter per square meter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>40</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6016</code>
+    </TYPE>
+    <TextId>268160</TextId>
+    <VariableString xml:lang="en">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="de">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="fr">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="it">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="es">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="nl">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="sv">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="fi">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="no">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="da">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="ja">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="zh-TW">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="zh-CN">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="pt">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="ru">DSм²/см⁵</VariableString>
+    <VariableString xml:lang="el">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="pl">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="cs">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="sk">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="hu">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="ro">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="tr">DSm²/cm⁵</VariableString>
+    <VariableString xml:lang="et">DSm²/cm⁵</VariableString>
+    <Definition>DSm_^2/cm_^5</Definition>
+    <Description>dyne-sec-meter² per centimeter⁵</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>41</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1891</code>
+    </TYPE>
+    <TextId>264035</TextId>
+    <VariableString xml:lang="en">kg-m/m²</VariableString>
+    <VariableString xml:lang="de">kg-m/m²</VariableString>
+    <VariableString xml:lang="fr">kg-m/m²</VariableString>
+    <VariableString xml:lang="it">kg-m/m²</VariableString>
+    <VariableString xml:lang="es">kg-m/m²</VariableString>
+    <VariableString xml:lang="nl">kg.m/m²</VariableString>
+    <VariableString xml:lang="sv">kg-m/m²</VariableString>
+    <VariableString xml:lang="fi">kg-m/m²</VariableString>
+    <VariableString xml:lang="no">kg-m/m²</VariableString>
+    <VariableString xml:lang="da">kg-m/m²</VariableString>
+    <VariableString xml:lang="ja">kg-m/m²</VariableString>
+    <VariableString xml:lang="zh-TW">kg-m/m²</VariableString>
+    <VariableString xml:lang="zh-CN">kg-m/m²</VariableString>
+    <VariableString xml:lang="pt">kg-m/m²</VariableString>
+    <VariableString xml:lang="ru">кг*м/м²</VariableString>
+    <VariableString xml:lang="el">kg-m/m²</VariableString>
+    <VariableString xml:lang="pl">kg-m/m²</VariableString>
+    <VariableString xml:lang="cs">kg-m/m²</VariableString>
+    <VariableString xml:lang="sk">kg-m/m²</VariableString>
+    <VariableString xml:lang="hu">kg-m/m²</VariableString>
+    <VariableString xml:lang="ro">kg-m/m²</VariableString>
+    <VariableString xml:lang="tr">kg-m/m²</VariableString>
+    <VariableString xml:lang="et">kg-m/m²</VariableString>
+    <Definition>kg-m/m_^2</Definition>
+    <Description>kilogram-meter per square meter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>42</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1888</code>
+    </TYPE>
+    <TextId>264032</TextId>
+    <VariableString xml:lang="en">g-m/m²</VariableString>
+    <VariableString xml:lang="de">g-m/m²</VariableString>
+    <VariableString xml:lang="fr">g-m/m²</VariableString>
+    <VariableString xml:lang="it">g-m/m²</VariableString>
+    <VariableString xml:lang="es">g-m/m²</VariableString>
+    <VariableString xml:lang="nl">g.m/m²</VariableString>
+    <VariableString xml:lang="sv">g-m/m²</VariableString>
+    <VariableString xml:lang="fi">g-m/m²</VariableString>
+    <VariableString xml:lang="no">g-m/m²</VariableString>
+    <VariableString xml:lang="da">g-m/m²</VariableString>
+    <VariableString xml:lang="ja">g-m/m²</VariableString>
+    <VariableString xml:lang="zh-TW">g-m/m²</VariableString>
+    <VariableString xml:lang="zh-CN">g-m/m²</VariableString>
+    <VariableString xml:lang="pt">g-m/m²</VariableString>
+    <VariableString xml:lang="ru">г*м/м²</VariableString>
+    <VariableString xml:lang="el">g-m/m²</VariableString>
+    <VariableString xml:lang="pl">g-m/m²</VariableString>
+    <VariableString xml:lang="cs">g-m/m²</VariableString>
+    <VariableString xml:lang="sk">g-m/m²</VariableString>
+    <VariableString xml:lang="hu">g-m/m²</VariableString>
+    <VariableString xml:lang="ro">g-m/m²</VariableString>
+    <VariableString xml:lang="tr">g-m/m²</VariableString>
+    <VariableString xml:lang="et">g-m/m²</VariableString>
+    <Definition>g-m/m_^2</Definition>
+    <Description>gram-meter per square meter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>43</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1728</code>
+    </TYPE>
+    <TextId>263872</TextId>
+    <VariableString xml:lang="en">g</VariableString>
+    <VariableString xml:lang="de">g</VariableString>
+    <VariableString xml:lang="fr">g</VariableString>
+    <VariableString xml:lang="it">g</VariableString>
+    <VariableString xml:lang="es">g</VariableString>
+    <VariableString xml:lang="nl">gram</VariableString>
+    <VariableString xml:lang="sv">g</VariableString>
+    <VariableString xml:lang="fi">g</VariableString>
+    <VariableString xml:lang="no">g</VariableString>
+    <VariableString xml:lang="da">g</VariableString>
+    <VariableString xml:lang="ja">g</VariableString>
+    <VariableString xml:lang="zh-TW">g</VariableString>
+    <VariableString xml:lang="zh-CN">g</VariableString>
+    <VariableString xml:lang="pt">g</VariableString>
+    <VariableString xml:lang="ru">г</VariableString>
+    <VariableString xml:lang="el">g</VariableString>
+    <VariableString xml:lang="pl">g</VariableString>
+    <VariableString xml:lang="cs">g</VariableString>
+    <VariableString xml:lang="sk">g</VariableString>
+    <VariableString xml:lang="hu">g</VariableString>
+    <VariableString xml:lang="ro">g</VariableString>
+    <VariableString xml:lang="tr">g</VariableString>
+    <VariableString xml:lang="et">g</VariableString>
+    <Definition>g</Definition>
+    <Description>grams</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>44</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1504</code>
+    </TYPE>
+    <TextId>263648</TextId>
+    <VariableString xml:lang="en">in²</VariableString>
+    <VariableString xml:lang="de">in²</VariableString>
+    <VariableString xml:lang="fr">in²</VariableString>
+    <VariableString xml:lang="it">in²</VariableString>
+    <VariableString xml:lang="es">in²</VariableString>
+    <VariableString xml:lang="nl">in²</VariableString>
+    <VariableString xml:lang="sv">tum²</VariableString>
+    <VariableString xml:lang="fi">in²</VariableString>
+    <VariableString xml:lang="no">in²</VariableString>
+    <VariableString xml:lang="da">inch²</VariableString>
+    <VariableString xml:lang="ja">in²</VariableString>
+    <VariableString xml:lang="zh-TW">in²</VariableString>
+    <VariableString xml:lang="zh-CN">in²</VariableString>
+    <VariableString xml:lang="pt">pol²</VariableString>
+    <VariableString xml:lang="ru">дюйм²</VariableString>
+    <VariableString xml:lang="el">in²</VariableString>
+    <VariableString xml:lang="pl">in²</VariableString>
+    <VariableString xml:lang="cs">in²</VariableString>
+    <VariableString xml:lang="sk">in²</VariableString>
+    <VariableString xml:lang="hu">in²</VariableString>
+    <VariableString xml:lang="ro">in²</VariableString>
+    <VariableString xml:lang="tr">in²</VariableString>
+    <VariableString xml:lang="et">in²</VariableString>
+    <Definition>in_^2</Definition>
+    <Description>square inches</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>47</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4288</code>
+    </TYPE>
+    <TextId>266432</TextId>
+    <VariableString xml:lang="en">Ohm</VariableString>
+    <VariableString xml:lang="de">Ohm</VariableString>
+    <VariableString xml:lang="fr">Ohm</VariableString>
+    <VariableString xml:lang="it">Ohm</VariableString>
+    <VariableString xml:lang="es">Ohm</VariableString>
+    <VariableString xml:lang="nl">Ohm</VariableString>
+    <VariableString xml:lang="sv">Ohm</VariableString>
+    <VariableString xml:lang="fi">ohmi</VariableString>
+    <VariableString xml:lang="no">Ohm</VariableString>
+    <VariableString xml:lang="da">Ohm</VariableString>
+    <VariableString xml:lang="ja">Ohm</VariableString>
+    <VariableString xml:lang="zh-TW">Ohm</VariableString>
+    <VariableString xml:lang="zh-CN">欧﻿姆﻿</VariableString>
+    <VariableString xml:lang="pt">Ohm</VariableString>
+    <VariableString xml:lang="ru">Ом</VariableString>
+    <VariableString xml:lang="el">Ohm</VariableString>
+    <VariableString xml:lang="pl">Ohm</VariableString>
+    <VariableString xml:lang="cs">Ohm</VariableString>
+    <VariableString xml:lang="sk">Ohm</VariableString>
+    <VariableString xml:lang="hu">Ohm</VariableString>
+    <VariableString xml:lang="ro">Ohm</VariableString>
+    <VariableString xml:lang="tr">Ohm</VariableString>
+    <VariableString xml:lang="et">Ohm</VariableString>
+    <Definition>Ohms</Definition>
+    <Description>Ohms</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>48</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2208</code>
+    </TYPE>
+    <TextId>264352</TextId>
+    <VariableString xml:lang="en">min</VariableString>
+    <VariableString xml:lang="de">min</VariableString>
+    <VariableString xml:lang="fr">min</VariableString>
+    <VariableString xml:lang="it">min</VariableString>
+    <VariableString xml:lang="es">min</VariableString>
+    <VariableString xml:lang="nl">min</VariableString>
+    <VariableString xml:lang="sv">min</VariableString>
+    <VariableString xml:lang="fi">min</VariableString>
+    <VariableString xml:lang="no">min</VariableString>
+    <VariableString xml:lang="da">min</VariableString>
+    <VariableString xml:lang="ja">min</VariableString>
+    <VariableString xml:lang="zh-TW">分﻿</VariableString>
+    <VariableString xml:lang="zh-CN">分﻿钟﻿</VariableString>
+    <VariableString xml:lang="pt">min</VariableString>
+    <VariableString xml:lang="ru">мин</VariableString>
+    <VariableString xml:lang="el">min</VariableString>
+    <VariableString xml:lang="pl">min</VariableString>
+    <VariableString xml:lang="cs">min</VariableString>
+    <VariableString xml:lang="sk">min</VariableString>
+    <VariableString xml:lang="hu">perc</VariableString>
+    <VariableString xml:lang="ro">min</VariableString>
+    <VariableString xml:lang="tr">min</VariableString>
+    <VariableString xml:lang="et">min</VariableString>
+    <Definition>min</Definition>
+    <Description>minutes</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>49</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1280</code>
+    </TYPE>
+    <TextId>263424</TextId>
+    <VariableString xml:lang="en">m</VariableString>
+    <VariableString xml:lang="de">m</VariableString>
+    <VariableString xml:lang="fr">m</VariableString>
+    <VariableString xml:lang="it">m</VariableString>
+    <VariableString xml:lang="es">m</VariableString>
+    <VariableString xml:lang="nl">m</VariableString>
+    <VariableString xml:lang="sv">m</VariableString>
+    <VariableString xml:lang="fi">m</VariableString>
+    <VariableString xml:lang="no">m</VariableString>
+    <VariableString xml:lang="da">m</VariableString>
+    <VariableString xml:lang="ja">m</VariableString>
+    <VariableString xml:lang="zh-TW">m</VariableString>
+    <VariableString xml:lang="zh-CN">m</VariableString>
+    <VariableString xml:lang="pt">m</VariableString>
+    <VariableString xml:lang="ru">м</VariableString>
+    <VariableString xml:lang="el">m</VariableString>
+    <VariableString xml:lang="pl">m</VariableString>
+    <VariableString xml:lang="cs">m</VariableString>
+    <VariableString xml:lang="sk">m</VariableString>
+    <VariableString xml:lang="hu">m</VariableString>
+    <VariableString xml:lang="ro">m</VariableString>
+    <VariableString xml:lang="tr">m</VariableString>
+    <VariableString xml:lang="et">m</VariableString>
+    <Definition>m</Definition>
+    <Description>meter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>50</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1298</code>
+    </TYPE>
+    <TextId>263442</TextId>
+    <VariableString xml:lang="en">mm</VariableString>
+    <VariableString xml:lang="de">mm</VariableString>
+    <VariableString xml:lang="fr">mm</VariableString>
+    <VariableString xml:lang="it">mm</VariableString>
+    <VariableString xml:lang="es">mm</VariableString>
+    <VariableString xml:lang="nl">mm</VariableString>
+    <VariableString xml:lang="sv">mm</VariableString>
+    <VariableString xml:lang="fi">mm</VariableString>
+    <VariableString xml:lang="no">mm</VariableString>
+    <VariableString xml:lang="da">mm</VariableString>
+    <VariableString xml:lang="ja">mm</VariableString>
+    <VariableString xml:lang="zh-TW">mm</VariableString>
+    <VariableString xml:lang="zh-CN">mm</VariableString>
+    <VariableString xml:lang="pt">mm</VariableString>
+    <VariableString xml:lang="ru">мм</VariableString>
+    <VariableString xml:lang="el">mm</VariableString>
+    <VariableString xml:lang="pl">mm</VariableString>
+    <VariableString xml:lang="cs">mm</VariableString>
+    <VariableString xml:lang="sk">mm</VariableString>
+    <VariableString xml:lang="hu">mm</VariableString>
+    <VariableString xml:lang="ro">mm</VariableString>
+    <VariableString xml:lang="tr">mm</VariableString>
+    <VariableString xml:lang="et">mm</VariableString>
+    <Definition>mm</Definition>
+    <Description>milli meters</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>51</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4274</code>
+    </TYPE>
+    <TextId>266418</TextId>
+    <VariableString xml:lang="en">mV</VariableString>
+    <VariableString xml:lang="de">mV</VariableString>
+    <VariableString xml:lang="fr">mV</VariableString>
+    <VariableString xml:lang="it">mV</VariableString>
+    <VariableString xml:lang="es">mV</VariableString>
+    <VariableString xml:lang="nl">mV</VariableString>
+    <VariableString xml:lang="sv">mV</VariableString>
+    <VariableString xml:lang="fi">mV</VariableString>
+    <VariableString xml:lang="no">mV</VariableString>
+    <VariableString xml:lang="da">mV</VariableString>
+    <VariableString xml:lang="ja">mV</VariableString>
+    <VariableString xml:lang="zh-TW">mV</VariableString>
+    <VariableString xml:lang="zh-CN">毫﻿伏﻿</VariableString>
+    <VariableString xml:lang="pt">mV</VariableString>
+    <VariableString xml:lang="ru">мВ</VariableString>
+    <VariableString xml:lang="el">mV</VariableString>
+    <VariableString xml:lang="pl">mV</VariableString>
+    <VariableString xml:lang="cs">mV</VariableString>
+    <VariableString xml:lang="sk">mV</VariableString>
+    <VariableString xml:lang="hu">mV</VariableString>
+    <VariableString xml:lang="ro">mV</VariableString>
+    <VariableString xml:lang="tr">mV</VariableString>
+    <VariableString xml:lang="et">mV</VariableString>
+    <Definition>mV</Definition>
+    <Description>milli Volts</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>52</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2304</code>
+    </TYPE>
+    <TextId>264448</TextId>
+    <VariableString xml:lang="en">weeks</VariableString>
+    <VariableString xml:lang="de">Wochen</VariableString>
+    <VariableString xml:lang="fr">semaines</VariableString>
+    <VariableString xml:lang="it">settimane</VariableString>
+    <VariableString xml:lang="es">semanas</VariableString>
+    <VariableString xml:lang="nl">weken</VariableString>
+    <VariableString xml:lang="sv">veckor</VariableString>
+    <VariableString xml:lang="fi">viikkoa</VariableString>
+    <VariableString xml:lang="no">uker</VariableString>
+    <VariableString xml:lang="da">uger</VariableString>
+    <VariableString xml:lang="ja">週﻿</VariableString>
+    <VariableString xml:lang="zh-TW">weeks</VariableString>
+    <VariableString xml:lang="zh-CN">周﻿</VariableString>
+    <VariableString xml:lang="pt">semanas</VariableString>
+    <VariableString xml:lang="ru">недели</VariableString>
+    <VariableString xml:lang="el">εβδομάδες</VariableString>
+    <VariableString xml:lang="pl">tygodni</VariableString>
+    <VariableString xml:lang="cs">týdn.</VariableString>
+    <VariableString xml:lang="sk">weeks</VariableString>
+    <VariableString xml:lang="hu">hét</VariableString>
+    <VariableString xml:lang="ro">weeks</VariableString>
+    <VariableString xml:lang="tr">weeks</VariableString>
+    <VariableString xml:lang="et">weeks</VariableString>
+    <Definition>weeks</Definition>
+    <Description>weeks</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>53</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2176</code>
+    </TYPE>
+    <TextId>264320</TextId>
+    <VariableString xml:lang="en">sec</VariableString>
+    <VariableString xml:lang="de">s</VariableString>
+    <VariableString xml:lang="fr">s</VariableString>
+    <VariableString xml:lang="it">sec</VariableString>
+    <VariableString xml:lang="es">s</VariableString>
+    <VariableString xml:lang="nl">sec</VariableString>
+    <VariableString xml:lang="sv">sek</VariableString>
+    <VariableString xml:lang="fi">s</VariableString>
+    <VariableString xml:lang="no">sek</VariableString>
+    <VariableString xml:lang="da">sek</VariableString>
+    <VariableString xml:lang="ja">sec</VariableString>
+    <VariableString xml:lang="zh-TW">秒﻿</VariableString>
+    <VariableString xml:lang="zh-CN">秒﻿</VariableString>
+    <VariableString xml:lang="pt">s</VariableString>
+    <VariableString xml:lang="ru">с</VariableString>
+    <VariableString xml:lang="el">sec</VariableString>
+    <VariableString xml:lang="pl">s</VariableString>
+    <VariableString xml:lang="cs">s</VariableString>
+    <VariableString xml:lang="sk">sec</VariableString>
+    <VariableString xml:lang="hu">mp</VariableString>
+    <VariableString xml:lang="ro">sec</VariableString>
+    <VariableString xml:lang="tr">sec</VariableString>
+    <VariableString xml:lang="et">sec</VariableString>
+    <Definition>sec</Definition>
+    <Description>seconds</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>54</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4256</code>
+    </TYPE>
+    <TextId>266400</TextId>
+    <VariableString xml:lang="en">V</VariableString>
+    <VariableString xml:lang="de">V</VariableString>
+    <VariableString xml:lang="fr">V</VariableString>
+    <VariableString xml:lang="it">V</VariableString>
+    <VariableString xml:lang="es">V</VariableString>
+    <VariableString xml:lang="nl">V</VariableString>
+    <VariableString xml:lang="sv">V</VariableString>
+    <VariableString xml:lang="fi">V</VariableString>
+    <VariableString xml:lang="no">V</VariableString>
+    <VariableString xml:lang="da">V</VariableString>
+    <VariableString xml:lang="ja">V</VariableString>
+    <VariableString xml:lang="zh-TW">V</VariableString>
+    <VariableString xml:lang="zh-CN">V</VariableString>
+    <VariableString xml:lang="pt">V</VariableString>
+    <VariableString xml:lang="ru">В</VariableString>
+    <VariableString xml:lang="el">V</VariableString>
+    <VariableString xml:lang="pl">V</VariableString>
+    <VariableString xml:lang="cs">V</VariableString>
+    <VariableString xml:lang="sk">V</VariableString>
+    <VariableString xml:lang="hu">V</VariableString>
+    <VariableString xml:lang="ro">V</VariableString>
+    <VariableString xml:lang="tr">V</VariableString>
+    <VariableString xml:lang="et">V</VariableString>
+    <Definition>V</Definition>
+    <Description>Volts</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>55</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1600</code>
+    </TYPE>
+    <TextId>263744</TextId>
+    <VariableString xml:lang="en">l</VariableString>
+    <VariableString xml:lang="de">Liter</VariableString>
+    <VariableString xml:lang="fr">litre</VariableString>
+    <VariableString xml:lang="it">litro</VariableString>
+    <VariableString xml:lang="es">l</VariableString>
+    <VariableString xml:lang="nl">liter</VariableString>
+    <VariableString xml:lang="sv">liter</VariableString>
+    <VariableString xml:lang="fi">l</VariableString>
+    <VariableString xml:lang="no">liter</VariableString>
+    <VariableString xml:lang="da">liter</VariableString>
+    <VariableString xml:lang="ja">l</VariableString>
+    <VariableString xml:lang="zh-TW">liter</VariableString>
+    <VariableString xml:lang="zh-CN">liter</VariableString>
+    <VariableString xml:lang="pt">litro</VariableString>
+    <VariableString xml:lang="ru">л</VariableString>
+    <VariableString xml:lang="el">λίτρο</VariableString>
+    <VariableString xml:lang="pl">litr</VariableString>
+    <VariableString xml:lang="cs">litr</VariableString>
+    <VariableString xml:lang="sk">l</VariableString>
+    <VariableString xml:lang="hu">liter</VariableString>
+    <VariableString xml:lang="ro">l</VariableString>
+    <VariableString xml:lang="tr">l</VariableString>
+    <VariableString xml:lang="et">l</VariableString>
+    <Definition>l</Definition>
+    <Description>liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>56</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>5920</code>
+    </TYPE>
+    <TextId>268064</TextId>
+    <VariableString xml:lang="en">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="de">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="fr">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="it">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="es">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="nl">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="sv">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="fi">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="no">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="da">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="ja">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="zh-TW">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="zh-CN">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="pt">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="ru">смH₂O/л/с</VariableString>
+    <VariableString xml:lang="el">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="pl">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="cs">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="sk">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="hu">H₂Ocm/l/s</VariableString>
+    <VariableString xml:lang="ro">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="tr">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="et">cmH₂O/l/s</VariableString>
+    <Definition>cmH_2O/_l/s</Definition>
+    <Description>centimeter water column per liter per second; used for Lung Resistance</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>57</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3040</code>
+    </TYPE>
+    <TextId>265184</TextId>
+    <VariableString xml:lang="en">l/sec</VariableString>
+    <VariableString xml:lang="de">l/s</VariableString>
+    <VariableString xml:lang="fr">l/s</VariableString>
+    <VariableString xml:lang="it">l/sec</VariableString>
+    <VariableString xml:lang="es">l/s</VariableString>
+    <VariableString xml:lang="nl">l/sec</VariableString>
+    <VariableString xml:lang="sv">l/sek</VariableString>
+    <VariableString xml:lang="fi">l/s</VariableString>
+    <VariableString xml:lang="no">l/sek</VariableString>
+    <VariableString xml:lang="da">l/sek</VariableString>
+    <VariableString xml:lang="ja">l/sec</VariableString>
+    <VariableString xml:lang="zh-TW">l/sec</VariableString>
+    <VariableString xml:lang="zh-CN">l/sec</VariableString>
+    <VariableString xml:lang="pt">l/s</VariableString>
+    <VariableString xml:lang="ru">л/с</VariableString>
+    <VariableString xml:lang="el">l/sec</VariableString>
+    <VariableString xml:lang="pl">l/s</VariableString>
+    <VariableString xml:lang="cs">l/s</VariableString>
+    <VariableString xml:lang="sk">l/sec</VariableString>
+    <VariableString xml:lang="hu">l/mp</VariableString>
+    <VariableString xml:lang="ro">l/sec</VariableString>
+    <VariableString xml:lang="tr">l/sec</VariableString>
+    <VariableString xml:lang="et">l/sec</VariableString>
+    <Definition>l/sec</Definition>
+    <Description>liters per second</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>58</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>5970</code>
+    </TYPE>
+    <TextId>268114</TextId>
+    <VariableString xml:lang="en">ml²/sec</VariableString>
+    <VariableString xml:lang="de">ml²/s</VariableString>
+    <VariableString xml:lang="fr">ml²/s</VariableString>
+    <VariableString xml:lang="it">ml²/sec</VariableString>
+    <VariableString xml:lang="es">ml²/s</VariableString>
+    <VariableString xml:lang="nl">ml²/sec</VariableString>
+    <VariableString xml:lang="sv">ml²/sek</VariableString>
+    <VariableString xml:lang="fi">ml²/s</VariableString>
+    <VariableString xml:lang="no">ml²/sek</VariableString>
+    <VariableString xml:lang="da">ml²/sek</VariableString>
+    <VariableString xml:lang="ja">ml²/sec</VariableString>
+    <VariableString xml:lang="zh-TW">ml²/sec</VariableString>
+    <VariableString xml:lang="zh-CN">ml²/sec</VariableString>
+    <VariableString xml:lang="pt">ml²/s</VariableString>
+    <VariableString xml:lang="ru">мл²/с</VariableString>
+    <VariableString xml:lang="el">ml²/sec</VariableString>
+    <VariableString xml:lang="pl">ml²/s</VariableString>
+    <VariableString xml:lang="cs">ml²/s</VariableString>
+    <VariableString xml:lang="sk">ml²/sec</VariableString>
+    <VariableString xml:lang="hu">ml²/mp</VariableString>
+    <VariableString xml:lang="ro">ml²/sec</VariableString>
+    <VariableString xml:lang="tr">ml²/sec</VariableString>
+    <VariableString xml:lang="et">ml²/sec</VariableString>
+    <Definition>ml_^2/sec</Definition>
+    <Description>milli liter² per second</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>59</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2496</code>
+    </TYPE>
+    <TextId>264640</TextId>
+    <VariableString xml:lang="en">Hz</VariableString>
+    <VariableString xml:lang="de">Hz</VariableString>
+    <VariableString xml:lang="fr">Hz</VariableString>
+    <VariableString xml:lang="it">Hz</VariableString>
+    <VariableString xml:lang="es">Hz</VariableString>
+    <VariableString xml:lang="nl">Hz</VariableString>
+    <VariableString xml:lang="sv">Hz</VariableString>
+    <VariableString xml:lang="fi">Hz</VariableString>
+    <VariableString xml:lang="no">Hz</VariableString>
+    <VariableString xml:lang="da">Hz</VariableString>
+    <VariableString xml:lang="ja">Hz</VariableString>
+    <VariableString xml:lang="zh-TW">Hz</VariableString>
+    <VariableString xml:lang="zh-CN">Hz</VariableString>
+    <VariableString xml:lang="pt">Hz</VariableString>
+    <VariableString xml:lang="ru">Гц</VariableString>
+    <VariableString xml:lang="el">Hz</VariableString>
+    <VariableString xml:lang="pl">Hz</VariableString>
+    <VariableString xml:lang="cs">Hz</VariableString>
+    <VariableString xml:lang="sk">Hz</VariableString>
+    <VariableString xml:lang="hu">Hz</VariableString>
+    <VariableString xml:lang="ro">Hz</VariableString>
+    <VariableString xml:lang="tr">Hz</VariableString>
+    <VariableString xml:lang="et">Hz</VariableString>
+    <Definition>Hz</Definition>
+    <Description>Hertz</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>60</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4275</code>
+    </TYPE>
+    <TextId>266419</TextId>
+    <VariableString xml:lang="en">µV</VariableString>
+    <VariableString xml:lang="de">µV</VariableString>
+    <VariableString xml:lang="fr">µV</VariableString>
+    <VariableString xml:lang="it">µV</VariableString>
+    <VariableString xml:lang="es">µV</VariableString>
+    <VariableString xml:lang="nl">µV</VariableString>
+    <VariableString xml:lang="sv">µV</VariableString>
+    <VariableString xml:lang="fi">uV</VariableString>
+    <VariableString xml:lang="no">µV</VariableString>
+    <VariableString xml:lang="da">µV</VariableString>
+    <VariableString xml:lang="ja">μV</VariableString>
+    <VariableString xml:lang="zh-TW">μV</VariableString>
+    <VariableString xml:lang="zh-CN">μV</VariableString>
+    <VariableString xml:lang="pt">µV</VariableString>
+    <VariableString xml:lang="ru">мкВ</VariableString>
+    <VariableString xml:lang="el">μV</VariableString>
+    <VariableString xml:lang="pl">µV</VariableString>
+    <VariableString xml:lang="cs">µV</VariableString>
+    <VariableString xml:lang="sk">µV</VariableString>
+    <VariableString xml:lang="hu">µV</VariableString>
+    <VariableString xml:lang="ro">µV</VariableString>
+    <VariableString xml:lang="tr">µV</VariableString>
+    <VariableString xml:lang="et">µV</VariableString>
+    <Definition>uV</Definition>
+    <Description>micro Volts</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>61</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4053</code>
+    </TYPE>
+    <TextId>266197</TextId>
+    <VariableString xml:lang="en">pW</VariableString>
+    <VariableString xml:lang="de">pW</VariableString>
+    <VariableString xml:lang="fr">pW</VariableString>
+    <VariableString xml:lang="it">pW</VariableString>
+    <VariableString xml:lang="es">pW</VariableString>
+    <VariableString xml:lang="nl">pW</VariableString>
+    <VariableString xml:lang="sv">pW</VariableString>
+    <VariableString xml:lang="fi">pW</VariableString>
+    <VariableString xml:lang="no">pW</VariableString>
+    <VariableString xml:lang="da">pW</VariableString>
+    <VariableString xml:lang="ja">pW</VariableString>
+    <VariableString xml:lang="zh-TW">pW</VariableString>
+    <VariableString xml:lang="zh-CN">pW</VariableString>
+    <VariableString xml:lang="pt">pW</VariableString>
+    <VariableString xml:lang="ru">пВт</VariableString>
+    <VariableString xml:lang="el">pW</VariableString>
+    <VariableString xml:lang="pl">pW</VariableString>
+    <VariableString xml:lang="cs">pW</VariableString>
+    <VariableString xml:lang="sk">pW</VariableString>
+    <VariableString xml:lang="hu">pW</VariableString>
+    <VariableString xml:lang="ro">pW</VariableString>
+    <VariableString xml:lang="tr">pW</VariableString>
+    <VariableString xml:lang="et">pW</VariableString>
+    <Definition>pW</Definition>
+    <Description>pico watt</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>62</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4052</code>
+    </TYPE>
+    <TextId>266196</TextId>
+    <VariableString xml:lang="en">nW</VariableString>
+    <VariableString xml:lang="de">nW</VariableString>
+    <VariableString xml:lang="fr">nW</VariableString>
+    <VariableString xml:lang="it">nW</VariableString>
+    <VariableString xml:lang="es">nW</VariableString>
+    <VariableString xml:lang="nl">nW</VariableString>
+    <VariableString xml:lang="sv">nW</VariableString>
+    <VariableString xml:lang="fi">nW</VariableString>
+    <VariableString xml:lang="no">nW</VariableString>
+    <VariableString xml:lang="da">nW</VariableString>
+    <VariableString xml:lang="ja">nW</VariableString>
+    <VariableString xml:lang="zh-TW">nW</VariableString>
+    <VariableString xml:lang="zh-CN">nW</VariableString>
+    <VariableString xml:lang="pt">nW</VariableString>
+    <VariableString xml:lang="ru">нВт</VariableString>
+    <VariableString xml:lang="el">nW</VariableString>
+    <VariableString xml:lang="pl">nW</VariableString>
+    <VariableString xml:lang="cs">nW</VariableString>
+    <VariableString xml:lang="sk">nW</VariableString>
+    <VariableString xml:lang="hu">nW</VariableString>
+    <VariableString xml:lang="ro">nW</VariableString>
+    <VariableString xml:lang="tr">nW</VariableString>
+    <VariableString xml:lang="et">nW</VariableString>
+    <Definition>nW</Definition>
+    <Description>nano watt</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>63</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61444</code>
+    </TYPE>
+    <TextId>323588</TextId>
+    <VariableString xml:lang="en">µV p-p</VariableString>
+    <VariableString xml:lang="de">µV s-s</VariableString>
+    <VariableString xml:lang="fr">µV p-p</VariableString>
+    <VariableString xml:lang="it">µV p-p</VariableString>
+    <VariableString xml:lang="es">µV p-p</VariableString>
+    <VariableString xml:lang="nl">µV p-p</VariableString>
+    <VariableString xml:lang="sv">µV p-p</VariableString>
+    <VariableString xml:lang="fi">uV p-p</VariableString>
+    <VariableString xml:lang="no">µV p-p</VariableString>
+    <VariableString xml:lang="da">µV p-p</VariableString>
+    <VariableString xml:lang="ja">μVp-p</VariableString>
+    <VariableString xml:lang="zh-TW">μV p-p</VariableString>
+    <VariableString xml:lang="zh-CN">μV p-p</VariableString>
+    <VariableString xml:lang="pt">µV p-p</VariableString>
+    <VariableString xml:lang="ru">мкВ разм.</VariableString>
+    <VariableString xml:lang="el">μV p-p</VariableString>
+    <VariableString xml:lang="pl">µV p-p</VariableString>
+    <VariableString xml:lang="cs">µV p-p</VariableString>
+    <VariableString xml:lang="sk">µV p-p</VariableString>
+    <VariableString xml:lang="hu">µV p-p</VariableString>
+    <VariableString xml:lang="ro">µV p-p</VariableString>
+    <VariableString xml:lang="tr">µV p-p</VariableString>
+    <VariableString xml:lang="et">µV p-p</VariableString>
+    <Definition>uV p-p</Definition>
+    <Description>micro Volts Peak to Peak</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>64</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1248</code>
+    </TYPE>
+    <TextId>263392</TextId>
+    <VariableString xml:lang="en">%PCV</VariableString>
+    <VariableString xml:lang="de">%PCV</VariableString>
+    <VariableString xml:lang="fr">%</VariableString>
+    <VariableString xml:lang="it">%PCV</VariableString>
+    <VariableString xml:lang="es">%VCC</VariableString>
+    <VariableString xml:lang="nl">%PCV</VariableString>
+    <VariableString xml:lang="sv">%PCV</VariableString>
+    <VariableString xml:lang="fi">%PCV</VariableString>
+    <VariableString xml:lang="no">%PCV</VariableString>
+    <VariableString xml:lang="da">%PCV</VariableString>
+    <VariableString xml:lang="ja">%PCV</VariableString>
+    <VariableString xml:lang="zh-TW">%PCV</VariableString>
+    <VariableString xml:lang="zh-CN">%PCV</VariableString>
+    <VariableString xml:lang="pt">%VCE</VariableString>
+    <VariableString xml:lang="ru">%PCV</VariableString>
+    <VariableString xml:lang="el">%PCV</VariableString>
+    <VariableString xml:lang="pl">%PCV</VariableString>
+    <VariableString xml:lang="cs">%PCV</VariableString>
+    <VariableString xml:lang="sk">%PCV</VariableString>
+    <VariableString xml:lang="hu">%PCV</VariableString>
+    <VariableString xml:lang="ro">%PCV</VariableString>
+    <VariableString xml:lang="tr">%PCV</VariableString>
+    <VariableString xml:lang="et">%PCV</VariableString>
+    <Definition>%PCV</Definition>
+    <Description>% of packed cell volume. Used by the HCT (Hematocrit) parameter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>65</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2048</code>
+    </TYPE>
+    <TextId>264192</TextId>
+    <VariableString xml:lang="en">g/l</VariableString>
+    <VariableString xml:lang="de">g/l</VariableString>
+    <VariableString xml:lang="fr">g/l</VariableString>
+    <VariableString xml:lang="it">g/l</VariableString>
+    <VariableString xml:lang="es">g/l</VariableString>
+    <VariableString xml:lang="nl">g/l</VariableString>
+    <VariableString xml:lang="sv">g/l</VariableString>
+    <VariableString xml:lang="fi">g/l</VariableString>
+    <VariableString xml:lang="no">g/l</VariableString>
+    <VariableString xml:lang="da">g/l</VariableString>
+    <VariableString xml:lang="ja">g/l</VariableString>
+    <VariableString xml:lang="zh-TW">g/l</VariableString>
+    <VariableString xml:lang="zh-CN">g/l</VariableString>
+    <VariableString xml:lang="pt">g/l</VariableString>
+    <VariableString xml:lang="ru">г/л</VariableString>
+    <VariableString xml:lang="el">g/l</VariableString>
+    <VariableString xml:lang="pl">g/l</VariableString>
+    <VariableString xml:lang="cs">g/l</VariableString>
+    <VariableString xml:lang="sk">g/l</VariableString>
+    <VariableString xml:lang="hu">g/l</VariableString>
+    <VariableString xml:lang="ro">g/l</VariableString>
+    <VariableString xml:lang="tr">g/l</VariableString>
+    <VariableString xml:lang="et">g/l</VariableString>
+    <Definition>g/l</Definition>
+    <Description>gram per liter. Used by the Hemoglobin parameter (HGB)</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>66</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2034</code>
+    </TYPE>
+    <TextId>264178</TextId>
+    <VariableString xml:lang="en">mg/cm³</VariableString>
+    <VariableString xml:lang="de">mg/cm³</VariableString>
+    <VariableString xml:lang="fr">mg/cm³</VariableString>
+    <VariableString xml:lang="it">mg/cm³</VariableString>
+    <VariableString xml:lang="es">mg/cm³</VariableString>
+    <VariableString xml:lang="nl">mg/cm³</VariableString>
+    <VariableString xml:lang="sv">mg/cm³</VariableString>
+    <VariableString xml:lang="fi">mg/cm³</VariableString>
+    <VariableString xml:lang="no">mg/cm³</VariableString>
+    <VariableString xml:lang="da">mg/cm³</VariableString>
+    <VariableString xml:lang="ja">mg/cm³</VariableString>
+    <VariableString xml:lang="zh-TW">mg/cm³</VariableString>
+    <VariableString xml:lang="zh-CN">mg/cm³</VariableString>
+    <VariableString xml:lang="pt">mg/cm³</VariableString>
+    <VariableString xml:lang="ru">мг/см³</VariableString>
+    <VariableString xml:lang="el">mg/cm³</VariableString>
+    <VariableString xml:lang="pl">mg/cm³</VariableString>
+    <VariableString xml:lang="cs">mg/cm³</VariableString>
+    <VariableString xml:lang="sk">mg/cm³</VariableString>
+    <VariableString xml:lang="hu">mg/cm³</VariableString>
+    <VariableString xml:lang="ro">mg/cm³</VariableString>
+    <VariableString xml:lang="tr">mg/cm³</VariableString>
+    <VariableString xml:lang="et">mg/cm³</VariableString>
+    <Definition>mg/cm_^3</Definition>
+    <Description>milli gram per cubic centimeter. Unit for the density of the urine</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>68</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3136</code>
+    </TYPE>
+    <TextId>265280</TextId>
+    <VariableString xml:lang="en">l/day</VariableString>
+    <VariableString xml:lang="de">l/Tag</VariableString>
+    <VariableString xml:lang="fr">l/jour</VariableString>
+    <VariableString xml:lang="it">l/giorno</VariableString>
+    <VariableString xml:lang="es">l/día</VariableString>
+    <VariableString xml:lang="nl">l/dag</VariableString>
+    <VariableString xml:lang="sv">l/dag</VariableString>
+    <VariableString xml:lang="fi">l/päivä</VariableString>
+    <VariableString xml:lang="no">l/dag</VariableString>
+    <VariableString xml:lang="da">l/dag</VariableString>
+    <VariableString xml:lang="ja">l/day</VariableString>
+    <VariableString xml:lang="zh-TW">l/day</VariableString>
+    <VariableString xml:lang="zh-CN">l/day</VariableString>
+    <VariableString xml:lang="pt">l/dia</VariableString>
+    <VariableString xml:lang="ru">л/день</VariableString>
+    <VariableString xml:lang="el">l/ημέρα</VariableString>
+    <VariableString xml:lang="pl">l/dzień</VariableString>
+    <VariableString xml:lang="cs">l/den</VariableString>
+    <VariableString xml:lang="sk">l/day</VariableString>
+    <VariableString xml:lang="hu">l/nap</VariableString>
+    <VariableString xml:lang="ro">l/day</VariableString>
+    <VariableString xml:lang="tr">l/day</VariableString>
+    <VariableString xml:lang="et">l/day</VariableString>
+    <Definition>l/day</Definition>
+    <Description>liter per day. Daily Urine Output</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>69</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>1716</code>
+    </TYPE>
+    <TextId>263860</TextId>
+    <VariableString xml:lang="en">1/nl</VariableString>
+    <VariableString xml:lang="de">1/nl</VariableString>
+    <VariableString xml:lang="fr">1/nl</VariableString>
+    <VariableString xml:lang="it">1/nl</VariableString>
+    <VariableString xml:lang="es">1/nl</VariableString>
+    <VariableString xml:lang="nl">1/nl</VariableString>
+    <VariableString xml:lang="sv">1/nl</VariableString>
+    <VariableString xml:lang="fi">1/nl</VariableString>
+    <VariableString xml:lang="no">1/nl</VariableString>
+    <VariableString xml:lang="da">1/nl</VariableString>
+    <VariableString xml:lang="ja">1/nl</VariableString>
+    <VariableString xml:lang="zh-TW">1/nl</VariableString>
+    <VariableString xml:lang="zh-CN">1/nl</VariableString>
+    <VariableString xml:lang="pt">1/nl</VariableString>
+    <VariableString xml:lang="ru">1/нл</VariableString>
+    <VariableString xml:lang="el">1/nl</VariableString>
+    <VariableString xml:lang="pl">1/nl</VariableString>
+    <VariableString xml:lang="cs">1/nl</VariableString>
+    <VariableString xml:lang="sk">1/nl</VariableString>
+    <VariableString xml:lang="hu">1/nl</VariableString>
+    <VariableString xml:lang="ro">1/nl</VariableString>
+    <VariableString xml:lang="tr">1/nl</VariableString>
+    <VariableString xml:lang="et">1/nl</VariableString>
+    <Definition>1/nl</Definition>
+    <Description>one per nano-Liter.  Unit for the WBC (White Blood Cell) parameter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>70</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4594</code>
+    </TYPE>
+    <TextId>266738</TextId>
+    <VariableString xml:lang="en">mEq</VariableString>
+    <VariableString xml:lang="de">mEq</VariableString>
+    <VariableString xml:lang="fr">mEq</VariableString>
+    <VariableString xml:lang="it">mEq</VariableString>
+    <VariableString xml:lang="es">mEq</VariableString>
+    <VariableString xml:lang="nl">mEq</VariableString>
+    <VariableString xml:lang="sv">mEq</VariableString>
+    <VariableString xml:lang="fi">mEq</VariableString>
+    <VariableString xml:lang="no">mEq</VariableString>
+    <VariableString xml:lang="da">mEq</VariableString>
+    <VariableString xml:lang="ja">mEq</VariableString>
+    <VariableString xml:lang="zh-TW">mEq</VariableString>
+    <VariableString xml:lang="zh-CN">mEq</VariableString>
+    <VariableString xml:lang="pt">mEq</VariableString>
+    <VariableString xml:lang="ru">мэкв</VariableString>
+    <VariableString xml:lang="el">mEq</VariableString>
+    <VariableString xml:lang="pl">mEq</VariableString>
+    <VariableString xml:lang="cs">mEq</VariableString>
+    <VariableString xml:lang="sk">mEq</VariableString>
+    <VariableString xml:lang="hu">mEq</VariableString>
+    <VariableString xml:lang="ro">mEq</VariableString>
+    <VariableString xml:lang="tr">mEq</VariableString>
+    <VariableString xml:lang="et">mEq</VariableString>
+    <Definition>mEq</Definition>
+    <Description>milli Equivalents unit. Logically identical to the  mmol. Used by electrolyte params</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>71</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4723</code>
+    </TYPE>
+    <TextId>266867</TextId>
+    <VariableString xml:lang="en">µmol/l</VariableString>
+    <VariableString xml:lang="de">µmol/l</VariableString>
+    <VariableString xml:lang="fr">µmol/l</VariableString>
+    <VariableString xml:lang="it">µmol/l</VariableString>
+    <VariableString xml:lang="es">µmol/l</VariableString>
+    <VariableString xml:lang="nl">µmol/l</VariableString>
+    <VariableString xml:lang="sv">µmol/l</VariableString>
+    <VariableString xml:lang="fi">µmol/l</VariableString>
+    <VariableString xml:lang="no">µmol/l</VariableString>
+    <VariableString xml:lang="da">µmol/l</VariableString>
+    <VariableString xml:lang="ja">μmol/l</VariableString>
+    <VariableString xml:lang="zh-TW">μmol/l</VariableString>
+    <VariableString xml:lang="zh-CN">μmol/l</VariableString>
+    <VariableString xml:lang="pt">µmol/l</VariableString>
+    <VariableString xml:lang="ru">мкмоль/л</VariableString>
+    <VariableString xml:lang="el">μmol/l</VariableString>
+    <VariableString xml:lang="pl">µmol/l</VariableString>
+    <VariableString xml:lang="cs">µmol/l</VariableString>
+    <VariableString xml:lang="sk">µmol/l</VariableString>
+    <VariableString xml:lang="hu">µmol/l</VariableString>
+    <VariableString xml:lang="ro">µmol/l</VariableString>
+    <VariableString xml:lang="tr">µmol/l</VariableString>
+    <VariableString xml:lang="et">µmol/l</VariableString>
+    <Definition>umol/l</Definition>
+    <Description>micro Mol per Liter. Used by various bloodgas parameters</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>74</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4562</code>
+    </TYPE>
+    <TextId>266706</TextId>
+    <VariableString xml:lang="en">mmol</VariableString>
+    <VariableString xml:lang="de">mmol</VariableString>
+    <VariableString xml:lang="fr">mmol</VariableString>
+    <VariableString xml:lang="it">mmol</VariableString>
+    <VariableString xml:lang="es">mmol</VariableString>
+    <VariableString xml:lang="nl">mmol</VariableString>
+    <VariableString xml:lang="sv">mmol</VariableString>
+    <VariableString xml:lang="fi">mmol</VariableString>
+    <VariableString xml:lang="no">mmol</VariableString>
+    <VariableString xml:lang="da">mmol</VariableString>
+    <VariableString xml:lang="ja">mmol</VariableString>
+    <VariableString xml:lang="zh-TW">mmol</VariableString>
+    <VariableString xml:lang="zh-CN">mmol</VariableString>
+    <VariableString xml:lang="pt">mmol</VariableString>
+    <VariableString xml:lang="ru">ммоль</VariableString>
+    <VariableString xml:lang="el">mmol</VariableString>
+    <VariableString xml:lang="pl">mmol</VariableString>
+    <VariableString xml:lang="cs">mmol</VariableString>
+    <VariableString xml:lang="sk">mmol</VariableString>
+    <VariableString xml:lang="hu">mmol</VariableString>
+    <VariableString xml:lang="ro">mmol</VariableString>
+    <VariableString xml:lang="tr">mmol</VariableString>
+    <VariableString xml:lang="et">mmol</VariableString>
+    <Definition>mmol</Definition>
+    <Description>milli Mol. Used by various blood parameters</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>76</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>864</code>
+    </TYPE>
+    <TextId>263008</TextId>
+    <VariableString xml:lang="en">mol/mol</VariableString>
+    <VariableString xml:lang="de">mol/mol</VariableString>
+    <VariableString xml:lang="fr">mol/mol</VariableString>
+    <VariableString xml:lang="it">mol/mol</VariableString>
+    <VariableString xml:lang="es">mol/mol</VariableString>
+    <VariableString xml:lang="nl">mol/mol</VariableString>
+    <VariableString xml:lang="sv">mol/mol</VariableString>
+    <VariableString xml:lang="fi">mol/mol</VariableString>
+    <VariableString xml:lang="no">mol/mol</VariableString>
+    <VariableString xml:lang="da">mol/mol</VariableString>
+    <VariableString xml:lang="ja">mol/mol</VariableString>
+    <VariableString xml:lang="zh-TW">mol/mol</VariableString>
+    <VariableString xml:lang="zh-CN">mol/mol</VariableString>
+    <VariableString xml:lang="pt">mol/mol</VariableString>
+    <VariableString xml:lang="ru">моль/моль</VariableString>
+    <VariableString xml:lang="el">mol/mol</VariableString>
+    <VariableString xml:lang="pl">mol/mol</VariableString>
+    <VariableString xml:lang="cs">mol/mol</VariableString>
+    <VariableString xml:lang="sk">mol/mol</VariableString>
+    <VariableString xml:lang="hu">mol/mol</VariableString>
+    <VariableString xml:lang="ro">mol/mol</VariableString>
+    <VariableString xml:lang="tr">mol/mol</VariableString>
+    <VariableString xml:lang="et">mol/mol</VariableString>
+    <Definition>mol/mol</Definition>
+    <Description>Ratio of Mol per Mol. Used by the BUN-Creatinine and Urea-Creatinine ratio parameters</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>77</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6482</code>
+    </TYPE>
+    <TextId>268626</TextId>
+    <VariableString xml:lang="en">mg/mg</VariableString>
+    <VariableString xml:lang="de">mg/mg</VariableString>
+    <VariableString xml:lang="fr">mg/mg</VariableString>
+    <VariableString xml:lang="it">mg/mg</VariableString>
+    <VariableString xml:lang="es">mg/mg</VariableString>
+    <VariableString xml:lang="nl">mg/mg</VariableString>
+    <VariableString xml:lang="sv">mg/mg</VariableString>
+    <VariableString xml:lang="fi">mg/mg</VariableString>
+    <VariableString xml:lang="no">mg/mg</VariableString>
+    <VariableString xml:lang="da">mg/mg</VariableString>
+    <VariableString xml:lang="ja">mg/mg</VariableString>
+    <VariableString xml:lang="zh-TW">mg/mg</VariableString>
+    <VariableString xml:lang="zh-CN">mg/mg</VariableString>
+    <VariableString xml:lang="pt">mg/mg</VariableString>
+    <VariableString xml:lang="ru">мг/мг</VariableString>
+    <VariableString xml:lang="el">mg/mg</VariableString>
+    <VariableString xml:lang="pl">mg/mg</VariableString>
+    <VariableString xml:lang="cs">mg/mg</VariableString>
+    <VariableString xml:lang="sk">mg/mg</VariableString>
+    <VariableString xml:lang="hu">mg/mg</VariableString>
+    <VariableString xml:lang="ro">mg/mg</VariableString>
+    <VariableString xml:lang="tr">mg/mg</VariableString>
+    <VariableString xml:lang="et">mg/mg</VariableString>
+    <Definition>mg/mg</Definition>
+    <Description>milligram per milligram. Used by the BUN-Creatinine and Urea-Creatinine ratio parameters</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>78</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>5920</code>
+    </TYPE>
+    <TextId>268064</TextId>
+    <VariableString xml:lang="en">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="de">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="fr">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="it">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="es">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="nl">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="sv">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="fi">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="no">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="da">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="ja">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="zh-TW">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="zh-CN">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="pt">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="ru">смH₂O/л/с</VariableString>
+    <VariableString xml:lang="el">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="pl">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="cs">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="sk">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="hu">H₂Ocm/l/s</VariableString>
+    <VariableString xml:lang="ro">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="tr">cmH₂O/l/s</VariableString>
+    <VariableString xml:lang="et">cmH₂O/l/s</VariableString>
+    <Definition>cm_H2O*s/l</Definition>
+    <Description>Identical with the cmH₂O per liter per second</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>79</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6144</code>
+    </TYPE>
+    <TextId>268288</TextId>
+    <VariableString xml:lang="en">cmH₂O/l</VariableString>
+    <VariableString xml:lang="de">cmH₂O/l</VariableString>
+    <VariableString xml:lang="fr">cmH₂O/l</VariableString>
+    <VariableString xml:lang="it">cmH₂O/l</VariableString>
+    <VariableString xml:lang="es">cmH₂O/l</VariableString>
+    <VariableString xml:lang="nl">cmH₂O/l</VariableString>
+    <VariableString xml:lang="sv">cmH₂O/l</VariableString>
+    <VariableString xml:lang="fi">cmH₂O/l</VariableString>
+    <VariableString xml:lang="no">cmH₂O/l</VariableString>
+    <VariableString xml:lang="da">cmH₂O/l</VariableString>
+    <VariableString xml:lang="ja">cmH₂O/l</VariableString>
+    <VariableString xml:lang="zh-TW">cmH₂O/l</VariableString>
+    <VariableString xml:lang="zh-CN">cmH₂O/l</VariableString>
+    <VariableString xml:lang="pt">cmH₂O/l</VariableString>
+    <VariableString xml:lang="ru">смH₂O/л</VariableString>
+    <VariableString xml:lang="el">cmH₂O/l</VariableString>
+    <VariableString xml:lang="pl">cmH₂O/l</VariableString>
+    <VariableString xml:lang="cs">cmH₂O/l</VariableString>
+    <VariableString xml:lang="sk">cmH₂O/l</VariableString>
+    <VariableString xml:lang="hu">H₂Ocm/l</VariableString>
+    <VariableString xml:lang="ro">cmH₂O/l</VariableString>
+    <VariableString xml:lang="tr">cmH₂O/l</VariableString>
+    <VariableString xml:lang="et">cmH₂O/l</VariableString>
+    <Definition>cmH_2O/l</Definition>
+    <Description>cmH₂O per liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>80</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4291</code>
+    </TYPE>
+    <TextId>266435</TextId>
+    <VariableString xml:lang="en">kOhm</VariableString>
+    <VariableString xml:lang="de">kOhm</VariableString>
+    <VariableString xml:lang="fr">kOhm</VariableString>
+    <VariableString xml:lang="it">kOhm</VariableString>
+    <VariableString xml:lang="es">kOhm</VariableString>
+    <VariableString xml:lang="nl">kOhm</VariableString>
+    <VariableString xml:lang="sv">kOhm</VariableString>
+    <VariableString xml:lang="fi">kilo-ohmi</VariableString>
+    <VariableString xml:lang="no">kOhm</VariableString>
+    <VariableString xml:lang="da">kOhm</VariableString>
+    <VariableString xml:lang="ja">kOhm</VariableString>
+    <VariableString xml:lang="zh-TW">kOhm</VariableString>
+    <VariableString xml:lang="zh-CN">kOhm</VariableString>
+    <VariableString xml:lang="pt">kOhm</VariableString>
+    <VariableString xml:lang="ru">кОм</VariableString>
+    <VariableString xml:lang="el">kOhm</VariableString>
+    <VariableString xml:lang="pl">kOhm</VariableString>
+    <VariableString xml:lang="cs">kOhm</VariableString>
+    <VariableString xml:lang="sk">kOhm</VariableString>
+    <VariableString xml:lang="hu">kOhm</VariableString>
+    <VariableString xml:lang="ro">kOhm</VariableString>
+    <VariableString xml:lang="tr">kOhm</VariableString>
+    <VariableString xml:lang="et">kOhm</VariableString>
+    <Definition>kOhm</Definition>
+    <Description>kilo Ohm</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>81</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3186</code>
+    </TYPE>
+    <TextId>265330</TextId>
+    <VariableString xml:lang="en">ml/kg</VariableString>
+    <VariableString xml:lang="de">ml/kg</VariableString>
+    <VariableString xml:lang="fr">ml/kg</VariableString>
+    <VariableString xml:lang="it">ml/kg</VariableString>
+    <VariableString xml:lang="es">ml/kg</VariableString>
+    <VariableString xml:lang="nl">ml/kg</VariableString>
+    <VariableString xml:lang="sv">ml/kg</VariableString>
+    <VariableString xml:lang="fi">ml/kg</VariableString>
+    <VariableString xml:lang="no">ml/kg</VariableString>
+    <VariableString xml:lang="da">ml/kg</VariableString>
+    <VariableString xml:lang="ja">ml/kg</VariableString>
+    <VariableString xml:lang="zh-TW">ml/kg</VariableString>
+    <VariableString xml:lang="zh-CN">ml/kg</VariableString>
+    <VariableString xml:lang="pt">ml/kg</VariableString>
+    <VariableString xml:lang="ru">мл/кг</VariableString>
+    <VariableString xml:lang="el">ml/kg</VariableString>
+    <VariableString xml:lang="pl">ml/kg</VariableString>
+    <VariableString xml:lang="cs">ml/kg</VariableString>
+    <VariableString xml:lang="sk">ml/kg</VariableString>
+    <VariableString xml:lang="hu">ml/kg</VariableString>
+    <VariableString xml:lang="ro">ml/kg</VariableString>
+    <VariableString xml:lang="tr">ml/kg</VariableString>
+    <VariableString xml:lang="et">ml/kg</VariableString>
+    <Definition>ml/kg</Definition>
+    <Description>milli liter per kilogram</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>82</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4178</code>
+    </TYPE>
+    <TextId>266322</TextId>
+    <VariableString xml:lang="en">mA</VariableString>
+    <VariableString xml:lang="de">mA</VariableString>
+    <VariableString xml:lang="fr">mA</VariableString>
+    <VariableString xml:lang="it">mA</VariableString>
+    <VariableString xml:lang="es">mA</VariableString>
+    <VariableString xml:lang="nl">mA</VariableString>
+    <VariableString xml:lang="sv">mA</VariableString>
+    <VariableString xml:lang="fi">mA</VariableString>
+    <VariableString xml:lang="no">mA</VariableString>
+    <VariableString xml:lang="da">mA</VariableString>
+    <VariableString xml:lang="ja">mA</VariableString>
+    <VariableString xml:lang="zh-TW">mA</VariableString>
+    <VariableString xml:lang="zh-CN">mA</VariableString>
+    <VariableString xml:lang="pt">mA</VariableString>
+    <VariableString xml:lang="ru">мА</VariableString>
+    <VariableString xml:lang="el">mA</VariableString>
+    <VariableString xml:lang="pl">mA</VariableString>
+    <VariableString xml:lang="cs">mA</VariableString>
+    <VariableString xml:lang="sk">mA</VariableString>
+    <VariableString xml:lang="hu">mA</VariableString>
+    <VariableString xml:lang="ro">mA</VariableString>
+    <VariableString xml:lang="tr">mA</VariableString>
+    <VariableString xml:lang="et">mA</VariableString>
+    <Definition>mA</Definition>
+    <Description>milli Ampere</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>83</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>4211</code>
+    </TYPE>
+    <TextId>266355</TextId>
+    <VariableString xml:lang="en">µC</VariableString>
+    <VariableString xml:lang="de">µC</VariableString>
+    <VariableString xml:lang="fr">µC</VariableString>
+    <VariableString xml:lang="it">µC</VariableString>
+    <VariableString xml:lang="es">µC</VariableString>
+    <VariableString xml:lang="nl">µC</VariableString>
+    <VariableString xml:lang="sv">µC</VariableString>
+    <VariableString xml:lang="fi">µC</VariableString>
+    <VariableString xml:lang="no">µC</VariableString>
+    <VariableString xml:lang="da">µC</VariableString>
+    <VariableString xml:lang="ja">μC</VariableString>
+    <VariableString xml:lang="zh-TW">μC</VariableString>
+    <VariableString xml:lang="zh-CN">μC</VariableString>
+    <VariableString xml:lang="pt">µC</VariableString>
+    <VariableString xml:lang="ru">мкКл</VariableString>
+    <VariableString xml:lang="el">μC</VariableString>
+    <VariableString xml:lang="pl">µC</VariableString>
+    <VariableString xml:lang="cs">µC</VariableString>
+    <VariableString xml:lang="sk">µC</VariableString>
+    <VariableString xml:lang="hu">µC</VariableString>
+    <VariableString xml:lang="ro">µC</VariableString>
+    <VariableString xml:lang="tr">µC</VariableString>
+    <VariableString xml:lang="et">µC</VariableString>
+    <Definition>uC</Definition>
+    <Description>micro Coulomb</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>84</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2195</code>
+    </TYPE>
+    <TextId>264339</TextId>
+    <VariableString xml:lang="en">µsec</VariableString>
+    <VariableString xml:lang="de">µs</VariableString>
+    <VariableString xml:lang="fr">µs</VariableString>
+    <VariableString xml:lang="it">µsec</VariableString>
+    <VariableString xml:lang="es">µs</VariableString>
+    <VariableString xml:lang="nl">µsec</VariableString>
+    <VariableString xml:lang="sv">µsek</VariableString>
+    <VariableString xml:lang="fi">µs</VariableString>
+    <VariableString xml:lang="no">µsek</VariableString>
+    <VariableString xml:lang="da">µsek</VariableString>
+    <VariableString xml:lang="ja">μsec</VariableString>
+    <VariableString xml:lang="zh-TW">μsec</VariableString>
+    <VariableString xml:lang="zh-CN">μsec</VariableString>
+    <VariableString xml:lang="pt">µs</VariableString>
+    <VariableString xml:lang="ru">мкс</VariableString>
+    <VariableString xml:lang="el">μsec</VariableString>
+    <VariableString xml:lang="pl">µs</VariableString>
+    <VariableString xml:lang="cs">µs</VariableString>
+    <VariableString xml:lang="sk">µsec</VariableString>
+    <VariableString xml:lang="hu">µsec</VariableString>
+    <VariableString xml:lang="ro">µsec</VariableString>
+    <VariableString xml:lang="tr">µsec</VariableString>
+    <VariableString xml:lang="et">µsec</VariableString>
+    <Definition>usec</Definition>
+    <Description>micro seconds</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>85</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6432</code>
+    </TYPE>
+    <TextId>268576</TextId>
+    <VariableString xml:lang="en">dB</VariableString>
+    <VariableString xml:lang="de">dB</VariableString>
+    <VariableString xml:lang="fr">dB</VariableString>
+    <VariableString xml:lang="it">dB</VariableString>
+    <VariableString xml:lang="es">dB</VariableString>
+    <VariableString xml:lang="nl">dB</VariableString>
+    <VariableString xml:lang="sv">dB</VariableString>
+    <VariableString xml:lang="fi">dB</VariableString>
+    <VariableString xml:lang="no">dB</VariableString>
+    <VariableString xml:lang="da">dB</VariableString>
+    <VariableString xml:lang="ja">dB</VariableString>
+    <VariableString xml:lang="zh-TW">dB</VariableString>
+    <VariableString xml:lang="zh-CN">dB</VariableString>
+    <VariableString xml:lang="pt">dB</VariableString>
+    <VariableString xml:lang="ru">дБ</VariableString>
+    <VariableString xml:lang="el">dB</VariableString>
+    <VariableString xml:lang="pl">dB</VariableString>
+    <VariableString xml:lang="cs">dB</VariableString>
+    <VariableString xml:lang="sk">dB</VariableString>
+    <VariableString xml:lang="hu">dB</VariableString>
+    <VariableString xml:lang="ro">dB</VariableString>
+    <VariableString xml:lang="tr">dB</VariableString>
+    <VariableString xml:lang="et">dB</VariableString>
+    <Definition>dB</Definition>
+    <Description>Decibel</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>86</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2194</code>
+    </TYPE>
+    <TextId>264338</TextId>
+    <VariableString xml:lang="en">msec</VariableString>
+    <VariableString xml:lang="de">ms</VariableString>
+    <VariableString xml:lang="fr">ms</VariableString>
+    <VariableString xml:lang="it">msec</VariableString>
+    <VariableString xml:lang="es">ms</VariableString>
+    <VariableString xml:lang="nl">msec</VariableString>
+    <VariableString xml:lang="sv">msek</VariableString>
+    <VariableString xml:lang="fi">ms</VariableString>
+    <VariableString xml:lang="no">msek</VariableString>
+    <VariableString xml:lang="da">msek</VariableString>
+    <VariableString xml:lang="ja">msec</VariableString>
+    <VariableString xml:lang="zh-TW">msec</VariableString>
+    <VariableString xml:lang="zh-CN">msec</VariableString>
+    <VariableString xml:lang="pt">ms</VariableString>
+    <VariableString xml:lang="ru">мс</VariableString>
+    <VariableString xml:lang="el">msec</VariableString>
+    <VariableString xml:lang="pl">ms</VariableString>
+    <VariableString xml:lang="cs">ms</VariableString>
+    <VariableString xml:lang="sk">msec</VariableString>
+    <VariableString xml:lang="hu">msec</VariableString>
+    <VariableString xml:lang="ro">msec</VariableString>
+    <VariableString xml:lang="tr">msec</VariableString>
+    <VariableString xml:lang="et">msec</VariableString>
+    <Definition>msec</Definition>
+    <Description>milli seconds</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>88</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6528</code>
+    </TYPE>
+    <TextId>268672</TextId>
+    <VariableString xml:lang="en">1/(min*l)</VariableString>
+    <VariableString xml:lang="de">1/(min*l)</VariableString>
+    <VariableString xml:lang="fr">1/(min*l)</VariableString>
+    <VariableString xml:lang="it">1/(min*l)</VariableString>
+    <VariableString xml:lang="es">1/(min*l)</VariableString>
+    <VariableString xml:lang="nl">1/(min*l)</VariableString>
+    <VariableString xml:lang="sv">1/(min*l)</VariableString>
+    <VariableString xml:lang="fi">1/(min*l)</VariableString>
+    <VariableString xml:lang="no">1/(min*l)</VariableString>
+    <VariableString xml:lang="da">1/(min*l)</VariableString>
+    <VariableString xml:lang="ja">1/(min*l)</VariableString>
+    <VariableString xml:lang="zh-TW">1/(min*l)</VariableString>
+    <VariableString xml:lang="zh-CN">1/(min*l)</VariableString>
+    <VariableString xml:lang="pt">1/(min*l)</VariableString>
+    <VariableString xml:lang="ru">1/(мин*л)</VariableString>
+    <VariableString xml:lang="el">1/(min*l)</VariableString>
+    <VariableString xml:lang="pl">1/(min*l)</VariableString>
+    <VariableString xml:lang="cs">1/(min*l)</VariableString>
+    <VariableString xml:lang="sk">1/(min*l)</VariableString>
+    <VariableString xml:lang="hu">1/(p*l)</VariableString>
+    <VariableString xml:lang="ro">1/(min*l)</VariableString>
+    <VariableString xml:lang="tr">1/(min*l)</VariableString>
+    <VariableString xml:lang="et">1/(min*l)</VariableString>
+    <Definition>1/(min*l)</Definition>
+    <Description>Quotient between the spontanous resp rate (breath/min) and the Tidal Volume (l). Used for the RSBI-paramter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>89</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2834</code>
+    </TYPE>
+    <TextId>264978</TextId>
+    <VariableString xml:lang="en">mm/sec</VariableString>
+    <VariableString xml:lang="de">mm/s</VariableString>
+    <VariableString xml:lang="fr">mm/s</VariableString>
+    <VariableString xml:lang="it">mm/sec</VariableString>
+    <VariableString xml:lang="es">mm/s</VariableString>
+    <VariableString xml:lang="nl">mm/sec</VariableString>
+    <VariableString xml:lang="sv">mm/sek</VariableString>
+    <VariableString xml:lang="fi">mm/s</VariableString>
+    <VariableString xml:lang="no">mm/sek</VariableString>
+    <VariableString xml:lang="da">mm/sek</VariableString>
+    <VariableString xml:lang="ja">mm/sec</VariableString>
+    <VariableString xml:lang="zh-TW">mm/sec</VariableString>
+    <VariableString xml:lang="zh-CN">mm/sec</VariableString>
+    <VariableString xml:lang="pt">mm/s</VariableString>
+    <VariableString xml:lang="ru">мм/с</VariableString>
+    <VariableString xml:lang="el">mm/sec</VariableString>
+    <VariableString xml:lang="pl">mm/s</VariableString>
+    <VariableString xml:lang="cs">mm/s</VariableString>
+    <VariableString xml:lang="sk">mm/sec</VariableString>
+    <VariableString xml:lang="hu">mm/mp</VariableString>
+    <VariableString xml:lang="ro">mm/sec</VariableString>
+    <VariableString xml:lang="tr">mm/sec</VariableString>
+    <VariableString xml:lang="et">mm/sec</VariableString>
+    <Definition>mm/sec</Definition>
+    <Description>milli meter per second</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>90</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>6577</code>
+    </TYPE>
+    <TextId>268721</TextId>
+    <VariableString xml:lang="en">cm/min</VariableString>
+    <VariableString xml:lang="de">cm/min</VariableString>
+    <VariableString xml:lang="fr">cm/min</VariableString>
+    <VariableString xml:lang="it">cm/min</VariableString>
+    <VariableString xml:lang="es">cm/min</VariableString>
+    <VariableString xml:lang="nl">cm/min</VariableString>
+    <VariableString xml:lang="sv">cm/min</VariableString>
+    <VariableString xml:lang="fi">cm/min</VariableString>
+    <VariableString xml:lang="no">cm/min</VariableString>
+    <VariableString xml:lang="da">cm/min</VariableString>
+    <VariableString xml:lang="ja">cm/min</VariableString>
+    <VariableString xml:lang="zh-TW">cm/min</VariableString>
+    <VariableString xml:lang="zh-CN">cm/min</VariableString>
+    <VariableString xml:lang="pt">cm/min</VariableString>
+    <VariableString xml:lang="ru">см/мин</VariableString>
+    <VariableString xml:lang="el">cm/min</VariableString>
+    <VariableString xml:lang="pl">cm/min</VariableString>
+    <VariableString xml:lang="cs">cm/min</VariableString>
+    <VariableString xml:lang="sk">cm/min</VariableString>
+    <VariableString xml:lang="hu">cm/perc</VariableString>
+    <VariableString xml:lang="ro">cm/min</VariableString>
+    <VariableString xml:lang="tr">cm/min</VariableString>
+    <VariableString xml:lang="et">cm/min</VariableString>
+    <Definition>cm/min</Definition>
+    <Description>centimeter per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>91</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2528</code>
+    </TYPE>
+    <TextId>264672</TextId>
+    <VariableString xml:lang="en">/min</VariableString>
+    <VariableString xml:lang="de">/min</VariableString>
+    <VariableString xml:lang="fr">/min</VariableString>
+    <VariableString xml:lang="it">/min</VariableString>
+    <VariableString xml:lang="es">/min</VariableString>
+    <VariableString xml:lang="nl">/min</VariableString>
+    <VariableString xml:lang="sv">/min</VariableString>
+    <VariableString xml:lang="fi">/min</VariableString>
+    <VariableString xml:lang="no">/min</VariableString>
+    <VariableString xml:lang="da">/min</VariableString>
+    <VariableString xml:lang="ja">/min</VariableString>
+    <VariableString xml:lang="zh-TW">/min</VariableString>
+    <VariableString xml:lang="zh-CN">/min</VariableString>
+    <VariableString xml:lang="pt">/min</VariableString>
+    <VariableString xml:lang="ru">/мин</VariableString>
+    <VariableString xml:lang="el">/min</VariableString>
+    <VariableString xml:lang="pl">/min</VariableString>
+    <VariableString xml:lang="cs">/min</VariableString>
+    <VariableString xml:lang="sk">/min</VariableString>
+    <VariableString xml:lang="hu">/perc</VariableString>
+    <VariableString xml:lang="ro">/min</VariableString>
+    <VariableString xml:lang="tr">/min</VariableString>
+    <VariableString xml:lang="et">/min</VariableString>
+    <Definition>1/min</Definition>
+    <Description>one per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>92</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61449</code>
+    </TYPE>
+    <TextId>323593</TextId>
+    <VariableString xml:lang="en">mmHg/sec</VariableString>
+    <VariableString xml:lang="de">mmHg/s</VariableString>
+    <VariableString xml:lang="fr">mmHg/s</VariableString>
+    <VariableString xml:lang="it">mmHg/sec</VariableString>
+    <VariableString xml:lang="es">mmHg/s</VariableString>
+    <VariableString xml:lang="nl">mmHg/sec</VariableString>
+    <VariableString xml:lang="sv">mmHg/sek</VariableString>
+    <VariableString xml:lang="fi">mmHg/s</VariableString>
+    <VariableString xml:lang="no">mmHg/sek</VariableString>
+    <VariableString xml:lang="da">mmHg/sek</VariableString>
+    <VariableString xml:lang="ja">mmHg/sec</VariableString>
+    <VariableString xml:lang="zh-TW">mmHg/sec</VariableString>
+    <VariableString xml:lang="zh-CN">mmHg/sec</VariableString>
+    <VariableString xml:lang="pt">mmHg/s</VariableString>
+    <VariableString xml:lang="ru">ммHg/с</VariableString>
+    <VariableString xml:lang="el">mmHg/sec</VariableString>
+    <VariableString xml:lang="pl">mmHg/s</VariableString>
+    <VariableString xml:lang="cs">mmHg/s</VariableString>
+    <VariableString xml:lang="sk">mmHg/sec</VariableString>
+    <VariableString xml:lang="hu">Hgmm/mp</VariableString>
+    <VariableString xml:lang="ro">mmHg/sec</VariableString>
+    <VariableString xml:lang="tr">mmHg/sec</VariableString>
+    <VariableString xml:lang="et">mmHg/sec</VariableString>
+    <Definition>mmHg/sec</Definition>
+    <Description>milli meter mercury per second</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>93</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2164</code>
+    </TYPE>
+    <TextId>264308</TextId>
+    <VariableString xml:lang="en">ng/ml</VariableString>
+    <VariableString xml:lang="de">ng/ml</VariableString>
+    <VariableString xml:lang="fr">ng/ml</VariableString>
+    <VariableString xml:lang="it">ng/ml</VariableString>
+    <VariableString xml:lang="es">ng/ml</VariableString>
+    <VariableString xml:lang="nl">ng/ml</VariableString>
+    <VariableString xml:lang="sv">ng/ml</VariableString>
+    <VariableString xml:lang="fi">ng/ml</VariableString>
+    <VariableString xml:lang="no">ng/ml</VariableString>
+    <VariableString xml:lang="da">ng/ml</VariableString>
+    <VariableString xml:lang="ja">ng/ml</VariableString>
+    <VariableString xml:lang="zh-TW">ng/ml</VariableString>
+    <VariableString xml:lang="zh-CN">ng/ml</VariableString>
+    <VariableString xml:lang="pt">ng/ml</VariableString>
+    <VariableString xml:lang="ru">нг/мл</VariableString>
+    <VariableString xml:lang="el">ng/ml</VariableString>
+    <VariableString xml:lang="pl">ng/ml</VariableString>
+    <VariableString xml:lang="cs">ng/ml</VariableString>
+    <VariableString xml:lang="sk">ng/ml</VariableString>
+    <VariableString xml:lang="hu">ng/ml</VariableString>
+    <VariableString xml:lang="ro">ng/ml</VariableString>
+    <VariableString xml:lang="tr">ng/ml</VariableString>
+    <VariableString xml:lang="et">ng/ml</VariableString>
+    <Definition>ng/ml</Definition>
+    <Description>nano gram per milli liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>94</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2067</code>
+    </TYPE>
+    <TextId>264211</TextId>
+    <VariableString xml:lang="en">mcg/l</VariableString>
+    <VariableString xml:lang="de">µg/l</VariableString>
+    <VariableString xml:lang="fr">µg/l</VariableString>
+    <VariableString xml:lang="it">µg/l</VariableString>
+    <VariableString xml:lang="es">mcg/l</VariableString>
+    <VariableString xml:lang="nl">µg/l</VariableString>
+    <VariableString xml:lang="sv">µg/l</VariableString>
+    <VariableString xml:lang="fi">µg/l</VariableString>
+    <VariableString xml:lang="no">mcg/l</VariableString>
+    <VariableString xml:lang="da">mcg/l</VariableString>
+    <VariableString xml:lang="ja">mcg/l</VariableString>
+    <VariableString xml:lang="zh-TW">mcg/l</VariableString>
+    <VariableString xml:lang="zh-CN">mcg/l</VariableString>
+    <VariableString xml:lang="pt">mcg/l</VariableString>
+    <VariableString xml:lang="ru">мкг/л</VariableString>
+    <VariableString xml:lang="el">mcg/l</VariableString>
+    <VariableString xml:lang="pl">mcg/l</VariableString>
+    <VariableString xml:lang="cs">mcg/l</VariableString>
+    <VariableString xml:lang="sk">mcg/l</VariableString>
+    <VariableString xml:lang="hu">mcg/l</VariableString>
+    <VariableString xml:lang="ro">mcg/l</VariableString>
+    <VariableString xml:lang="tr">mcg/l</VariableString>
+    <VariableString xml:lang="et">mcg/l</VariableString>
+    <Definition>ug/l</Definition>
+    <Description>micro gram per liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>95</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2165</code>
+    </TYPE>
+    <TextId>264309</TextId>
+    <VariableString xml:lang="en">pg/ml</VariableString>
+    <VariableString xml:lang="de">pg/ml</VariableString>
+    <VariableString xml:lang="fr">pg/ml</VariableString>
+    <VariableString xml:lang="it">pg/ml</VariableString>
+    <VariableString xml:lang="es">pg/ml</VariableString>
+    <VariableString xml:lang="nl">pg/ml</VariableString>
+    <VariableString xml:lang="sv">pg/ml</VariableString>
+    <VariableString xml:lang="fi">pg/ml</VariableString>
+    <VariableString xml:lang="no">pg/ml</VariableString>
+    <VariableString xml:lang="da">pg/ml</VariableString>
+    <VariableString xml:lang="ja">pg/ml</VariableString>
+    <VariableString xml:lang="zh-TW">pg/ml</VariableString>
+    <VariableString xml:lang="zh-CN">pg/ml</VariableString>
+    <VariableString xml:lang="pt">pg/ml</VariableString>
+    <VariableString xml:lang="ru">пкг/мл</VariableString>
+    <VariableString xml:lang="el">pg/ml</VariableString>
+    <VariableString xml:lang="pl">pg/ml</VariableString>
+    <VariableString xml:lang="cs">pg/ml</VariableString>
+    <VariableString xml:lang="sk">pg/ml</VariableString>
+    <VariableString xml:lang="hu">pg/ml</VariableString>
+    <VariableString xml:lang="ro">pg/ml</VariableString>
+    <VariableString xml:lang="tr">pg/ml</VariableString>
+    <VariableString xml:lang="et">pg/ml</VariableString>
+    <Definition>pg/ml</Definition>
+    <Description>pico gram  per milli liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>96</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2068</code>
+    </TYPE>
+    <TextId>264212</TextId>
+    <VariableString xml:lang="en">ng/l</VariableString>
+    <VariableString xml:lang="de">ng/l</VariableString>
+    <VariableString xml:lang="fr">ng/l</VariableString>
+    <VariableString xml:lang="it">ng/l</VariableString>
+    <VariableString xml:lang="es">ng/l</VariableString>
+    <VariableString xml:lang="nl">ng/l</VariableString>
+    <VariableString xml:lang="sv">ng/l</VariableString>
+    <VariableString xml:lang="fi">ng/l</VariableString>
+    <VariableString xml:lang="no">ng/l</VariableString>
+    <VariableString xml:lang="da">ng/l</VariableString>
+    <VariableString xml:lang="ja">ng/l</VariableString>
+    <VariableString xml:lang="zh-TW">ng/l</VariableString>
+    <VariableString xml:lang="zh-CN">ng/l</VariableString>
+    <VariableString xml:lang="pt">ng/l</VariableString>
+    <VariableString xml:lang="ru">нг/л</VariableString>
+    <VariableString xml:lang="el">ng/l</VariableString>
+    <VariableString xml:lang="pl">ng/l</VariableString>
+    <VariableString xml:lang="cs">ng/l</VariableString>
+    <VariableString xml:lang="sk">ng/l</VariableString>
+    <VariableString xml:lang="hu">ng/l</VariableString>
+    <VariableString xml:lang="ro">ng/l</VariableString>
+    <VariableString xml:lang="tr">ng/l</VariableString>
+    <VariableString xml:lang="et">ng/l</VariableString>
+    <Definition>ng/l</Definition>
+    <Description>nano gram  per liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>97</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61450</code>
+    </TYPE>
+    <TextId>323594</TextId>
+    <VariableString xml:lang="en">ml/sec</VariableString>
+    <VariableString xml:lang="de">ml/s</VariableString>
+    <VariableString xml:lang="fr">ml/s</VariableString>
+    <VariableString xml:lang="it">ml/sec</VariableString>
+    <VariableString xml:lang="es">ml/s</VariableString>
+    <VariableString xml:lang="nl">ml/sec</VariableString>
+    <VariableString xml:lang="sv">ml/sek</VariableString>
+    <VariableString xml:lang="fi">ml/s</VariableString>
+    <VariableString xml:lang="no">ml/sek</VariableString>
+    <VariableString xml:lang="da">ml/sek</VariableString>
+    <VariableString xml:lang="ja">ml/sec</VariableString>
+    <VariableString xml:lang="zh-TW">ml/sec</VariableString>
+    <VariableString xml:lang="zh-CN">ml/sec</VariableString>
+    <VariableString xml:lang="pt">ml/s</VariableString>
+    <VariableString xml:lang="ru">мл/с</VariableString>
+    <VariableString xml:lang="el">ml/sec</VariableString>
+    <VariableString xml:lang="pl">ml/s</VariableString>
+    <VariableString xml:lang="cs">ml/s</VariableString>
+    <VariableString xml:lang="sk">ml/sec</VariableString>
+    <VariableString xml:lang="hu">ml/mp</VariableString>
+    <VariableString xml:lang="ro">ml/sec</VariableString>
+    <VariableString xml:lang="tr">ml/sec</VariableString>
+    <VariableString xml:lang="et">ml/sec</VariableString>
+    <Definition>ml/sec</Definition>
+    <Description>milli liter per second</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>98</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61451</code>
+    </TYPE>
+    <TextId>323595</TextId>
+    <VariableString xml:lang="en">bpm/ml</VariableString>
+    <VariableString xml:lang="de">/min/ml</VariableString>
+    <VariableString xml:lang="fr">bpm/ml</VariableString>
+    <VariableString xml:lang="it">bpm/ml</VariableString>
+    <VariableString xml:lang="es">lpm/ml</VariableString>
+    <VariableString xml:lang="nl">rpm/ml</VariableString>
+    <VariableString xml:lang="sv">bpm/ml</VariableString>
+    <VariableString xml:lang="fi">bpm/ml</VariableString>
+    <VariableString xml:lang="no">bpm/ml</VariableString>
+    <VariableString xml:lang="da">bpm/ml</VariableString>
+    <VariableString xml:lang="ja">bpm/ml</VariableString>
+    <VariableString xml:lang="zh-TW">bpm/ml</VariableString>
+    <VariableString xml:lang="zh-CN">bpm/ml</VariableString>
+    <VariableString xml:lang="pt">bpm/ml</VariableString>
+    <VariableString xml:lang="ru">уд/мин/мл</VariableString>
+    <VariableString xml:lang="el">bpm/ml</VariableString>
+    <VariableString xml:lang="pl">bpm/ml</VariableString>
+    <VariableString xml:lang="cs">bpm/ml</VariableString>
+    <VariableString xml:lang="sk">bpm/ml</VariableString>
+    <VariableString xml:lang="hu">bpm/ml</VariableString>
+    <VariableString xml:lang="ro">bpm/ml</VariableString>
+    <VariableString xml:lang="tr">bpm/ml</VariableString>
+    <VariableString xml:lang="et">bpm/ml</VariableString>
+    <Definition>bpm/ml</Definition>
+    <Description>beats per minute per milli liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>99</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61696</code>
+    </TYPE>
+    <TextId>323840</TextId>
+    <VariableString xml:lang="en">RPM</VariableString>
+    <VariableString xml:lang="de">U/min</VariableString>
+    <VariableString xml:lang="fr">RPM</VariableString>
+    <VariableString xml:lang="it">RPM</VariableString>
+    <VariableString xml:lang="es">RPM</VariableString>
+    <VariableString xml:lang="nl">RPM</VariableString>
+    <VariableString xml:lang="sv">RPM</VariableString>
+    <VariableString xml:lang="fi">RPM</VariableString>
+    <VariableString xml:lang="no">resp/min</VariableString>
+    <VariableString xml:lang="da">RPM</VariableString>
+    <VariableString xml:lang="ja">RPM</VariableString>
+    <VariableString xml:lang="zh-TW">RPM</VariableString>
+    <VariableString xml:lang="zh-CN">RPM</VariableString>
+    <VariableString xml:lang="pt">RPM</VariableString>
+    <VariableString xml:lang="ru">об/мин</VariableString>
+    <VariableString xml:lang="el">RPM</VariableString>
+    <VariableString xml:lang="pl">RPM</VariableString>
+    <VariableString xml:lang="cs">RPM</VariableString>
+    <VariableString xml:lang="sk">RPM</VariableString>
+    <VariableString xml:lang="hu">RPM</VariableString>
+    <VariableString xml:lang="ro">RPM</VariableString>
+    <VariableString xml:lang="tr">RPM</VariableString>
+    <VariableString xml:lang="et">RPM</VariableString>
+    <Definition>revpm</Definition>
+    <Description>revolutions per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>100</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3971</code>
+    </TYPE>
+    <TextId>266115</TextId>
+    <VariableString xml:lang="en">kJ</VariableString>
+    <VariableString xml:lang="de">kJ</VariableString>
+    <VariableString xml:lang="fr">kJ</VariableString>
+    <VariableString xml:lang="it">kJ</VariableString>
+    <VariableString xml:lang="es">kJ</VariableString>
+    <VariableString xml:lang="nl">kJ</VariableString>
+    <VariableString xml:lang="sv">kJ</VariableString>
+    <VariableString xml:lang="fi">kJ</VariableString>
+    <VariableString xml:lang="no">kJ</VariableString>
+    <VariableString xml:lang="da">kJ</VariableString>
+    <VariableString xml:lang="ja">kJ</VariableString>
+    <VariableString xml:lang="zh-TW">kJ</VariableString>
+    <VariableString xml:lang="zh-CN">kJ</VariableString>
+    <VariableString xml:lang="pt">kJ</VariableString>
+    <VariableString xml:lang="ru">кДж</VariableString>
+    <VariableString xml:lang="el">kJ</VariableString>
+    <VariableString xml:lang="pl">kJ</VariableString>
+    <VariableString xml:lang="cs">kJ</VariableString>
+    <VariableString xml:lang="sk">kJ</VariableString>
+    <VariableString xml:lang="hu">kJ</VariableString>
+    <VariableString xml:lang="ro">kJ</VariableString>
+    <VariableString xml:lang="tr">kJ</VariableString>
+    <VariableString xml:lang="et">kJ</VariableString>
+    <Definition>kJ</Definition>
+    <Description>kilo joule</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>101</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3972</code>
+    </TYPE>
+    <TextId>266116</TextId>
+    <VariableString xml:lang="en">MJ</VariableString>
+    <VariableString xml:lang="de">MJ</VariableString>
+    <VariableString xml:lang="fr">MJ</VariableString>
+    <VariableString xml:lang="it">MJ</VariableString>
+    <VariableString xml:lang="es">MJ</VariableString>
+    <VariableString xml:lang="nl">MJ</VariableString>
+    <VariableString xml:lang="sv">MJ</VariableString>
+    <VariableString xml:lang="fi">MJ</VariableString>
+    <VariableString xml:lang="no">MJ</VariableString>
+    <VariableString xml:lang="da">MJ</VariableString>
+    <VariableString xml:lang="ja">MJ</VariableString>
+    <VariableString xml:lang="zh-TW">MJ</VariableString>
+    <VariableString xml:lang="zh-CN">MJ</VariableString>
+    <VariableString xml:lang="pt">MJ</VariableString>
+    <VariableString xml:lang="ru">МДж</VariableString>
+    <VariableString xml:lang="el">MJ</VariableString>
+    <VariableString xml:lang="pl">MJ</VariableString>
+    <VariableString xml:lang="cs">MJ</VariableString>
+    <VariableString xml:lang="sk">MJ</VariableString>
+    <VariableString xml:lang="hu">MJ</VariableString>
+    <VariableString xml:lang="ro">MJ</VariableString>
+    <VariableString xml:lang="tr">MJ</VariableString>
+    <VariableString xml:lang="et">MJ</VariableString>
+    <Definition>MJ</Definition>
+    <Description>mega joule</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>102</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61571</code>
+    </TYPE>
+    <TextId>323715</TextId>
+    <VariableString xml:lang="en">kcal</VariableString>
+    <VariableString xml:lang="de">kcal</VariableString>
+    <VariableString xml:lang="fr">kcal</VariableString>
+    <VariableString xml:lang="it">kcal</VariableString>
+    <VariableString xml:lang="es">kcal</VariableString>
+    <VariableString xml:lang="nl">kcal</VariableString>
+    <VariableString xml:lang="sv">kcal</VariableString>
+    <VariableString xml:lang="fi">kcal</VariableString>
+    <VariableString xml:lang="no">kcal</VariableString>
+    <VariableString xml:lang="da">kcal</VariableString>
+    <VariableString xml:lang="ja">kcal</VariableString>
+    <VariableString xml:lang="zh-TW">kcal</VariableString>
+    <VariableString xml:lang="zh-CN">千﻿卡﻿</VariableString>
+    <VariableString xml:lang="pt">kcal</VariableString>
+    <VariableString xml:lang="ru">ккал</VariableString>
+    <VariableString xml:lang="el">kcal</VariableString>
+    <VariableString xml:lang="pl">kcal</VariableString>
+    <VariableString xml:lang="cs">kkal</VariableString>
+    <VariableString xml:lang="sk">kcal</VariableString>
+    <VariableString xml:lang="hu">kcal</VariableString>
+    <VariableString xml:lang="ro">kcal</VariableString>
+    <VariableString xml:lang="tr">kcal</VariableString>
+    <VariableString xml:lang="et">kcal</VariableString>
+    <Definition>kcal</Definition>
+    <Description>kilo calories</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>103</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61572</code>
+    </TYPE>
+    <TextId>323716</TextId>
+    <VariableString xml:lang="en">Mcal</VariableString>
+    <VariableString xml:lang="de">Mcal</VariableString>
+    <VariableString xml:lang="fr">Mcal</VariableString>
+    <VariableString xml:lang="it">Mcal</VariableString>
+    <VariableString xml:lang="es">Mcal</VariableString>
+    <VariableString xml:lang="nl">Mcal</VariableString>
+    <VariableString xml:lang="sv">Mcal</VariableString>
+    <VariableString xml:lang="fi">Mcal</VariableString>
+    <VariableString xml:lang="no">Mcal</VariableString>
+    <VariableString xml:lang="da">Mcal</VariableString>
+    <VariableString xml:lang="ja">Mcal</VariableString>
+    <VariableString xml:lang="zh-TW">Mcal</VariableString>
+    <VariableString xml:lang="zh-CN">兆﻿卡﻿</VariableString>
+    <VariableString xml:lang="pt">Mcal</VariableString>
+    <VariableString xml:lang="ru">Мкал</VariableString>
+    <VariableString xml:lang="el">Mcal</VariableString>
+    <VariableString xml:lang="pl">Mcal</VariableString>
+    <VariableString xml:lang="cs">Mkal</VariableString>
+    <VariableString xml:lang="sk">Mcal</VariableString>
+    <VariableString xml:lang="hu">Mcal</VariableString>
+    <VariableString xml:lang="ro">Mcal</VariableString>
+    <VariableString xml:lang="tr">Mcal</VariableString>
+    <VariableString xml:lang="et">Mcal</VariableString>
+    <Definition>Mcal</Definition>
+    <Description>mega calories</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>104</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61539</code>
+    </TYPE>
+    <TextId>323683</TextId>
+    <VariableString xml:lang="en">kJ/day</VariableString>
+    <VariableString xml:lang="de">kJ/Tag</VariableString>
+    <VariableString xml:lang="fr">kJ/jour</VariableString>
+    <VariableString xml:lang="it">kJ/d</VariableString>
+    <VariableString xml:lang="es">kJ/día</VariableString>
+    <VariableString xml:lang="nl">kJ/dag</VariableString>
+    <VariableString xml:lang="sv">kJ/dag</VariableString>
+    <VariableString xml:lang="fi">kJ/päivä</VariableString>
+    <VariableString xml:lang="no">kJ/dag</VariableString>
+    <VariableString xml:lang="da">kJ/dag</VariableString>
+    <VariableString xml:lang="ja">kJ/day</VariableString>
+    <VariableString xml:lang="zh-TW">kJ/day</VariableString>
+    <VariableString xml:lang="zh-CN">kJ/天﻿</VariableString>
+    <VariableString xml:lang="pt">kJ/dia</VariableString>
+    <VariableString xml:lang="ru">кДж/день</VariableString>
+    <VariableString xml:lang="el">kJ/ημέρα</VariableString>
+    <VariableString xml:lang="pl">kJ/dzień</VariableString>
+    <VariableString xml:lang="cs">kJ/den</VariableString>
+    <VariableString xml:lang="sk">kJ/day</VariableString>
+    <VariableString xml:lang="hu">kJ/nap</VariableString>
+    <VariableString xml:lang="ro">kJ/day</VariableString>
+    <VariableString xml:lang="tr">kJ/day</VariableString>
+    <VariableString xml:lang="et">kJ/day</VariableString>
+    <Definition>kJ/day</Definition>
+    <Description>kilo joule per day</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>105</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61540</code>
+    </TYPE>
+    <TextId>323684</TextId>
+    <VariableString xml:lang="en">MJ/day</VariableString>
+    <VariableString xml:lang="de">MJ/Tag</VariableString>
+    <VariableString xml:lang="fr">MJ/jour</VariableString>
+    <VariableString xml:lang="it">MJ/d</VariableString>
+    <VariableString xml:lang="es">MJ/día</VariableString>
+    <VariableString xml:lang="nl">MJ/dag</VariableString>
+    <VariableString xml:lang="sv">MJ/dag</VariableString>
+    <VariableString xml:lang="fi">MJ/päivä</VariableString>
+    <VariableString xml:lang="no">MJ/dag</VariableString>
+    <VariableString xml:lang="da">MJ/dag</VariableString>
+    <VariableString xml:lang="ja">MJ/day</VariableString>
+    <VariableString xml:lang="zh-TW">MJ/day</VariableString>
+    <VariableString xml:lang="zh-CN">MJ/天﻿</VariableString>
+    <VariableString xml:lang="pt">MJ/dia</VariableString>
+    <VariableString xml:lang="ru">МДж/день</VariableString>
+    <VariableString xml:lang="el">MJ/ημέρα</VariableString>
+    <VariableString xml:lang="pl">MJ/dzień</VariableString>
+    <VariableString xml:lang="cs">MJ/den</VariableString>
+    <VariableString xml:lang="sk">MJ/day</VariableString>
+    <VariableString xml:lang="hu">MJ/nap</VariableString>
+    <VariableString xml:lang="ro">MJ/day</VariableString>
+    <VariableString xml:lang="tr">MJ/day</VariableString>
+    <VariableString xml:lang="et">MJ/day</VariableString>
+    <Definition>MJ/day</Definition>
+    <Description>mega joule per day</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>106</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61603</code>
+    </TYPE>
+    <TextId>323747</TextId>
+    <VariableString xml:lang="en">kcal/day</VariableString>
+    <VariableString xml:lang="de">kcal/Tag</VariableString>
+    <VariableString xml:lang="fr">kcal/jour</VariableString>
+    <VariableString xml:lang="it">kcal/d</VariableString>
+    <VariableString xml:lang="es">kcal/día</VariableString>
+    <VariableString xml:lang="nl">kcal/dag</VariableString>
+    <VariableString xml:lang="sv">kcal/dag</VariableString>
+    <VariableString xml:lang="fi">kcal/pvä</VariableString>
+    <VariableString xml:lang="no">kcal/dag</VariableString>
+    <VariableString xml:lang="da">kcal/dag</VariableString>
+    <VariableString xml:lang="ja">kcal/day</VariableString>
+    <VariableString xml:lang="zh-TW">kcal/day</VariableString>
+    <VariableString xml:lang="zh-CN">千﻿卡﻿/天﻿</VariableString>
+    <VariableString xml:lang="pt">kcal/dia</VariableString>
+    <VariableString xml:lang="ru">ккал/день</VariableString>
+    <VariableString xml:lang="el">kcal/ημέρ</VariableString>
+    <VariableString xml:lang="pl">kcal/dz</VariableString>
+    <VariableString xml:lang="cs">kkal/den</VariableString>
+    <VariableString xml:lang="sk">kcal/day</VariableString>
+    <VariableString xml:lang="hu">kcal/nap</VariableString>
+    <VariableString xml:lang="ro">kcal/day</VariableString>
+    <VariableString xml:lang="tr">kcal/day</VariableString>
+    <VariableString xml:lang="et">kcal/day</VariableString>
+    <Definition>kcal/day</Definition>
+    <Description>kilo calories per day</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>107</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>61604</code>
+    </TYPE>
+    <TextId>323748</TextId>
+    <VariableString xml:lang="en">Mcal/day</VariableString>
+    <VariableString xml:lang="de">Mcal/Tag</VariableString>
+    <VariableString xml:lang="fr">Mcal/jour</VariableString>
+    <VariableString xml:lang="it">Mcal/d</VariableString>
+    <VariableString xml:lang="es">Mcal/día</VariableString>
+    <VariableString xml:lang="nl">Mcal/dag</VariableString>
+    <VariableString xml:lang="sv">Mcal/dag</VariableString>
+    <VariableString xml:lang="fi">Mcal/pvä</VariableString>
+    <VariableString xml:lang="no">Mcal/dag</VariableString>
+    <VariableString xml:lang="da">Mcal/dag</VariableString>
+    <VariableString xml:lang="ja">Mcal/day</VariableString>
+    <VariableString xml:lang="zh-TW">Mcal/day</VariableString>
+    <VariableString xml:lang="zh-CN">兆﻿卡﻿/天﻿</VariableString>
+    <VariableString xml:lang="pt">Mcal/dia</VariableString>
+    <VariableString xml:lang="ru">Мкал/день</VariableString>
+    <VariableString xml:lang="el">Mcal/ημέρ</VariableString>
+    <VariableString xml:lang="pl">Mcal/dz</VariableString>
+    <VariableString xml:lang="cs">Mkal/den</VariableString>
+    <VariableString xml:lang="sk">Mcal/day</VariableString>
+    <VariableString xml:lang="hu">Mcal/nap</VariableString>
+    <VariableString xml:lang="ro">Mcal/day</VariableString>
+    <VariableString xml:lang="tr">Mcal/day</VariableString>
+    <VariableString xml:lang="et">Mcal/day</VariableString>
+    <Definition>Mcal/day</Definition>
+    <Description>mega calories per day</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>108</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2162</code>
+    </TYPE>
+    <TextId>264306</TextId>
+    <VariableString xml:lang="en">mg/ml</VariableString>
+    <VariableString xml:lang="de">mg/ml</VariableString>
+    <VariableString xml:lang="fr">mg/ml</VariableString>
+    <VariableString xml:lang="it">mg/ml</VariableString>
+    <VariableString xml:lang="es">mg/ml</VariableString>
+    <VariableString xml:lang="nl">mg/ml</VariableString>
+    <VariableString xml:lang="sv">mg/ml</VariableString>
+    <VariableString xml:lang="fi">mg/ml</VariableString>
+    <VariableString xml:lang="no">mg/ml</VariableString>
+    <VariableString xml:lang="da">mg/ml</VariableString>
+    <VariableString xml:lang="ja">mg/ml</VariableString>
+    <VariableString xml:lang="zh-TW">mg/ml</VariableString>
+    <VariableString xml:lang="zh-CN">mg/ml</VariableString>
+    <VariableString xml:lang="pt">mg/ml</VariableString>
+    <VariableString xml:lang="ru">мг/мл</VariableString>
+    <VariableString xml:lang="el">mg/ml</VariableString>
+    <VariableString xml:lang="pl">mg/ml</VariableString>
+    <VariableString xml:lang="cs">mg/ml</VariableString>
+    <VariableString xml:lang="sk">mg/ml</VariableString>
+    <VariableString xml:lang="hu">mg/ml</VariableString>
+    <VariableString xml:lang="ro">mg/ml</VariableString>
+    <VariableString xml:lang="tr">mg/ml</VariableString>
+    <VariableString xml:lang="et">mg/ml</VariableString>
+    <Definition>mg/ml</Definition>
+    <Description>milli gram per milli liter</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>109</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3346</code>
+    </TYPE>
+    <TextId>265490</TextId>
+    <VariableString xml:lang="en">mg/min</VariableString>
+    <VariableString xml:lang="de">mg/min</VariableString>
+    <VariableString xml:lang="fr">mg/min</VariableString>
+    <VariableString xml:lang="it">mg/min</VariableString>
+    <VariableString xml:lang="es">mg/min</VariableString>
+    <VariableString xml:lang="nl">mg/min</VariableString>
+    <VariableString xml:lang="sv">mg/min</VariableString>
+    <VariableString xml:lang="fi">mg/min</VariableString>
+    <VariableString xml:lang="no">mg/min</VariableString>
+    <VariableString xml:lang="da">mg/min</VariableString>
+    <VariableString xml:lang="ja">mg/min</VariableString>
+    <VariableString xml:lang="zh-TW">mg/min</VariableString>
+    <VariableString xml:lang="zh-CN">mg/min</VariableString>
+    <VariableString xml:lang="pt">mg/min</VariableString>
+    <VariableString xml:lang="ru">мг/мин</VariableString>
+    <VariableString xml:lang="el">mg/min</VariableString>
+    <VariableString xml:lang="pl">mg/min</VariableString>
+    <VariableString xml:lang="cs">mg/min</VariableString>
+    <VariableString xml:lang="sk">mg/min</VariableString>
+    <VariableString xml:lang="hu">mg/perc</VariableString>
+    <VariableString xml:lang="ro">mg/min</VariableString>
+    <VariableString xml:lang="tr">mg/min</VariableString>
+    <VariableString xml:lang="et">mg/min</VariableString>
+    <Definition>mg/min</Definition>
+    <Description>milli gram per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>110</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3378</code>
+    </TYPE>
+    <TextId>265522</TextId>
+    <VariableString xml:lang="en">mg/hr</VariableString>
+    <VariableString xml:lang="de">mg/h</VariableString>
+    <VariableString xml:lang="fr">mg/h</VariableString>
+    <VariableString xml:lang="it">mg/h</VariableString>
+    <VariableString xml:lang="es">mg/h</VariableString>
+    <VariableString xml:lang="nl">mg/uur</VariableString>
+    <VariableString xml:lang="sv">mg/tim</VariableString>
+    <VariableString xml:lang="fi">mg/h</VariableString>
+    <VariableString xml:lang="no">mg/tim</VariableString>
+    <VariableString xml:lang="da">mg/t</VariableString>
+    <VariableString xml:lang="ja">mg/hr</VariableString>
+    <VariableString xml:lang="zh-TW">mg/hr</VariableString>
+    <VariableString xml:lang="zh-CN">mg/hr</VariableString>
+    <VariableString xml:lang="pt">mg/h</VariableString>
+    <VariableString xml:lang="ru">мг/ч</VariableString>
+    <VariableString xml:lang="el">mg/hr</VariableString>
+    <VariableString xml:lang="pl">mg/h</VariableString>
+    <VariableString xml:lang="cs">mg/hod</VariableString>
+    <VariableString xml:lang="sk">mg/hr</VariableString>
+    <VariableString xml:lang="hu">mg/óra</VariableString>
+    <VariableString xml:lang="ro">mg/hr</VariableString>
+    <VariableString xml:lang="tr">mg/hr</VariableString>
+    <VariableString xml:lang="et">mg/hr</VariableString>
+    <Definition>mg/hr</Definition>
+    <Description>milli gram per hour</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>111</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3474</code>
+    </TYPE>
+    <TextId>265618</TextId>
+    <VariableString xml:lang="en">mg/kg/min</VariableString>
+    <VariableString xml:lang="de">mg/kg/min</VariableString>
+    <VariableString xml:lang="fr">mg/kg/min</VariableString>
+    <VariableString xml:lang="it">mg/kg/min</VariableString>
+    <VariableString xml:lang="es">mg/kg/min</VariableString>
+    <VariableString xml:lang="nl">mg/kg/min</VariableString>
+    <VariableString xml:lang="sv">mg/kg/min</VariableString>
+    <VariableString xml:lang="fi">mg/kg/min</VariableString>
+    <VariableString xml:lang="no">mg/kg/min</VariableString>
+    <VariableString xml:lang="da">mg/kg/min</VariableString>
+    <VariableString xml:lang="ja">mg/kg/min</VariableString>
+    <VariableString xml:lang="zh-TW">mg/kg/min</VariableString>
+    <VariableString xml:lang="zh-CN">mg/kg/min</VariableString>
+    <VariableString xml:lang="pt">mg/kg/min</VariableString>
+    <VariableString xml:lang="ru">мг/кг/мин</VariableString>
+    <VariableString xml:lang="el">mg/kg/min</VariableString>
+    <VariableString xml:lang="pl">mg/kg/min</VariableString>
+    <VariableString xml:lang="cs">mg/kg/min</VariableString>
+    <VariableString xml:lang="sk">mg/kg/min</VariableString>
+    <VariableString xml:lang="hu">mg/kg/p</VariableString>
+    <VariableString xml:lang="ro">mg/kg/min</VariableString>
+    <VariableString xml:lang="tr">mg/kg/min</VariableString>
+    <VariableString xml:lang="et">mg/kg/min</VariableString>
+    <Definition>mg/kg/min</Definition>
+    <Description>milli gram per kilo gram per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>112</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>3506</code>
+    </TYPE>
+    <TextId>265650</TextId>
+    <VariableString xml:lang="en">mg/kg/hr</VariableString>
+    <VariableString xml:lang="de">mg/kg/h</VariableString>
+    <VariableString xml:lang="fr">mg/kg/h</VariableString>
+    <VariableString xml:lang="it">mg/kg/h</VariableString>
+    <VariableString xml:lang="es">mg/kg/h</VariableString>
+    <VariableString xml:lang="nl">mg/kg/uur</VariableString>
+    <VariableString xml:lang="sv">mg/kg/tim</VariableString>
+    <VariableString xml:lang="fi">mg/kg/h</VariableString>
+    <VariableString xml:lang="no">mg/kg/tim</VariableString>
+    <VariableString xml:lang="da">mg/kg/t</VariableString>
+    <VariableString xml:lang="ja">mg/kg/hr</VariableString>
+    <VariableString xml:lang="zh-TW">mg/kg/hr</VariableString>
+    <VariableString xml:lang="zh-CN">mg/kg/hr</VariableString>
+    <VariableString xml:lang="pt">mg/kg/h</VariableString>
+    <VariableString xml:lang="ru">мг/кг/ч</VariableString>
+    <VariableString xml:lang="el">mg/kg/hr</VariableString>
+    <VariableString xml:lang="pl">mg/kg/h</VariableString>
+    <VariableString xml:lang="cs">mg/kg/hod</VariableString>
+    <VariableString xml:lang="sk">mg/kg/hr</VariableString>
+    <VariableString xml:lang="hu">mg/kg/óra</VariableString>
+    <VariableString xml:lang="ro">mg/kg/hr</VariableString>
+    <VariableString xml:lang="tr">mg/kg/hr</VariableString>
+    <VariableString xml:lang="et">mg/kg/hr</VariableString>
+    <Definition>mg/kg/hr</Definition>
+    <Description>milli gram per kilo gram per hour</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>113</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>608</code>
+    </TYPE>
+    <TextId>262752</TextId>
+    <VariableString xml:lang="en">ppm</VariableString>
+    <VariableString xml:lang="de">ppm</VariableString>
+    <VariableString xml:lang="fr">ppm</VariableString>
+    <VariableString xml:lang="it">ppm</VariableString>
+    <VariableString xml:lang="es">ppm</VariableString>
+    <VariableString xml:lang="nl">ppm</VariableString>
+    <VariableString xml:lang="sv">ppm</VariableString>
+    <VariableString xml:lang="fi">ppm</VariableString>
+    <VariableString xml:lang="no">ppm</VariableString>
+    <VariableString xml:lang="da">ppm</VariableString>
+    <VariableString xml:lang="ja">ppm</VariableString>
+    <VariableString xml:lang="zh-TW">ppm</VariableString>
+    <VariableString xml:lang="zh-CN">ppm</VariableString>
+    <VariableString xml:lang="pt">ppm</VariableString>
+    <VariableString xml:lang="ru">ppm</VariableString>
+    <VariableString xml:lang="el">ppm</VariableString>
+    <VariableString xml:lang="pl">ppm</VariableString>
+    <VariableString xml:lang="cs">ppm</VariableString>
+    <VariableString xml:lang="sk">ppm</VariableString>
+    <VariableString xml:lang="hu">ppm</VariableString>
+    <VariableString xml:lang="ro">ppm</VariableString>
+    <VariableString xml:lang="tr">ppm</VariableString>
+    <VariableString xml:lang="et">ppm</VariableString>
+    <Definition>ppm</Definition>
+    <Description>parts per million</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>114</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>62528</code>
+    </TYPE>
+    <TextId>324672</TextId>
+    <VariableString xml:lang="en">%min</VariableString>
+    <VariableString xml:lang="de">%min</VariableString>
+    <VariableString xml:lang="fr">%min</VariableString>
+    <VariableString xml:lang="it">%min</VariableString>
+    <VariableString xml:lang="es">%min</VariableString>
+    <VariableString xml:lang="nl">%min</VariableString>
+    <VariableString xml:lang="sv">%min</VariableString>
+    <VariableString xml:lang="fi">%min</VariableString>
+    <VariableString xml:lang="no">%min</VariableString>
+    <VariableString xml:lang="da">%min</VariableString>
+    <VariableString xml:lang="ja">%min</VariableString>
+    <VariableString xml:lang="zh-TW">%min</VariableString>
+    <VariableString xml:lang="zh-CN">%min</VariableString>
+    <VariableString xml:lang="pt">%min</VariableString>
+    <VariableString xml:lang="ru">%мин</VariableString>
+    <VariableString xml:lang="el">%min</VariableString>
+    <VariableString xml:lang="pl">%min</VariableString>
+    <VariableString xml:lang="cs">%min</VariableString>
+    <VariableString xml:lang="sk">%min</VariableString>
+    <VariableString xml:lang="hu">%min</VariableString>
+    <VariableString xml:lang="ro">%min</VariableString>
+    <VariableString xml:lang="tr">%min</VariableString>
+    <VariableString xml:lang="et">%min</VariableString>
+    <Definition>%min</Definition>
+    <Description>percent minutes (% * min)</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>115</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>62624</code>
+    </TYPE>
+    <TextId>324768</TextId>
+    <VariableString xml:lang="en">cmH₂O/min</VariableString>
+    <VariableString xml:lang="de">cmH₂O/min</VariableString>
+    <VariableString xml:lang="fr">cmH₂O/min</VariableString>
+    <VariableString xml:lang="it">cmH₂O/min</VariableString>
+    <VariableString xml:lang="es">cmH₂O/min</VariableString>
+    <VariableString xml:lang="nl">cmH₂O/min</VariableString>
+    <VariableString xml:lang="sv">cmH₂O/min</VariableString>
+    <VariableString xml:lang="fi">cmH₂O/min</VariableString>
+    <VariableString xml:lang="no">cmH₂O/min</VariableString>
+    <VariableString xml:lang="da">cmH₂O/min</VariableString>
+    <VariableString xml:lang="ja">cmH₂O/min</VariableString>
+    <VariableString xml:lang="zh-TW">cmH₂O/min</VariableString>
+    <VariableString xml:lang="zh-CN">cmH₂O/min</VariableString>
+    <VariableString xml:lang="pt">cmH₂O/min</VariableString>
+    <VariableString xml:lang="ru">смH₂O/мин</VariableString>
+    <VariableString xml:lang="el">cmH₂O/min</VariableString>
+    <VariableString xml:lang="pl">cmH₂O/min</VariableString>
+    <VariableString xml:lang="cs">cmH₂O/min</VariableString>
+    <VariableString xml:lang="sk">cmH₂O/min</VariableString>
+    <VariableString xml:lang="hu">H₂Ocm/min</VariableString>
+    <VariableString xml:lang="ro">cmH₂O/min</VariableString>
+    <VariableString xml:lang="tr">cmH₂O/min</VariableString>
+    <VariableString xml:lang="et">cmH₂O/min</VariableString>
+    <Definition>cmH_2O/min</Definition>
+    <Description>cmH₂O per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>116</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>736</code>
+    </TYPE>
+    <TextId>262880</TextId>
+    <VariableString xml:lang="en">°</VariableString>
+    <VariableString xml:lang="de">°</VariableString>
+    <VariableString xml:lang="fr">°</VariableString>
+    <VariableString xml:lang="it">°</VariableString>
+    <VariableString xml:lang="es">°</VariableString>
+    <VariableString xml:lang="nl">°</VariableString>
+    <VariableString xml:lang="sv">°</VariableString>
+    <VariableString xml:lang="fi">°</VariableString>
+    <VariableString xml:lang="no">°</VariableString>
+    <VariableString xml:lang="da">°</VariableString>
+    <VariableString xml:lang="ja">°</VariableString>
+    <VariableString xml:lang="zh-TW">°</VariableString>
+    <VariableString xml:lang="zh-CN">°</VariableString>
+    <VariableString xml:lang="pt">°</VariableString>
+    <VariableString xml:lang="ru">°</VariableString>
+    <VariableString xml:lang="el">°</VariableString>
+    <VariableString xml:lang="pl">°</VariableString>
+    <VariableString xml:lang="cs">°</VariableString>
+    <VariableString xml:lang="sk">°</VariableString>
+    <VariableString xml:lang="hu">°</VariableString>
+    <VariableString xml:lang="ro">°</VariableString>
+    <VariableString xml:lang="tr">°</VariableString>
+    <VariableString xml:lang="et">°</VariableString>
+    <Definition>°</Definition>
+    <Description>Angle degree</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>117</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>62770</code>
+    </TYPE>
+    <TextId>324914</TextId>
+    <VariableString xml:lang="en">ml/100gmn</VariableString>
+    <VariableString xml:lang="de">ml/100gmn</VariableString>
+    <VariableString xml:lang="fr">ml/100gmn</VariableString>
+    <VariableString xml:lang="it">ml/100gmn</VariableString>
+    <VariableString xml:lang="es">ml/100gmn</VariableString>
+    <VariableString xml:lang="nl">ml/100gmn</VariableString>
+    <VariableString xml:lang="sv">ml/100gmn</VariableString>
+    <VariableString xml:lang="fi">ml/100gmn</VariableString>
+    <VariableString xml:lang="no">ml/100gmn</VariableString>
+    <VariableString xml:lang="da">ml/100grm</VariableString>
+    <VariableString xml:lang="ja">ml/100gmn</VariableString>
+    <VariableString xml:lang="zh-TW">ml/100gmn</VariableString>
+    <VariableString xml:lang="zh-CN">ml/100gmn</VariableString>
+    <VariableString xml:lang="pt">ml/100gmn</VariableString>
+    <VariableString xml:lang="ru">мл/100гмн</VariableString>
+    <VariableString xml:lang="el">ml/100gmn</VariableString>
+    <VariableString xml:lang="pl">ml/100gmn</VariableString>
+    <VariableString xml:lang="cs">ml/100gmn</VariableString>
+    <VariableString xml:lang="sk">ml/100gmn</VariableString>
+    <VariableString xml:lang="hu">ml/100 g</VariableString>
+    <VariableString xml:lang="ro">ml/100gmn</VariableString>
+    <VariableString xml:lang="tr">ml/100gmn</VariableString>
+    <VariableString xml:lang="et">ml/100gmn</VariableString>
+    <Definition>ml/100gmn</Definition>
+    <Description>milli liter per 100 gram per minute</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>118</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>62802</code>
+    </TYPE>
+    <TextId>324946</TextId>
+    <VariableString xml:lang="en">mW/cm/°C</VariableString>
+    <VariableString xml:lang="de">mW/cm/°C</VariableString>
+    <VariableString xml:lang="fr">mW/cm/°C</VariableString>
+    <VariableString xml:lang="it">mW/cm/°C</VariableString>
+    <VariableString xml:lang="es">mW/cm/°C</VariableString>
+    <VariableString xml:lang="nl">mW/cm/°C</VariableString>
+    <VariableString xml:lang="sv">mW/cm/°C</VariableString>
+    <VariableString xml:lang="fi">mW/cm/°C</VariableString>
+    <VariableString xml:lang="no">mW/cm/°C</VariableString>
+    <VariableString xml:lang="da">mW/cm/°C</VariableString>
+    <VariableString xml:lang="ja">mW/cm/°C</VariableString>
+    <VariableString xml:lang="zh-TW">mW/cm/°C</VariableString>
+    <VariableString xml:lang="zh-CN">mW/cm/°C</VariableString>
+    <VariableString xml:lang="pt">mW/cm/°C</VariableString>
+    <VariableString xml:lang="ru">мВт/см/°C</VariableString>
+    <VariableString xml:lang="el">mW/cm/°C</VariableString>
+    <VariableString xml:lang="pl">mW/cm/°C</VariableString>
+    <VariableString xml:lang="cs">mW/cm/°C</VariableString>
+    <VariableString xml:lang="sk">mW/cm/°C</VariableString>
+    <VariableString xml:lang="hu">mW/cm/°C</VariableString>
+    <VariableString xml:lang="ro">mW/cm/°C</VariableString>
+    <VariableString xml:lang="tr">mW/cm/°C</VariableString>
+    <VariableString xml:lang="et">mW/cm/°C</VariableString>
+    <Definition>mW/cm/_C</Definition>
+    <Description>milli watt per centimeter per degree Celsius</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>119</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>62816</code>
+    </TYPE>
+    <TextId>324960</TextId>
+    <VariableString xml:lang="en">dB(A)</VariableString>
+    <VariableString xml:lang="de">dB(A)</VariableString>
+    <VariableString xml:lang="fr">dB(A)</VariableString>
+    <VariableString xml:lang="it">dB(A)</VariableString>
+    <VariableString xml:lang="es">dB(A)</VariableString>
+    <VariableString xml:lang="nl">dB(A)</VariableString>
+    <VariableString xml:lang="sv">dB(A)</VariableString>
+    <VariableString xml:lang="fi">dB(A)</VariableString>
+    <VariableString xml:lang="no">dB(A)</VariableString>
+    <VariableString xml:lang="da">dB(A)</VariableString>
+    <VariableString xml:lang="ja">dB(A)</VariableString>
+    <VariableString xml:lang="zh-TW">dB(A)</VariableString>
+    <VariableString xml:lang="zh-CN">dB(A)</VariableString>
+    <VariableString xml:lang="pt">dB(A)</VariableString>
+    <VariableString xml:lang="ru">дБ(A)</VariableString>
+    <VariableString xml:lang="el">dB(A)</VariableString>
+    <VariableString xml:lang="pl">dB(A)</VariableString>
+    <VariableString xml:lang="cs">dB(A)</VariableString>
+    <VariableString xml:lang="sk">dB(A)</VariableString>
+    <VariableString xml:lang="hu">dB(A)</VariableString>
+    <VariableString xml:lang="ro">dB(A)</VariableString>
+    <VariableString xml:lang="tr">dB(A)</VariableString>
+    <VariableString xml:lang="et">dB(A)</VariableString>
+    <Definition>dB(A)</Definition>
+    <Description>A-weighted decibel</Description>
+  </UnitConversionEntry>
+  <UnitConversionEntry>
+    <UnitCode>120</UnitCode>
+    <TYPE>
+      <partition>4</partition>
+      <code>2833</code>
+    </TYPE>
+    <TextId>264977</TextId>
+    <VariableString xml:lang="en">cm/sec</VariableString>
+    <VariableString xml:lang="de">cm/s</VariableString>
+    <VariableString xml:lang="fr">cm/s</VariableString>
+    <VariableString xml:lang="it">cm/sec</VariableString>
+    <VariableString xml:lang="es">cm/s</VariableString>
+    <VariableString xml:lang="nl">cm/sec</VariableString>
+    <VariableString xml:lang="sv">cm/s</VariableString>
+    <VariableString xml:lang="fi">cm/s</VariableString>
+    <VariableString xml:lang="no">cm/sek</VariableString>
+    <VariableString xml:lang="da">cm/sek.</VariableString>
+    <VariableString xml:lang="ja">cm/sec</VariableString>
+    <VariableString xml:lang="zh-TW">cm/sec</VariableString>
+    <VariableString xml:lang="zh-CN">cm/sec</VariableString>
+    <VariableString xml:lang="pt">cm/seg</VariableString>
+    <VariableString xml:lang="ru">см/с</VariableString>
+    <VariableString xml:lang="el">cm/sec</VariableString>
+    <VariableString xml:lang="pl">cm/s</VariableString>
+    <VariableString xml:lang="cs">cm/s</VariableString>
+    <VariableString xml:lang="sk">cm/sec</VariableString>
+    <VariableString xml:lang="hu">cm/mp</VariableString>
+    <VariableString xml:lang="ro">cm/sec</VariableString>
+    <VariableString xml:lang="tr">cm/sec</VariableString>
+    <VariableString xml:lang="et">cm/sec</VariableString>
+    <Definition>cm/sec</Definition>
+    <Description>centimeter per second</Description>
+  </UnitConversionEntry>
+</UnitConversion>

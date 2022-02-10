@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	 xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Fragment>
+		<DirectoryRef Id="INSTALLFOLDER">
+			<Component Id="PowershellComponent" Guid="*">
+				<File Id="InvokeEditLocalhostPS" Source="EditLocalhost.ps1" />
+			</Component>
+		</DirectoryRef>
+		<Property Id="POWERSHELLEXE">
+			<RegistrySearch Id="POWERSHELLEXE"
+							Type="raw"
+							Root="HKLM"
+							Key="SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell"
+							Name="Path" />
+		</Property>
+		<Condition Message="This application requires Windows PowerShell.">
+			<![CDATA[Installed OR POWERSHELLEXE]]>
+		</Condition>
+		
+		<SetProperty Id="InvokeEditLocalhostPS"
+			 Before="InvokeEditLocalhostPS"
+			 Sequence="execute"
+			 Value ="&quot;[POWERSHELLEXE]&quot; -Version 5.0 -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -Command &quot;&amp; '[#InvokeEditLocalhostPS]' ; exit $$($Error.Count)&quot;" />
+		
+		<CustomAction Id="ExecEnablePowershell" Directory="INSTALLFOLDER" Execute="commit" Impersonate="no" ExeCommand="PowerShell.exe /c &quot;Set-ExecutionPolicy Unrestricted -Force&quot;" Return="check" />
+		
+		<CustomAction Id="InvokeEditLocalhostPS"
+					  BinaryKey="WixCA"
+					  DllEntry="CAQuietExec"
+					  Execute="deferred"
+					  Return="check"
+					  Impersonate="no"/>
+		
+		<InstallExecuteSequence>
+			<Custom Action="ExecEnablePowershell" After="InstallInitialize" /> <!--Powershell has a standard execution policy, which gives error powershell disabled error. This solves that-->
+			<Custom Action="InvokeEditLocalhostPS" After="InstallFiles"> <!--Add medstorm name as localhost in windows/drivers/etc using powershell-->
+				<![CDATA[NOT Installed]]>
+			</Custom>
+		</InstallExecuteSequence>
+	</Fragment>
+	
+</Wix>

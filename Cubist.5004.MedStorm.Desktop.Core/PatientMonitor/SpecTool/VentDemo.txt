@@ -1,0 +1,240 @@
+// This file describes the IntelliBridge and VueLink Open Interface
+// specification for a sample Ventilator device.
+
+------------------------------------------------------------------------------
+IDENTIFICATION
+------------------------------------------------------------------------------
+
+  GENERAL
+    TYPE :              "VENTILATOR"
+    NAME :              "Ventilator Demo"
+    PROTOCOL :          FAST
+    TARGET :            ALL
+
+------------------------------------------------------------------------------
+WAVE SIGNALS
+------------------------------------------------------------------------------
+
+  GENERAL
+    TRANSFER METHOD :   DIGITAL
+    SAMPLES :           4
+    SIMULTANEOUS WAVES : 2
+
+  WAVE
+    LABEL :             "AWF"
+    UNIT :              "l/min"
+    RANGE :             -160 .. 160
+    SCALES :            -120 / 0 / 120
+    ALIGNED :           "RRaw" / "I:E 1:"
+    COLOR :             CYAN
+    DEFAULT SPI :       YES
+
+  WAVE
+    LABEL :             "AWV"
+    UNIT :              "ml"
+    RANGE :             -100 .. 1200
+    SCALES :            0 / 500 / 1000
+    ALIGNED :           "TV" / "MV"
+    COLOR :             GREEN
+
+  WAVE
+    LABEL :             "AWP"
+    UNIT :              "mbar"
+    RANGE :             -10 .. 60
+    SCALES :            0 / (25) / 50
+    ALIGNED :           "PIP" / "MnAwP"
+    COLOR :             MAGENTA
+
+  WAVE
+    LABEL :             "CO_2"
+    UNIT :              "mmHg"
+    RANGE :             -10 .. 60
+    SCALES :            0 / (20) / 40
+    ALIGNED :           "ETCO_2" / "IMCO_2"
+    COLOR :             YELLOW
+    DEFAULT SPI :       YES
+
+------------------------------------------------------------------------------
+ALPHANUMERIC
+------------------------------------------------------------------------------
+
+  MEASUREMENT NUMERIC
+    LABEL :             "RRaw"
+    UNIT :              "rpm"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 60
+    DEFAULT SPI :       YES
+    TASK WINDOW :       LEFT / 0 / NO
+
+  MEASUREMENT NUMERIC
+    LABEL :             "I:E 1:"
+    UNIT :              ""
+    CLASS :             SINGLE / PERIODIC       
+    EXPONENT :          -2
+    RANGE :             0.00 .. 10.00
+    OPTIMUM RANGE :     0.30 .. 3.00
+    TASK WINDOW :       LEFT / 1 / SOLID
+
+  MEASUREMENT NUMERIC
+    LABEL :             "TV"
+    UNIT :              "ml"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 1000
+    TASK WINDOW :       LEFT / 2 / NO
+
+  MEASUREMENT NUMERIC
+    LABEL :             "MV"
+    UNIT :              "l/min"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          -2
+    RANGE :             0.00 .. 10.00
+    ALARM INDICATION :  YES
+    DEFAULT SPI :       YES
+    TASK WINDOW :       LEFT / 3 / SOLID
+
+  ALARM LIMITS
+    ASSOCIATED LABEL :  "MV"
+    LOWER LIMIT :       YES
+    UPPER LIMIT :       YES
+
+  MEASUREMENT NUMERIC
+    LABEL :             "PIP"
+    CLASS :             SINGLE / PERIODIC
+    UNIT :              "mbar"
+    EXPONENT :          0
+    RANGE :             0 .. 50
+    ALARM INDICATION :  YES
+    DEFAULT SPI :       YES
+    TASK WINDOW :       LEFT / 4 / NO
+
+  ALARM LIMITS
+    ASSOCIATED LABEL :  "PIP"
+    UPPER LIMIT :       YES
+
+  MEASUREMENT NUMERIC
+    LABEL :             "MnAwP"
+    CLASS :             SINGLE / PERIODIC
+    UNIT :              "mbar"
+    EXPONENT :          0
+    RANGE :             0 .. 30
+    TASK WINDOW :       LEFT / 5 / NO
+
+  MEASUREMENT NUMERIC
+    LABEL :             "PEEP"
+    CLASS :             SINGLE / PERIODIC
+    UNIT :              "cmH_2O"
+    EXPONENT :          -1
+    RANGE :             0.0 .. 20.0
+    TASK WINDOW :       LEFT / 6 / SOLID
+
+  MEASUREMENT NUMERIC
+    LABEL :             "FIO_2"
+    CLASS :             SINGLE / PERIODIC       
+    UNIT :              "%"
+    EXPONENT :          0
+    RANGE :             0 .. 100
+    ALARM INDICATION :  YES
+    INOP INDICATION :   YES
+    DEFAULT SPI :       YES
+    TASK WINDOW :       LEFT / 7 / SOLID
+
+  ALARM LIMITS
+    ASSOCIATED LABEL :  "FIO_2"
+    LOWER LIMIT :       YES
+
+  MEASUREMENT NUMERIC
+    LABEL :             "ETCO_2"
+    UNIT :              "mmHg"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 60
+    ALARM INDICATION :  YES
+    DEFAULT SPI :       YES
+    TASK WINDOW :       MIDDLE / 0 / NO
+
+  ALARM LIMITS
+    ASSOCIATED LABEL :  "ETCO_2"
+    LOWER LIMIT :       YES
+    UPPER LIMIT :       YES
+
+  MEASUREMENT NUMERIC
+    LABEL :             "IMCO_2"
+    UNIT :              "mmHg"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 10
+    TASK WINDOW :       MIDDLE / 1 / NO
+
+  MEASUREMENT NUMERIC
+    LABEL :             "AWRR"
+    UNIT :              "rpm"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 60
+    DEFAULT SPI :       YES
+    TASK WINDOW :       MIDDLE / 2 / SOLID
+
+  SETTING NUMERIC
+    LABEL :             "sRRaw"
+    UNIT :              "rpm"
+    EXPONENT :          0
+    RANGE :             0 .. 100
+    TASK WINDOW :       MIDDLE / 3 / NO
+
+  SETTING NUMERIC
+    LABEL :             "sPkFl"
+    UNIT :              "l/min"
+    EXPONENT :          0
+    RANGE :             0 .. 200
+    TASK WINDOW :       MIDDLE / 4 / NO
+
+  SETTING NUMERIC
+    LABEL :             "sTV"
+    UNIT :              "ml"
+    EXPONENT :          0
+    RANGE :             0 .. 1000
+    TASK WINDOW :       MIDDLE / 5 / NO
+
+  SETTING NUMERIC
+    LABEL :             "sPEEP"
+    UNIT :              "mbar"
+    EXPONENT :          -1
+    RANGE :             0.0 .. 20.0
+    TASK WINDOW :       MIDDLE / 6 / SOLID
+
+  SETTING NUMERIC
+    LABEL :             "sFIO_2"
+    UNIT :              "%"
+    EXPONENT :          0
+    RANGE :             0 .. 100
+    TASK WINDOW :       MIDDLE / 7 / SOLID
+
+  SETTING MODE
+    LABEL :             "sVMode"
+    MODE STRING :       "Ventilation Mode"
+
+------------------------------------------------------------------------------
+TEXT STRINGS
+------------------------------------------------------------------------------
+
+  LIST OF GENERAL INOPS
+    HARD INOP:          "VENT MALFUNCTION", NOT AVAILABLE
+
+  LIST OF INOPS
+    HARD INOP:          "CO2 SAMPLE LINE", INVALID USELESS
+    SOFT INOP:          "O2 CALIBRATION", INVALID QUESTIONABLE
+
+  LIST OF ALARMS
+    RED ALARM:          "FIO2 LOW"
+    RED ALARM:          "MINVOL LOW"
+    YELLOW ALARM:       "MINVOL HIGH"
+    YELLOW ALARM:       "PIP High"
+    YELLOW ALARM:       "etCO2 LOW"
+    YELLOW ALARM:       "etCO2 HIGH"
+
+  LIST OF MODES
+    TEXT :              "CMV"
+    TEXT :              "SIMV"
+    TEXT :              "CPAP"

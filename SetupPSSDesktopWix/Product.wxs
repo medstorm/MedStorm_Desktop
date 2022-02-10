@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	 xmlns:iis='http://schemas.microsoft.com/wix/IIsExtension'>
+	<Product Id="*" 
+			 Name="PSS Application" 
+			 Language="1033" 
+			 Version="1.4.4.0" 
+			 Manufacturer="Medstorm" 
+			 UpgradeCode="e9ab78f0-ae14-4320-8079-f5e2ba4e76a2">
+		<Package InstallerVersion="200" 
+				 Compressed="yes" 
+				 InstallScope="perMachine" 
+				 InstallPrivileges="elevated" />
+		<MajorUpgrade
+			AllowDowngrades="no" 
+			DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+			AllowSameVersionUpgrades="no" />
+
+		<!--Creating a msi installer for non-admin user-->
+		<MediaTemplate EmbedCab="yes"/>
+		<Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+		
+		<Property Id="ARPPRODUCTICON" Value="MedstormIcon.ico" />
+		<SetProperty Id="ARPNOMODIFY" Value="1" After="InstallValidate" Sequence="execute"/>
+
+		<WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.bmp" />
+		<WixVariable Id="WixUIDialogBmp" Value="WixUIDialogBmp.bmp" />
+		<UI>
+			<UIRef Id="WixUI_InstallDir"/>
+			<Publish Dialog="WelcomeDlg"
+			Control="Next"
+			Event="NewDialog"
+			Value="InstallDirDlg"
+			Order="2">1</Publish>
+			<Publish Dialog="InstallDirDlg"
+			Control="Back"
+			Event="NewDialog"
+			Value="WelcomeDlg"
+			Order="2">1</Publish>
+		</UI>
+		<Binary
+			Id="PersonalCertificate.Binary"
+			SourceFile="$(var.ProjectDir)localhost.pfx" />
+		<Binary
+			Id="RootCertificate.Binary"
+			SourceFile="$(var.ProjectDir)localhost.cer" />
+		<Binary
+			Id="PersonalCertificateMy.Binary"
+			SourceFile="$(var.ProjectDir)medstorm_signed_pfx.pfx" />
+		<Binary
+			Id="RootCertificateMy.Binary"
+			SourceFile="$(var.ProjectDir)medstorm_signed.cer" />
+		<Binary
+			Id="CRTCertificateMy.Binary"
+			SourceFile="$(var.ProjectDir)medstorm_signed_crt.crt" />
+		
+		<Feature Id="ProductFeature" Title="Medstorm Tool" Level="1">
+			<ComponentGroupRef Id="Medstorm_Project" />
+			<ComponentGroupRef Id="Medstorm_exe" />
+			<ComponentRef Id="ApplicationShortcutStartmenu" />
+			<ComponentRef Id="ApplicationShortcutDesktop"/>
+			<ComponentRef Id="PowershellComponent" />
+			
+			<ComponentRef Id="TrustedRootCertificateComponent"/>
+			<ComponentRef Id="PersonalCertificateComponent"/>
+			<ComponentRef Id="TrustedRootCertificateComponentMy"/>
+			<ComponentRef Id="PersonalCertificateComponentMy"/>			
+			<ComponentRef Id="CrtCertificateComponentMy"/>
+		</Feature>
+		<Icon Id="MedstormIcon.ico" SourceFile="MedstormIcon.ico"/>
+		<Icon Id="ClientIcon.exe" SourceFile="..\Cubist.5004.MedStorm.Desktop.Client\bin\$(var.Configuration)\netcoreapp3.1\win10-x64\publish\Cubist.5004.MedStorm.Desktop.Client.exe" />
+	</Product>
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="PSS Application" />
+			</Directory>
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="ApplicationProgramsFolder" Name="PSS Application"/>
+			</Directory>
+			<Directory Id="DesktopFolder" Name="Desktop" />
+		</Directory>
+
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="Medstorm_exe" >
+			<Component Id="MedstormComponent" Directory ="INSTALLFOLDER" Guid="6F21B8D0-F69F-4D4B-A787-FF2EB2FC100A">
+				<CreateFolder/>
+				<RemoveFile Id="InstallState" On="uninstall" Name="medstorm-tool.InstallState" />
+				<Environment
+				  Id="PATH"
+				  Name="PATH"
+				  Value="[INSTALLFOLDER]"
+				  Permanent="yes"
+				  Part="last"
+				  Action="set"
+				  System="yes" />
+				<File Id="MedstormIcon.ico" Source="MedstormIcon.ico" KeyPath="yes" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+		<DirectoryRef Id="ApplicationProgramsFolder">
+			<Component Id="ApplicationShortcutStartmenu" Guid="1CC07930-E5C2-468E-9EFE-B3E64E2EBB5C">
+				<Shortcut Id="ApplicationStartMenuShortcut"
+						  Name="PSS Application"
+						  Description="Medstorm PSS Desktop application"
+						  Target="[INSTALLFOLDER]Start.bat"
+						  WorkingDirectory="INSTALLFOLDER"
+						  Icon="ClientIcon.exe" >
+				</Shortcut>
+				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\Medstorm\PSSApplication" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	<Fragment>
+		<DirectoryRef Id="DesktopFolder">
+			<Component Id="ApplicationShortcutDesktop" Guid="AA7DFC08-BFB2-5E98-AFD3-590B17BA24DE">
+				<Shortcut Id="ApplicationDesktopShortcut"
+					Name="PSS Application"
+					Description="Medstorm PSS Desktop application"
+					Target="[INSTALLFOLDER]Start.bat"
+					WorkingDirectory="INSTALLFOLDER"
+					Icon="ClientIcon.exe">
+				</Shortcut>
+				<RemoveFolder Id="DesktopFolder" On="uninstall"/>
+				<RegistryValue
+					Root="HKCU" Key="Software\Medstorm\PSSApplication" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+ <!-- Root cert into root, pfx1 into root-->
+	<Fragment>
+		<DirectoryRef Id="ProgramFilesFolder">			
+			<Component Id="TrustedRootCertificateComponent" Guid="8C0591EE-5C5E-4535-930D-2426E129055A">
+				<CreateFolder/>
+				<iis:Certificate
+					Id="TrustedRootCertificate"
+					Name="Medstorm cer certificate in root"
+					StoreLocation="localMachine"
+					StoreName="root"
+					Request="no"
+					Overwrite="yes"
+					BinaryKey="RootCertificate.Binary"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	<Fragment>
+		<DirectoryRef Id="ProgramFilesFolder">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="PersonalCertificateComponent" Guid="7272E85D-4895-49EE-B9FC-6913CBCFEDEC">
+				<CreateFolder/>
+				<iis:Certificate
+					Id="PersonalCertificate"
+					Name="Medstorm pxs certificate in root"
+					StoreLocation="localMachine"
+					PFXPassword="Medstorm5004PS"
+					StoreName="root"
+					Request="no"
+					Overwrite="yes"
+					BinaryKey="PersonalCertificate.Binary"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	<!--Signed cer-file imported to my, signed pfx file imported to my, signed cxt file imported to my-->
+	<Fragment>
+		<DirectoryRef Id="ProgramFilesFolder">
+			<Component Id="TrustedRootCertificateComponentMy" Guid="6FC4E2D2-0461-4521-ADF4-558E7D95827D">
+				<CreateFolder/>
+				<iis:Certificate
+					Id="TrustedRootCertificateMy"
+					Name="Medstorm cer certificate"
+					StoreLocation="localMachine"
+					StoreName="personal"
+					Request="no"
+					Overwrite="yes"
+					BinaryKey="RootCertificateMy.Binary"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	<Fragment>
+		<DirectoryRef Id="ProgramFilesFolder">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="PersonalCertificateComponentMy" Guid="0B540FD7-B23A-4736-A75A-DB6E5C06D5CB">
+				<CreateFolder/>
+				<iis:Certificate
+					Id="PersonalCertificateMy"
+					Name="Medstorm pxs certificate signed located in my"
+					StoreLocation="localMachine"
+					PFXPassword="Medstorm5004PS"
+					StoreName="personal"
+					Request="no"
+					Overwrite="yes"
+					BinaryKey="PersonalCertificateMy.Binary"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	<Fragment>
+		<DirectoryRef Id="ProgramFilesFolder">
+			<Component Id="CrtCertificateComponentMy" Guid="1728CC31-47C8-406B-8A64-580DF3E0FF92">
+				<CreateFolder/>
+				<iis:Certificate
+					Id="MedstormCRTCertificateMy"
+					Name="Medstorm CRT certificate signed located in my"
+					StoreLocation="localMachine"
+					StoreName="personal"
+					Request="no"
+					Overwrite="yes"
+					BinaryKey="CRTCertificateMy.Binary"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+</Wix>

@@ -1,0 +1,390 @@
+﻿:root {
+    --pps-color: #FF3D7F;
+    --auc-color: #7FC7AF;
+    --nerveblock-color: #FEAB5F;
+    --skinCond-color: #c5e3ee;
+    --badsignal-color: #8B9DA1;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.line {
+    fill: none;
+    stroke-width: 1px;
+}
+
+body {
+    /*background: #eaeaea;*/
+    background: #d6d6d6;
+}
+
+#monitor, #monitor2 {
+    width: 800px;
+    margin: auto;
+    background: #1a1a1a;
+}
+
+.axis, .axis path, .axis line, .grid line {
+    stroke: #c5e3ee;
+}
+
+.grid line {
+    opacity: 0.2;
+}
+
+.tick text {
+    stroke: none;
+    fill: #d2b1b4;
+    font-size: 11px;
+}
+
+.hide-tick, .buttonHidden {
+    display: none;
+}
+
+.display {
+    position: relative;
+}
+
+.lineGraph {
+    display: inline-block;
+    width: calc(100% - 150px);
+}
+
+.currentValue {
+    height: 100px;
+    width: 150px;
+}
+
+#svgCurrentValue {
+    width: 100%;
+    height: 100%;
+}
+
+.text {
+    font-size: 80px;
+    fill: red;
+}
+
+.displayText {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.clicked {
+    background: #00171E;
+}
+
+button {
+    height: 50px;
+    width: 70px;
+    background: #3d3d3d;
+    border-radius: 2px;
+    border: none;
+}
+
+    button i, button p {
+        color: #eaeaea;
+        font-weight: 300;
+    }
+
+.panel, .panel-white {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 5px;
+}
+
+.panel-white {
+    background: #fcfcfc;
+    box-shadow: 0px 0px 9px 3px #757575;
+}
+
+
+/***********************************/
+
+.panel, .panel-white, body {
+    background: black;
+    box-shadow: none;
+}
+
+.display {
+    margin-bottom: 10px;
+}
+
+#monitor {
+    width: 100%;
+    background: black;
+}
+
+button {
+    background: #eaeaea;
+}
+
+    button i, button p {
+        color: #3d3d3d;
+    }
+
+
+input, select {
+    background: #033140;
+    border: 0px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    width: 300px;
+    height: 40px;
+    padding-left: 20px;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #c5e3ee;
+}
+
+.styled-select select {
+    font-size: 21px;
+}
+
+::placeholder {
+    color: #c5e3ee;
+}
+
+button {
+    background: #033140;
+    border: 0px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    height: 40px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #c5e3ee;
+    margin-bottom: 5px;
+}
+
+#optionsPanel {
+    width: 430px;
+    float: left;
+    margin-left: 5px;
+    padding-top: 25px;
+}
+
+#monitorPanel {
+    width: calc(100% - 440px);
+    float: right;
+    display: inline-block;
+    text-align: center;
+}
+
+#connectButton, #disconnectButton, #connectMonitorButton, #disconnectMonitorButton {
+    width: 300px;
+}
+
+.svgTextBox {
+    text-anchor: middle;
+}
+
+.svgZoom {
+    display: block;
+    float: right;
+    padding-top: 15px;
+}
+
+.zoomButton {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: block;
+    float: right;
+    background: #0c82a6;
+    margin-top: 15px;
+    padding: 0px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+
+    .zoomButton > i {
+        color: black;
+        font-size: 15px;
+    }
+
+.textLabel {
+    font-size: 19px;
+}
+
+#path-pps {
+    stroke: var(--pps-color);
+}
+
+#text-pps, #ppsTextLabel, #area-pps {
+    fill: var(--pps-color);
+}
+
+#path-area {
+    stroke: var(--auc-color);
+}
+
+#text-area, #areaTextLabel, #area-area {
+    fill: var(--auc-color);
+}
+
+#path-nerveblock {
+    stroke: var(--nerveblock-color);
+}
+
+#text-nerveblock, #nerveblockTextLabel, #area-nerveblock {
+    fill: var(--nerveblock-color);
+}
+
+#area-pps, #area-area, #area-nerveblock {
+    fill-opacity: 0.7;
+}
+
+#logo {
+    width: 140px;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+}
+
+#skinCondDataMonitor {
+    margin-bottom: 40px;
+}
+
+#path-skinCond {
+    stroke-width: 1px;
+    stroke: var(--skinCond-color);
+}
+
+.hideZoomButtons {
+    display: none;
+}
+
+.zoomSkinCond {
+    text-align: left;
+    width: 120px;
+    padding-left: 10px;
+}
+
+button span {
+    color: #c5e3ee80;
+}
+
+#xButtons {
+    margin-bottom: 5px;
+}
+
+button:focus, select:focus, input:focus {
+    outline: none;
+}
+
+.addBorder {
+    border: 1px solid #c5e3ee80;
+}
+
+select {
+    cursor: pointer;
+}
+
+button:active, button:disabled {
+    background: #022531;
+}
+
+#badSignalText {
+    text-anchor: middle;
+    display: none;
+    font-size: 10px;
+    text-transform: uppercase;
+    fill: var(--badsignal-color);
+}
+
+.badSignal #badSignalText {
+    display: block;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+}
+
+.modal-content {
+    width: 310px;
+    height: 245px;
+    margin: auto;
+    top: 100px;
+    padding: 10px;
+    background: #033140cf;
+    border: 1px solid #c5e3ee;
+}
+
+    .modal-content p {
+        display: inline-block;
+        margin-bottom: 0;
+        font-size: 14px;
+        color: #c5e3ee;
+    }
+
+#closeModal {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    color: #c5e3ee;
+}
+
+#modalCloseApplication p {
+    display: block;
+    text-align: center;
+}
+
+#modalCloseApplication button, #modalPatientId button {
+    float: right;
+}
+
+.modal input {
+    width: 100%;
+}
+
+#modalPatientId .modal-content {
+    height: 170px;
+}
+
+#closeApplicationWrapper {
+    margin: auto;
+}
+
+#addCommentButton {
+    float: right;
+}
+
+textarea {
+    resize: none;
+    outline: none;
+}
+
+#commentTimestamp {
+    display: none;
+}
+
+.badSignalLine {
+    stroke-width: 2px;
+    stroke: var(--badsignal-color);
+    stroke-dasharray: 1;
+}
+
+#notificationText {
+    display: none;
+    font-size: 12px;
+    color: red;
+}
+
+/**********************************/

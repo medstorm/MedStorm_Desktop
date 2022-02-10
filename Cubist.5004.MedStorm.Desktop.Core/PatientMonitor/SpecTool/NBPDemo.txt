@@ -1,0 +1,58 @@
+// This file describes the IntelliBridge and VueLink Open Interface
+// specification for a sample Non-invasive Blood Pressure (NBP) device.
+
+------------------------------------------------------------------------------
+IDENTIFICATION
+------------------------------------------------------------------------------
+
+  GENERAL
+    TYPE :              "AUXILIARY"
+    NAME :              "Blood Pressure Demo"
+    PROTOCOL :          SLOW
+
+------------------------------------------------------------------------------
+ALPHANUMERIC
+------------------------------------------------------------------------------
+
+  MEASUREMENT NUMERIC
+    LABEL :             "NBP"
+    UNIT :              "mmHg"
+    CLASS :             TRIPLE / APERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 250
+    OPTIMUM RANGE :     0 .. 180
+    ALARM INDICATION :  YES
+    INOP INDICATION :   YES
+    DEFAULT SPI :       YES
+    TASK WINDOW :       LEFT / 0 / SOLID
+
+  MEASUREMENT NUMERIC
+    LABEL :             "PULSE"
+    UNIT :              "bpm"
+    CLASS :             SINGLE / APERIODIC       
+    EXPONENT :          0
+    RANGE :             0 .. 250
+    OPTIMUM RANGE :     30 .. 150
+    ALARM INDICATION :  YES
+    DEFAULT SPI :       YES
+    TASK WINDOW :       MIDDLE / 0 / SOLID
+
+  SETTING MODE
+    LABEL :             "sMode"
+    MODE STRING :       "Mode"
+
+------------------------------------------------------------------------------
+TEXT STRINGS
+------------------------------------------------------------------------------
+
+  LIST OF INOPS
+    HARD INOP:          "NBP NO CUFF", INVALID USELESS
+
+  LIST OF ALARMS
+    RED ALARM:          "NBP NO PULSE"
+
+  LIST OF MODES
+    TEXT :              "AUTO"
+    TEXT :              "MANUAL"
+    TEXT :              "OFF"
+    TEXT :              "STAT"
