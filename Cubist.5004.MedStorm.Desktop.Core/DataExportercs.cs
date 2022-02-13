@@ -10,7 +10,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.SignalR;
 
-public class DataExportObject
+public struct DataExportObject
 {
     public string Timestamp { get; set; }
     public int Pain { get; set; }
@@ -41,9 +41,9 @@ public class DataExporter : Hub
         }
     }
 
-    private static Column[] columns = { new Column("Time", "A"), 
-                                 new Column("Pain-Nociceptive", "B"), 
-                                 new Column("Awakening", "C"), 
+    private static Column[] m_columns = { new Column("Time", "A"),
+                                 new Column("Pain-Nociceptive", "B"),
+                                 new Column("Awakening", "C"),
                                  new Column("Nerve Block", "D"),
                                  new Column("Bad signal", "E"),
                                  new Column("Skin Conductivity 1", "F"),
@@ -51,88 +51,70 @@ public class DataExporter : Hub
                                  new Column("Skin Conductivity 3", "H"),
                                  new Column("Skin Conductivity 4", "I"),
                                  new Column("Skin Conductivity 5", "J"),
-                                 new Column("Comment", "K") 
+                                 new Column("Comment", "K")
     };
 
-    private static DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private static DateTime m_epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-    private static WorkbookPart workbookpart;
-    private static SpreadsheetDocument spreadsheetDocument;
+    private static SpreadsheetDocument m_spreadSheet;
 
-    private static string fileName;
-    private static string tempPath;
-    private static string sheetName = "Measurements";
+    private static string m_fileName;
+    private static string m_tempPath;
+    private static string m_sheetName = "Measurements";
+    private static uint m_currentRow;
+    private static object m_lockKey = new object();
 
-    private static uint currentRow;
+    protected static IHubContext<DataExporter> m_hubContext;
 
-    private static List<DataExportObject> dataExportPackage = new List<DataExportObject>();
-    private static readonly int DataExportPackageLength = 10;
-
-    protected IHubContext<DataExporter> _context;
-
-    public DataExporter(IHubContext<DataExporter> context)
+    public DataExporter(IHubContext<DataExporter> hubContext)
     {
-        _context = context;
+        m_hubContext = hubContext;
     }
 
     public static void CreateExcelFile()
     {
-        currentRow = 3;
-        fileName = getFileName();
-        tempPath = Path.GetTempPath();
+        m_currentRow = 3;
+        m_fileName = getFileName();
+        m_tempPath = Path.GetTempPath();
 
-        spreadsheetDocument = SpreadsheetDocument.Create(Path.Combine(tempPath, fileName), SpreadsheetDocumentType.Workbook);
-        
-        workbookpart = spreadsheetDocument.AddWorkbookPart();
+        m_spreadSheet = SpreadsheetDocument.Create(Path.Combine(m_tempPath, m_fileName), SpreadsheetDocumentType.Workbook);
+
+        WorkbookPart workbookpart = m_spreadSheet.AddWorkbookPart();
         workbookpart.Workbook = new Workbook();
-        
+
         WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
         worksheetPart.Worksheet = new Worksheet(new SheetData());
-        
-        Sheets sheets = spreadsheetDocument.WorkbookPart.Workbook.
+
+        Sheets sheets = m_spreadSheet.WorkbookPart.Workbook.
         AppendChild<Sheets>(new Sheets());
-        
+
         Sheet sheet = new Sheet()
         {
-            Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPart),
+            Id = m_spreadSheet.WorkbookPart.GetIdOfPart(worksheetPart),
             SheetId = 1,
-            Name = sheetName
+            Name = m_sheetName
         };
         sheets.Append(sheet);
 
-        workbookpart.Workbook.Save();
-        spreadsheetDocument.Close();
-
         CreateColumns();
+        workbookpart.Workbook.Save();
     }
     public static void AddData(DataExportObject dataExportObject)
     {
-        dataExportPackage.Add(dataExportObject);
-
-        if ( dataExportPackage.Count == DataExportPackageLength )
-        {
-            List<DataExportObject> dataExportPackageCopy = new List<DataExportObject>(dataExportPackage);
-            dataExportPackage.Clear();
-            InsertDataPackage(dataExportPackageCopy);
-        }
+        if (m_spreadSheet != null)
+            Task.Run(() => InsertDataPackage(dataExportObject));
     }
     private static void CreateColumns()
     {
-        using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(Path.Combine(tempPath, fileName), true))
+        WorksheetPart worksheetPart = m_spreadSheet.WorkbookPart.WorksheetParts.First();
+        InsertCell("A", 1, new CellValue("Patient Id"), new EnumValue<CellValues>(CellValues.String), worksheetPart);
+        foreach (Column column in m_columns)
         {
-            WorksheetPart worksheetPart = spreadSheet.WorkbookPart.WorksheetParts.First();
-
-            InsertCell("A", 1, new CellValue("Patient Id"), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-
-            foreach (Column column in columns)
-            {
-                InsertCell(column.Cell, currentRow, new CellValue(column.Text), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-            }
-
-            worksheetPart.Worksheet.Save();
+            InsertCell(column.Cell, m_currentRow, new CellValue(column.Text), new EnumValue<CellValues>(CellValues.String), worksheetPart);
         }
 
-        currentRow += 1;
+        worksheetPart.Worksheet.Save();
+        m_currentRow += 1;
     }
     private static void InsertCell(string columnName, uint rowIndex, CellValue value, EnumValue<CellValues> dataType, WorksheetPart worksheetPart)
     {
@@ -140,12 +122,8 @@ public class DataExporter : Hub
         SheetData sheetData = worksheet.GetFirstChild<SheetData>();
         string cellReference = columnName + rowIndex;
 
-        Row row;
-        if (sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).Count() != 0)
-        {
-            row = sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).First();
-        }
-        else
+        Row row = sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).FirstOrDefault();
+        if (row == default(Row))
         {
             row = new Row() { RowIndex = rowIndex };
             sheetData.Append(row);
@@ -161,29 +139,26 @@ public class DataExporter : Hub
 
         worksheet.Save();
     }
-    private static void InsertDataPackage(List<DataExportObject> dataPackage)
+
+    private static void InsertDataPackage(DataExportObject obj)
     {
-        using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(Path.Combine(tempPath, fileName), true))
+        lock (m_lockKey)
         {
-            WorksheetPart worksheetPart = spreadSheet.WorkbookPart.WorksheetParts.First();
+            WorksheetPart worksheetPart = m_spreadSheet.WorkbookPart.WorksheetParts.First();
 
-            foreach (DataExportObject obj in dataPackage.ToList())
-            {
-                InsertCell("A", currentRow, new CellValue(obj.Timestamp), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-                InsertCell("B", currentRow, new CellValue(obj.Pain), new EnumValue<CellValues>(CellValues.Number), worksheetPart);
-                InsertCell("C", currentRow, new CellValue(obj.Awakening), new EnumValue<CellValues>(CellValues.Number), worksheetPart);
-                InsertCell("D", currentRow, new CellValue(obj.Nerveblock), new EnumValue<CellValues>(CellValues.Number), worksheetPart);
-                InsertCell("E", currentRow, new CellValue(getBadSignalString(obj.BadSignal)), new EnumValue<CellValues>(CellValues.String), worksheetPart);
+            InsertCell("A", m_currentRow, new CellValue(obj.Timestamp), CellValues.String, worksheetPart);
+            InsertCell("B", m_currentRow, new CellValue(obj.Pain), CellValues.Number, worksheetPart);
+            InsertCell("C", m_currentRow, new CellValue(obj.Awakening), CellValues.Number, worksheetPart);
+            InsertCell("D", m_currentRow, new CellValue(obj.Nerveblock), CellValues.Number, worksheetPart);
+            InsertCell("E", m_currentRow, new CellValue(getBadSignalString(obj.BadSignal)), CellValues.String, worksheetPart);
 
-                InsertCell("F", currentRow, new CellValue(Math.Round(obj.SkinCond[0], 3)), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-                InsertCell("G", currentRow, new CellValue(Math.Round(obj.SkinCond[1], 3)), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-                InsertCell("H", currentRow, new CellValue(Math.Round(obj.SkinCond[2], 3)), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-                InsertCell("I", currentRow, new CellValue(Math.Round(obj.SkinCond[3], 3)), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-                InsertCell("J", currentRow, new CellValue(Math.Round(obj.SkinCond[4], 3)), new EnumValue<CellValues>(CellValues.String), worksheetPart);
+            InsertCell("F", m_currentRow, new CellValue(Math.Round(obj.SkinCond[0], 3)), CellValues.String, worksheetPart);
+            InsertCell("G", m_currentRow, new CellValue(Math.Round(obj.SkinCond[1], 3)), CellValues.String, worksheetPart);
+            InsertCell("H", m_currentRow, new CellValue(Math.Round(obj.SkinCond[2], 3)), CellValues.String, worksheetPart);
+            InsertCell("I", m_currentRow, new CellValue(Math.Round(obj.SkinCond[3], 3)), CellValues.String, worksheetPart);
+            InsertCell("J", m_currentRow, new CellValue(Math.Round(obj.SkinCond[4], 3)), CellValues.String, worksheetPart);
 
-                currentRow += 1;
-            }
-
+            m_currentRow += 1;
             worksheetPart.Worksheet.Save();
         }
     }
@@ -192,78 +167,69 @@ public class DataExporter : Hub
         Worksheet worksheet = worksheetPart.Worksheet;
         SheetData sheetData = worksheet.GetFirstChild<SheetData>();
 
-        Row row;
-        if (sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).Count() != 0)
+        Row row = sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).FirstOrDefault();
+        if (row != default(Row))
         {
-            row = sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).First();
             Cell cell = row.Elements<Cell>().Where(c => string.Compare(c.CellReference.Value, columnName + rowIndex, true) == 0).First();
             cell.CellValue = value;
         }
     }
     public async Task SaveFile(string patientId)
     {
-        if (dataExportPackage.Count > 0)
-        {
-            InsertDataPackage(dataExportPackage);
-            dataExportPackage.Clear();
-        }
+        DataExporter.UpdatePatientId(patientId);
+        m_spreadSheet.Close();
+        m_spreadSheet = null;   // To stop unwated updates to the spredsheets
 
-        UpdatePatientId(patientId);
-
+        // Make a copy of the spredsheet to PSS Application directory
         string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
-        string targetFile = Path.Combine(targetPath, fileName);
+        string targetFile = Path.Combine(targetPath, m_fileName);
 
-        //Create PSS Application directory if it does not already exist
         Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
-        
-        File.Copy(Path.Combine(tempPath, fileName), targetFile);
+
+        File.Copy(Path.Combine(m_tempPath, m_fileName), targetFile);
         DeleteTempFile();
         await AlertFilePath(targetFile);
     }
-    public void DeleteTempFile()
+
+    public static void DeleteTempFile()
     {
-        string tempFile = Path.Combine(tempPath, fileName);
-        File.Delete(tempFile);
-    }
-    public static void DeleteIfNotAlreadyDeleted()
-    {
-        if (tempPath != null && fileName != null)
+        if (m_tempPath != null && m_fileName != null)
         {
-            string tempFile = Path.Combine(tempPath, fileName);
+            string tempFile = Path.Combine(m_tempPath, m_fileName);
             if (File.Exists(tempFile))
             {
                 File.Delete(tempFile);
             }
         }
-        
     }
     public void AddComment(double timestamp, string comment)
     {
-        using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(Path.Combine(tempPath, fileName), true))
-        {
-            uint row = getCommentRow(timestamp, spreadSheet);
-            string timestring = epoch.AddMilliseconds(timestamp).ToLocalTime().ToString();
-            WorksheetPart worksheetPart = spreadSheet.WorkbookPart.WorksheetParts.First();
+        //using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(Path.Combine(m_tempPath, m_fileName), true))
+        //{
+        uint row = getCommentRow(timestamp);
+        string timestring = m_epoch.AddMilliseconds(timestamp).ToLocalTime().ToString();
+        WorksheetPart worksheetPart = m_spreadSheet.WorkbookPart.WorksheetParts.First();
 
-            InsertCell("F", row, new CellValue(comment), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-        }
+        InsertCell("F", row, new CellValue(comment), new EnumValue<CellValues>(CellValues.String), worksheetPart);
+        //}
     }
     public static void UpdatePatientId(string patientId)
     {
-        using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(Path.Combine(tempPath, fileName), true))
-        {
-            WorksheetPart worksheetPart = spreadSheet.WorkbookPart.WorksheetParts.First();
+        //using (SpreadsheetDocument spreadSheet = m_spreadSheet.Open(Path.Combine(m_tempPath, m_fileName), true))
+        //{
+        WorksheetPart worksheetPart = m_spreadSheet.WorkbookPart.WorksheetParts.First();
 
-            UpdateCell("A", 1, new CellValue($"Patient Id: {patientId}"), worksheetPart);
+        UpdateCell("A", 1, new CellValue($"Patient Id: {patientId}"), worksheetPart);
 
-            worksheetPart.Worksheet.Save();
-        }
+        worksheetPart.Worksheet.Save();
+        //}
     }
+
     public async Task AlertFilePath(string path)
     {
-        if (_context != null && _context.Clients != null)
+        if (m_hubContext != null && m_hubContext.Clients != null)
         {
-            await _context.Clients.All.SendAsync("AlertFilePath", path);
+            await DataExporter.m_hubContext.Clients.All.SendAsync("AlertFilePath", path);
         }
     }
 
@@ -274,7 +240,6 @@ public class DataExporter : Hub
 
         return "True";
     }
-
     private static string getFileName()
     {
         DateTime currentDateTime = DateTime.UtcNow;
@@ -282,21 +247,21 @@ public class DataExporter : Hub
 
         return fileName;
     }
-    private uint getCommentRow(double timestamp, SpreadsheetDocument spreadSheet)
+    private uint getCommentRow(double timestamp)
     {
         uint firstDataRow = 4;
-        DateTime firstRowDateTime = getCellValue(spreadSheet, "A" + firstDataRow);
-        var commentDateTime = epoch.AddMilliseconds(timestamp).ToLocalTime();
+        DateTime firstRowDateTime = getCellValue("A" + firstDataRow);
+        var commentDateTime = m_epoch.AddMilliseconds(timestamp).ToLocalTime();
 
         uint elapsedTime = (uint)((commentDateTime - firstRowDateTime).TotalSeconds);
         uint commentRow = firstDataRow + elapsedTime;
 
         return commentRow;
     }
-    private DateTime getCellValue(SpreadsheetDocument spreadSheet, string cellReference)
+    private DateTime getCellValue(string cellReference)
     {
-        WorkbookPart workbookPart = spreadSheet.WorkbookPart;
-        Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().Where(s => s.Name == sheetName).FirstOrDefault();
+        WorkbookPart workbookPart = m_spreadSheet.WorkbookPart;
+        Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().Where(s => s.Name == m_sheetName).FirstOrDefault();
         WorksheetPart worksheetPart = (WorksheetPart)(workbookPart.GetPartById(sheet.Id));
 
         Cell cell = worksheetPart.Worksheet.Descendants<Cell>().Where(c => c.CellReference == cellReference).FirstOrDefault();

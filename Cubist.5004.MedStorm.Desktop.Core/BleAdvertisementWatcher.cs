@@ -10,252 +10,354 @@ using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 using Windows.Storage.Streams;
 using System.Globalization;
+using System.Threading;
 
 namespace PSSApplication.Core
 {
-    public class BleAdvertisementWatcher : Hub
+    public class BleHub : Hub
     {
-        private static class Globals
+        IHubContext<BleEndpoint> m_hubContext;
+        AdvertisementHandler m_advHandler;
+
+        // This constructor is called everytime the client page is reloaded
+        public BleHub(IHubContext<BleEndpoint> context, string advertisementName)
         {
-            public static readonly object mThreadLock = new object();
-            //public static readonly Dictionary<string, BLEDevice> mDiscoveredDevices = new Dictionary<string, BLEDevice>();
-            public static BluetoothLEDevice bluetoothLeDevice;
-            public static GattDeviceService _service;
-            public static GattCharacteristic characteristic;
-            public static string deviceId;
-            /// <summary>
-            /// The underlying bluetooth watcher class
-            /// </summary>
-            public static BluetoothLEAdvertisementWatcher mWatcher;
+            m_hubContext = context;
+            m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(this, advertisementName);
         }
 
-        public static readonly string ServiceUuid = "264eaed6-c1da-4436-b98c-db79a7cc97b5";
+        public void CloseApplication()
+        {
+            Debug.WriteLine("CloseApplication");
+            m_advHandler.CloseApplication();
+        }
 
-        public static readonly string ConnectionServiceUuid = "8dfa3c12-660c-4992-a528-ebf1fa02fe9d";
-        public static readonly string ConnectionUuid = "6d5a8bd8-ce30-4c70-913b-21544a1ff4c3";
-        public static readonly string CombinedUuid = "14abde20-31ed-4e0a-bdcf-7efc40f3fffb";
+        public void StartScanningForPainSensors()
+        {
+            BleEndpoint.DebugWrite("BleHub: StartScanningForPainSensors");
+            m_advHandler.StartScanningForPainSensors();
+        }
 
-        private const int NumOfCondItems = 5;
-        private const int NumBytesFloats = 4;
+        public void StopScanningForPainSensors()
+        {
+            BleEndpoint.DebugWrite("BleHub: StopScanningForPainSensors");
+            m_advHandler.StopScanningForPainSensors();
+        }
+    }
 
-        private readonly string AdvertisementName;
-
-        private bool isBusy = false;
-        // Should try to refactor to get rid of context here. This class handles bluetooth communication,
-        // not communication with web clients.
-        private IHubContext<BleEndpoint> _context;
-
+    public class AdvertisementHandler
+    {
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
 
-        public BleAdvertisementWatcher(IHubContext<BleEndpoint> context, string advertisementName)
-        {
-            BleEndpoint.DebugWrite("New watcher created");
-            Globals.mWatcher = new BluetoothLEAdvertisementWatcher();
-            Globals.mWatcher.Received += Watcher_Received;
-            Globals.mWatcher.Stopped += Watcher_Stopped;
-            HookEvents(this);
+        static readonly string ServiceUuid = "264eaed6-c1da-4436-b98c-db79a7cc97b5";
+        static readonly string CombinedUuid = "14abde20-31ed-4e0a-bdcf-7efc40f3fffb";
 
-            _context = context;
-            AdvertisementName = advertisementName;
-            if (string.IsNullOrWhiteSpace(AdvertisementName))
-                throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
+        readonly object m_ThreadLock = new object();
+        //BluetoothLEDevice m_bluetoothLeDevice = null;
+        GattDeviceService m_service = null;
+        GattCharacteristic m_characteristic = null;
+        //string m_deviceId = null;
+        BluetoothLEAdvertisementWatcher m_Watcher; // The underlying bluetooth watcher class
+
+        const int NumOfCondItems = 5;
+        const int NumBytesFloats = 4;
+
+        readonly string AdvertisementName;
+
+        bool m_isBusy = false;
+        static BleHub m_bleHub;
+        public bool Listening => m_Watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started;
+        public int SleepTimer = 1000;
+        public static bool IsRunning { get; private set; }
+
+        ulong? m_bluetoothAddress = null;
+        Timer m_timer;
+        async Task<BluetoothLEDevice> GetBluetoothLEDevice()
+        {
+            if (m_bluetoothAddress == null)
+            {
+                Debug.WriteLine("AdvertisementHandler.GetBluetoothLEDevice: No available m_bluetoothAddress");
+                return null;
+            }
+            var bleDevice = await BluetoothLEDevice.FromBluetoothAddressAsync(m_bluetoothAddress.Value);
+            if (bleDevice == null)
+            {
+                m_isBusy = false;
+                BleEndpoint.DebugWrite("AdvertisementHandler.GetBluetoothLEDevice: Not able to get bleDevice");
+                return null;
+            }
+            return bleDevice;
         }
 
-        /// <summary>
-        /// Indicates if this watcher is listening for advertisements
-        /// </summary>
-        public bool Listening => Globals.mWatcher.Status == BluetoothLEAdvertisementWatcherStatus.Started;
+        DateTime lastReceivedData = DateTime.MinValue;
+        static AdvertisementHandler()
+        {
+            IsRunning = false;
+        }
 
-        public int SleepTimer = 10;
+        public static AdvertisementHandler m_advertisementHandlerSingleton;
+        public static AdvertisementHandler AdvertisementMgr
+        {
+            get => m_advertisementHandlerSingleton; private set => m_advertisementHandlerSingleton = value;
+        }
+
+        public static AdvertisementHandler CreateAdvertisementHandler(BleHub bleHub, string advertisementName)
+        {
+            if (m_advertisementHandlerSingleton == null)
+                m_advertisementHandlerSingleton = new AdvertisementHandler(bleHub, advertisementName);
+
+            return m_advertisementHandlerSingleton;
+        }
+        // This constructor is called everytime the client page is reloaded
+        private AdvertisementHandler(BleHub bleHub, string advertisementName)
+        {
+            m_bleHub = bleHub;
+            AdvertisementName = advertisementName;
+            BleEndpoint.DebugWrite("AdvertisementHandler.ctor - New watcher created");
+            m_Watcher = new BluetoothLEAdvertisementWatcher();
+            m_Watcher.Received += Watcher_Received;
+            m_Watcher.Stopped += Watcher_Stopped;
+            //m_advHandler.StartedListening += WatcherStartedListening;
+            //m_advHandler.StoppedListening += WatcherStoppedListening;
+            HookEvents(this);
+            if (string.IsNullOrWhiteSpace(advertisementName))
+                throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
+
+            Timer timer = new Timer(CheckStatus, null, 30000, 10000);    // wait 30 seconds, and then check every 10th. seconds
+        }
+
+        public void CheckStatus(Object stateInfo)
+        {
+            if (IsRunning && lastReceivedData < (DateTime.Now-TimeSpan.FromSeconds(10)))
+            {
+                BleEndpoint.DebugWrite("Expected datastream dosn't work. Restarting connection to sensor");
+                m_timer.Change(30000, 10000);
+                StopScanningForPainSensors();
+                StartScanningForPainSensors();
+            }
+        }
 
         private void Watcher_Stopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
-            BleEndpoint.DebugWrite("Watcher_Stopped");
+            BleEndpoint.DebugWrite("AdvertisementHandler.Watcher_Stopped");
             StopListening();
         }
 
         public void StartScanningForPainSensors()
         {
-            BleEndpoint.DebugWrite("StartScanningForPainSensors");
-
-            if (Globals.mWatcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
+            BleEndpoint.DebugWrite("AdvertisementHandler.StartScanningForPainSensors");
+            IsRunning = true;
+            if (m_Watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
                 return;
 
-            Globals.mWatcher.Start();
+            m_Watcher.Start();
             StartedListening(); // Inform listeners
+            lastReceivedData = DateTime.Now;    // To reset status check timer
         }
 
-        public void StopAdvertising()
+        public async void StopScanningForPainSensors()
         {
-            BleEndpoint.DebugWrite("Stop advertising");
-            StopAllBluetoothConnections();
-            Globals.deviceId = null;
-            if (Globals.mWatcher != null)
-                Globals.mWatcher.Stop();
+            if (m_Watcher != null)
+                m_Watcher.Stop();
+
+            BleEndpoint.DebugWrite("AdvertisementHandler.StopScanningForPainSensors");
+            IsRunning = false;
+
+            await StopAllBluetoothConnections();
+            await UnpairDevice();
         }
 
-        private async Task<bool> UnpairDevice(ulong bluetoothAddress)
+        private async Task<DeviceUnpairingResult> UnpairDevice()
         {
-            BleEndpoint.DebugWrite("UnpairDevice");
-            DeviceUnpairingResult unpairResult;
-            bool isPaired = Globals.bluetoothLeDevice.DeviceInformation.Pairing.IsPaired;
+            Debug.WriteLine("AdvertisementHandler.UnpairDevice:");
+            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (bleDevice == null)
+            {
+                Debug.WriteLine("AdvertisementHandler.UnpairDevice: Not able to get bleDevice ");
+                return null;
+            }
+
+            DeviceUnpairingResult unpairResult = null;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+
             //Try to unpair for 30 seconds, then fail
-            while (isPaired && stopwatch.ElapsedMilliseconds < 30000)
+            do
             {
-                unpairResult = await Globals.bluetoothLeDevice.DeviceInformation.Pairing.UnpairAsync();
-                ReleaseAndClearBluetoothLEObjects();
-                if (unpairResult.Status == DeviceUnpairingResultStatus.Unpaired)
-                {
-                    isPaired = false;
-                }
-                else
-                {
-                    Globals.bluetoothLeDevice = await BluetoothLEDevice.FromBluetoothAddressAsync(bluetoothAddress);
-                    if (Globals.bluetoothLeDevice == null)
-                        break;
-                }
-
-                BleEndpoint.DebugWrite($"Pairing Result: {unpairResult.Status}");
+                unpairResult = await bleDevice.DeviceInformation.Pairing.UnpairAsync();
+                BleEndpoint.DebugWrite($"AdvertisementHandler.UnpairDevice: Pairing Result= {unpairResult.Status}");
             }
+            while (unpairResult.Status != DeviceUnpairingResultStatus.Unpaired
+                   && unpairResult.Status != DeviceUnpairingResultStatus.AlreadyUnpaired
+                   && stopwatch.ElapsedMilliseconds < 30000);
+
             stopwatch.Stop();
-            return isPaired;
+
+            Debug.WriteLine($"AdvertisementHandler.UnpairDevice: unpairResult={unpairResult?.Status}");
+            return unpairResult;
         }
 
-        private async Task<DevicePairingResult> PairDevice(ulong bluetoothAddress)
+        private async Task<DevicePairingResult> PairDevice()
         {
-            BleEndpoint.DebugWrite("PairDevice");
-            bool isPaired = false;
-            DevicePairingResult _devicePairingResult = null;
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            //Try to pair for 30 seconds then fails
-            while (!isPaired && stopwatch.ElapsedMilliseconds < 30000)
+            Debug.WriteLine("PairDevice:");
+            Debug.WriteLine("AdvertisementHandler.UnpairDevice:");
+            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (bleDevice == null)
             {
-                BleEndpoint.DebugWrite($"Pairing...");
-                if (Globals.bluetoothLeDevice != null)
-                {
-                    ReleaseAndClearBluetoothLEObjects();
-                }
-                Globals.bluetoothLeDevice = await BluetoothLEDevice.FromBluetoothAddressAsync(bluetoothAddress);
-                if (Globals.bluetoothLeDevice == null)
-                    break;
-                Globals.bluetoothLeDevice.DeviceInformation.Pairing.Custom.PairingRequested += Custom_PairingRequested;
-                _devicePairingResult = await Globals.bluetoothLeDevice.DeviceInformation.Pairing.Custom.PairAsync(DevicePairingKinds.ConfirmOnly);
-                Globals.bluetoothLeDevice.DeviceInformation.Pairing.Custom.PairingRequested -= Custom_PairingRequested;
-                BleEndpoint.DebugWrite($"Pairing Result: {_devicePairingResult.Status}");
-                if (_devicePairingResult.Status == DevicePairingResultStatus.Paired)
-                {
-                    isPaired = true;
-                }
+                Debug.WriteLine("AdvertisementHandler.PairDevice: Not able to get bleDevice ");
+                return null;
             }
-            stopwatch.Stop();
-            stopwatch = null;
-            return _devicePairingResult;
+
+            try
+            {
+                DevicePairingResult devicePairingResult = null;
+                bool isPaired = false;
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                //Try to pair for 30 seconds then fails
+                while (!isPaired && stopwatch.ElapsedMilliseconds < 30000)
+                {
+                    BleEndpoint.DebugWrite($"AdvertisementHandler.PairDevice: Pairing...");
+                    bleDevice.DeviceInformation.Pairing.Custom.PairingRequested += Custom_PairingRequested;
+                    devicePairingResult = await bleDevice.DeviceInformation.Pairing.Custom.PairAsync(DevicePairingKinds.ConfirmOnly);
+                    bleDevice.DeviceInformation.Pairing.Custom.PairingRequested -= Custom_PairingRequested;
+                    BleEndpoint.DebugWrite($"AdvertisementHandler.PairDevice: result: {devicePairingResult.Status}");
+
+                    //if (m_bluetoothLeDevice.DeviceInformation.Pairing.IsPaired)
+                    if (devicePairingResult.Status == DevicePairingResultStatus.Paired)
+                        isPaired = true;
+
+                }
+                stopwatch.Stop();
+                stopwatch = null;
+                return devicePairingResult;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"xxxx PairDevice: {ex.Message}");
+                throw;
+            }
         }
 
-        public bool IsPaired()
+        public async Task<bool> IsPaired()
         {
-            if (Globals.bluetoothLeDevice != null)
+            Debug.WriteLine("AdvertisementHandlerIsPaired:");
+            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (bleDevice == null)
             {
-                return Globals.bluetoothLeDevice.DeviceInformation.Pairing.IsPaired;
+                Debug.WriteLine("AdvertisementHandler.AdvertisementHandler: Not able to get bleDevice ");
+                return false;
             }
 
-            return false;
+            return bleDevice.DeviceInformation.Pairing.IsPaired;
         }
 
         public void CloseApplication()
         {
-            StopAllBluetoothConnections();
+            StopScanningForPainSensors();
         }
 
         private async void Watcher_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
         {
-            if (isBusy)
+            Debug.WriteLine($"AdvertisementHandler.Watcher_Received: m_busy={m_isBusy}, BluetoothAddress={args.BluetoothAddress} ");
+            if (m_isBusy)
                 return;
 
-            if (!isBusy)
+            if (!string.IsNullOrWhiteSpace(args.Advertisement.LocalName))
+                BleEndpoint.DebugWrite($"AdvertisementHandler.Watcher_Received: Advertisement Discovered from {args.Advertisement.LocalName}");
+
+            try
             {
-                if (!string.IsNullOrWhiteSpace(args.Advertisement.LocalName))
+                if (args.Advertisement.LocalName != AdvertisementName)
+                    return;
+
+                m_isBusy = true;
+                m_Watcher.Stop();
+
+                BleEndpoint.DebugWrite("AdvertisementHandler.Watcher_Received: pairing...");
+                m_bluetoothAddress = args.BluetoothAddress;
+                BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+
+                if (bleDevice == null)
                 {
-                    BleEndpoint.DebugWrite($"Advertisement Discovered: {args.Advertisement.LocalName}");
+                    Debug.WriteLine("AdvertisementHandler.Watcher_Received: Not able to get bleDevice ");
+                    m_isBusy = false;
+                    m_Watcher.Start();
+                    return;
+                }
+
+                BleEndpoint.DebugWrite($"AdvertisementHandler.Watcher_Received: attached BluetoothAddress={bleDevice.BluetoothAddress}");
+
+                // Start connection
+                Debug.WriteLine($"AdvertisementHandler.Watcher_Received: Connection={bleDevice.ConnectionStatus}");
+
+                bleDevice = await BluetoothLEDevice.FromIdAsync(bleDevice.DeviceId);
+                bleDevice.ConnectionStatusChanged += ConnectionStatusChangeHandler;
+                Debug.WriteLine($"AdvertisementHandler.Watcher_Received: after FromIdAsync - Connection={bleDevice.ConnectionStatus}");
+
+                DeviceUnpairingResult unpairingResult = null;
+                if (bleDevice.DeviceInformation.Pairing.IsPaired)
+                {
+                    unpairingResult = await UnpairDevice();
+                }
+
+                DevicePairingResult result = await PairDevice();
+                if (result.Status == DevicePairingResultStatus.Paired)
+                {
+                    Debug.WriteLine($"AdvertisementHandler.Watcher_Received: Paired to {args.BluetoothAddress}, connectionOk= {bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected}");
+                    m_isBusy = false;
+                }
+                else
+                {
+                    //Failed to connect - Disconnect gracefully
+                    Debug.WriteLine("AdvertisementHandler.Watcher_Received: Failed to paire");
+                    //StopAllBluetoothConnections();
+                    m_isBusy = false;
                 }
             }
-            if (args.Advertisement.LocalName != AdvertisementName)
-                return;
-            isBusy = true;
-
-            BleEndpoint.DebugWrite("Advertisement Pairing...");
-
-            ReleaseAndClearBluetoothLEObjects();
-            var bleDevice = await BluetoothLEDevice.FromBluetoothAddressAsync(args.BluetoothAddress);
-            if (bleDevice == null || Globals.deviceId != null && bleDevice.DeviceId != Globals.deviceId)
+            catch (Exception ex)
             {
-                isBusy = false;
-                BleEndpoint.DebugWrite("No or wrong device trying to connect");
-                return;
-            }
-
-            Globals.bluetoothLeDevice = bleDevice;
-
-            bool isPaired = await UnpairDevice(args.BluetoothAddress);
-            DevicePairingResult result = null;
-            if (isPaired == false)
-            {
-                result = await PairDevice(args.BluetoothAddress);
-            }
-            if (result != null && result.Status == DevicePairingResultStatus.Paired)
-            {
-                Debug.WriteLine($"Paired to {args.BluetoothAddress}");
-                Globals.bluetoothLeDevice.ConnectionStatusChanged += ConnectionStatusChangeHandler;
-                Globals.mWatcher.Stop();
-                isBusy = false;
-                await ConfigureSensorService(Globals.bluetoothLeDevice.DeviceId);
-            }
-            else
-            {
-                //Failed to connect - Disconnect gracefully
-                Debug.WriteLine("Failed to paire");
-                StopAllBluetoothConnections();
-                isBusy = false;
+                Debug.WriteLine($"xxxxx AdvertisementHandler.Watcher_Received: ex.Message={ex.Message}");
+                //await UnpairDevice();
+                m_Watcher.Start();
+                m_isBusy = false;
             }
         }
 
-        private async Task ConfigureSensorService(string deviceId)
+        private async Task ConfigureSensorService(BluetoothLEDevice bleDevice)
         {
-            BleEndpoint.DebugWrite("ConfigureSensorService");
+            BleEndpoint.DebugWrite($"AdvertisementHandler.ConfigureSensorService Connection={bleDevice?.ConnectionStatus}");
             try
             {
-                GattCharacteristicProperties NotifyOrIndicate = GattCharacteristicProperties.Notify;
-                GattClientCharacteristicConfigurationDescriptorValue NotifyOrIndicateValue = GattClientCharacteristicConfigurationDescriptorValue.Notify;
-                Globals.bluetoothLeDevice = await BluetoothLEDevice.FromIdAsync(deviceId);
-                if (Globals.bluetoothLeDevice != null)
+                var Notify = GattCharacteristicProperties.Notify;
+                var NotifValue = GattClientCharacteristicConfigurationDescriptorValue.Notify;
+
+                if (bleDevice != null)
                 {
-                    Globals.deviceId = deviceId;
-                    var result = await Globals.bluetoothLeDevice.GetGattServicesForUuidAsync(Guid.Parse(ServiceUuid));
+                    var result = await bleDevice.GetGattServicesForUuidAsync(Guid.Parse(ServiceUuid));
                     if (result.Status == GattCommunicationStatus.Success)
                     {
                         var services = result.Services;
                         await Task.Delay(SleepTimer);
-                        BleEndpoint.DebugWrite($"=>Services Count {result.Services.Count}", true);
-                        Globals._service = result.Services[0];
-                        services = null;
-                        BleEndpoint.DebugWrite($"Service {Globals._service.Uuid} found and accessed!");
-                        var serviceAccess = await Globals._service.RequestAccessAsync();
-                        GattCharacteristicsResult characteristicResultAllValues = await Globals._service.GetCharacteristicsForUuidAsync(Guid.Parse(CombinedUuid));
+                        BleEndpoint.DebugWrite($"AdvertisementHandler.ConfigureSensorService: Services Count= {result.Services.Count}", true);
+                        m_service = result.Services[0];
+
+                        BleEndpoint.DebugWrite($"AdvertisementHandler.ConfigureSensorService: Service { m_service.Uuid} found and accessed!");
+                        var serviceAccess = await m_service.RequestAccessAsync();
+                        GattCharacteristicsResult characteristicResultAllValues = await m_service.GetCharacteristicsForUuidAsync(Guid.Parse(CombinedUuid));
                         if (characteristicResultAllValues.Status == GattCommunicationStatus.Success)
                         {
                             if (characteristicResultAllValues.Characteristics.Count == 0)
                             {
-                                BleEndpoint.DebugWrite($"No characteristics available in UUID {Guid.Parse(CombinedUuid)}");
+                                BleEndpoint.DebugWrite($"AdvertisementHandler.ConfigureSensorService: No characteristics available in UUID {Guid.Parse(CombinedUuid)}");
                                 return;
                             }
-                            Globals.characteristic = characteristicResultAllValues.Characteristics[0];
-                            characteristicResultAllValues = null;
-                            BleEndpoint.DebugWrite($"Characteristic AllValues {Globals.characteristic.Uuid} found and accessed!");
+                            m_characteristic = characteristicResultAllValues.Characteristics[0];
+                            //characteristicResultAllValues = null;
+                            BleEndpoint.DebugWrite($"AdvertisementHandler.ConfigureSensorService: Characteristic AllValues { m_characteristic.Uuid} found and accessed!");
 
-                            GattCharacteristicProperties properties = Globals.characteristic.CharacteristicProperties;
+                            GattCharacteristicProperties properties = m_characteristic.CharacteristicProperties;
 
                             List<GattCharacteristicProperties> gattCharacteristicProperties = new List<GattCharacteristicProperties>();
                             foreach (GattCharacteristicProperties property in Enum.GetValues(typeof(GattCharacteristicProperties)))
@@ -266,10 +368,10 @@ namespace PSSApplication.Core
                                 }
                             }
 
-                            if (gattCharacteristicProperties.Any(x => x == NotifyOrIndicate))
+                            if (gattCharacteristicProperties.Any(x => x == Notify))
                             {
-                                BleEndpoint.DebugWrite("Subscribing to the AllValues Indication/Notification");
-                                Globals.characteristic.ValueChanged += Oncharacteristic_ValueChanged_Combined;
+                                BleEndpoint.DebugWrite("AdvertisementHandler.ConfigureSensorService: Subscribing to the AllValues Indication/Notification");
+                                m_characteristic.ValueChanged += Oncharacteristic_ValueChanged_Combined;
 
                                 int loopCounter = 5;
                                 GattCommunicationStatus status = GattCommunicationStatus.ProtocolError;
@@ -277,22 +379,26 @@ namespace PSSApplication.Core
                                 {
                                     while (status != GattCommunicationStatus.Success && loopCounter-- > 0)
                                     {
-                                        BleEndpoint.DebugWrite($"Enter function WriteClientCharacteristicConfigurationDescriptorAsync AllValues");
-                                        status = await Globals.characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(NotifyOrIndicateValue);
-                                        if (status == GattCommunicationStatus.Success)
+                                        if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
+                                        {
+                                            BleEndpoint.DebugWrite($"AdvertisementHandler.ConfigureSensorService: CCCD Notify");
+                                            status = await m_characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(NotifValue);
+                                            if (status != GattCommunicationStatus.Success)
+                                                await Task.Delay(SleepTimer);
+                                        }
+                                        else
                                             await Task.Delay(SleepTimer);
                                     }
                                     if (status != GattCommunicationStatus.Success)
                                     {
-                                        BleEndpoint.DebugWrite($"Function WriteClientCharacteristicConfigurationDescriptorAsync failed - Disconnect");
-                                        StopAllBluetoothConnections();
+                                        BleEndpoint.DebugWrite($"AdvertisementHandler.ConfigureSensorService: CCCD Notify failed - Disconnecting");
+                                        //StopAllBluetoothConnections();
                                     }
                                 }
                                 catch (Exception ex)
                                 {
-                                    BleEndpoint.DebugWrite($"Exception from AllValues   WriteClientCharacteristicConfigurationDescriptorAsync {ex.Message}          { ex.ToString()}");
-                                    StopAllBluetoothConnections();
-
+                                    BleEndpoint.DebugWrite($"xxxx ConfigureSensorService: Exception c {ex.Message}");
+                                    //StopAllBluetoothConnections();
                                 }
                             }
                         }
@@ -301,7 +407,7 @@ namespace PSSApplication.Core
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.ToString());
+                BleEndpoint.DebugWrite("ConfigureSensorService Error: " + ex.Message);
             }
         }
 
@@ -312,13 +418,10 @@ namespace PSSApplication.Core
         private void StopListening()
         {
             BleEndpoint.DebugWrite("StopListening");
-            lock (Globals.mThreadLock)
+            lock (m_ThreadLock)
             {
-                BleEndpoint.DebugWrite("Unhook event Watcher_Received");
-                isBusy = false;
-                // Clear any devices
-                //Globals.mDiscoveredDevices.Clear();
-                BleEndpoint.DebugWrite("Stop listening");
+                m_isBusy = false;
+                BleEndpoint.DebugWrite("StopListening: -> StoppedListening() - fireing event");
                 StoppedListening();     // Fire event
             }
         }
@@ -331,8 +434,8 @@ namespace PSSApplication.Core
 
         private static void WatcherStartedListening()
         {
+            Console.WriteLine("WatcherStartedListening");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Started listening");
         }
 
         //private static void WatcherDeviceTimeout(BLEDevice device)
@@ -343,8 +446,8 @@ namespace PSSApplication.Core
 
         private static void WatcherStoppedListening()
         {
+            BleEndpoint.DebugWrite("WatcherStoppedListening");
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("Stopped listening");
         }
 
         //private static void WatcherNewDeviceDiscovered(BLEDevice device)
@@ -359,23 +462,22 @@ namespace PSSApplication.Core
         //    Console.WriteLine($"Device name changed: {device}");
         //}
 
-        private static void HookEvents(BleAdvertisementWatcher watcher)
+        private static void HookEvents(AdvertisementHandler advHandler)
         {
+            Debug.WriteLine("HookEvents:");
             // Hook into events
-            watcher.StartedListening += WatcherStartedListening;
-            watcher.StoppedListening += WatcherStoppedListening;
             //watcher.NewDeviceDiscovered += WatcherNewDeviceDiscovered;
             //watcher.DeviceNameChanged += WatcherDeviceNameChanged;
             //watcher.DeviceTimeout += WatcherDeviceTimeout;
         }
 
-        //private static void UnhookEvents(BleAdvertisementWatcher watcher)
+        //private static void UnhookEvents(BleHub watcher)
         //{
         //    watcher.StartedListening -= WatcherStartedListening;
         //    watcher.StoppedListening -= WatcherStoppedListening;
-        //    watcher.NewDeviceDiscovered -= WatcherNewDeviceDiscovered;
-        //    watcher.DeviceNameChanged -= WatcherDeviceNameChanged;
-        //    watcher.DeviceTimeout -= WatcherDeviceTimeout;
+        //    //watcher.NewDeviceDiscovered -= WatcherNewDeviceDiscovered;
+        //    //watcher.DeviceNameChanged -= WatcherDeviceNameChanged;
+        //    //watcher.DeviceTimeout -= WatcherDeviceTimeout;
         //}
 
         /// <summary>
@@ -414,16 +516,16 @@ namespace PSSApplication.Core
         ///// </summary>
         //private void CleanupTimeouts()
         //{
-        //    lock (Globals.mThreadLock)
+        //    lock ( mThreadLock)
         //    {
         //        // The date in time that if less than means a device has timed out
         //        var threshold = DateTime.UtcNow - TimeSpan.FromSeconds(30);
 
         //        // Any devices that have not sent a new broadcast within the heartbeat time
-        //        Globals.mDiscoveredDevices.Where(f => f.Value.BroadcastTime < threshold).ToList().ForEach(device =>
+        //         mDiscoveredDevices.Where(f => f.Value.BroadcastTime < threshold).ToList().ForEach(device =>
         //        {
         //            // Remove device
-        //            Globals.mDiscoveredDevices.Remove(device.Key);
+        //             mDiscoveredDevices.Remove(device.Key);
 
         //            // Inform listeners
         //            // Raising a public event inside a lock is a really bad idea.
@@ -476,58 +578,77 @@ namespace PSSApplication.Core
         public async Task DeviceDisconnected()
         {
             BleEndpoint.DebugWrite("DeviceDisconnected");
-            if (_context != null && _context.Clients != null)
+            if (m_bleHub != null && m_bleHub.Clients != null)
             {
-                await _context.Clients.All.SendAsync("DeviceDisconnected");
+                await m_bleHub.Clients.All.SendAsync("DeviceDisconnected");
             }
         }
-        private bool ReleaseAndClearBluetoothLEObjects()
+        private async Task StopAllBluetoothConnections()
         {
-            BleEndpoint.DebugWrite("ReleaseAndClearBluetoothLEObjects");
-            if (Globals.characteristic != null)
+            BleEndpoint.DebugWrite("AdvertisementHandler.StopAllBluetoothConnections");
+            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (bleDevice != null)
             {
-                Globals.characteristic.ValueChanged -= Oncharacteristic_ValueChanged_Combined;
-                Globals.characteristic = null;
+                bleDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
             }
-            if (Globals._service != null)
+            else
             {
-                Globals._service.Dispose();
-                Globals._service = null;
+                Debug.WriteLine("AdvertisementHandler.StopAllBluetoothConnections no bleDevice to Stop");
             }
-            if (Globals.bluetoothLeDevice != null)
+
+
+            if (m_characteristic != null)
             {
-                Globals.bluetoothLeDevice.Dispose();
-                Globals.bluetoothLeDevice = null;
+                m_characteristic.ValueChanged -= Oncharacteristic_ValueChanged_Combined;
+                //m_characteristic = null;
             }
-            return true;
-        }
-        private void StopAllBluetoothConnections()
-        {
-            BleEndpoint.DebugWrite("StopAllBluetoothConnections");
-            if (Globals.bluetoothLeDevice != null)
+            if (m_service != null)
             {
-                Globals.bluetoothLeDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
+                m_service.Dispose();
+                //m_service = null;
             }
-            ReleaseAndClearBluetoothLEObjects();
+            if (bleDevice != null)
+            {
+                bleDevice.Dispose();
+                bleDevice = null;
+                GC.Collect();
+            }
         }
 
-        public async void ConnectionStatusChangeHandler(BluetoothLEDevice bluetoothLEDevice, Object o)
+        public async void ConnectionStatusChangeHandler(BluetoothLEDevice bleDevice, Object o)
         {
-
-            if (Globals.bluetoothLeDevice == null)
+            m_bluetoothAddress = bleDevice.BluetoothAddress;
+            if (bleDevice == null)
+            {
+                BleEndpoint.DebugWrite($"ConnectionStatusChangeHandler: m_bluetoothLeDevice != bluetoothLEDevice ConnectionStatus={bleDevice?.ConnectionStatus} on bluetoothLEDevice={bleDevice?.GetHashCode()}");
                 return;
+            }
 
-            StopAllBluetoothConnections();
-            await DeviceDisconnected();
-            BleEndpoint.DebugWrite($"Enter ConnectionStatusChangeHandler  The device is now disconnected");
+            BleEndpoint.DebugWrite($"ConnectionStatusChangeHandler: ConnectionStatus={bleDevice.ConnectionStatus} on BluetoothAddress={bleDevice.BluetoothAddress}");
+            BleEndpoint.DebugWrite($"ConnectionStatusChangeHandler: IsPaired={bleDevice.DeviceInformation.Pairing.IsPaired}");
 
-            //Try reconnect
-            StartScanningForPainSensors();
-            await _context.Clients.All.SendAsync("ReconnectDevice");
+            if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
+            {
+                m_Watcher.Stop();
+                await ConfigureSensorService(bleDevice);
+            }
+
+            if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Disconnected)
+            {
+                //StopAllBluetoothConnections();
+                //await DeviceDisconnected();
+                BleEndpoint.DebugWrite($"ConnectionStatusChangeHandler: after disconneced on BluetoothAddress={bleDevice.BluetoothAddress}");
+
+                //Try reconnect
+                StartScanningForPainSensors();
+                if (m_bleHub.Clients != null)
+                    await m_bleHub.Clients.All.SendAsync("ReconnectDevice");    // Fire signals to clients
+            }
         }
 
         public void Oncharacteristic_ValueChanged_Combined(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
+            lastReceivedData = DateTime.Now;
             SendMessageToClient(sender, args);
         }
     }

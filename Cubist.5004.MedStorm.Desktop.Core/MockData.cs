@@ -11,12 +11,12 @@ namespace PSSApplication.Core
 
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
 
-        public void StartAdvertising()
+        public void StartListningForPainSensors()
         {
             startTimerMock();
         }
 
-        public void StopAdvertising()
+        public void StopListningForPainSensors()
         {
             if (timerMock == null) return;
             timerMock.Elapsed -= timerMock_Tick;
@@ -25,7 +25,7 @@ namespace PSSApplication.Core
             timerMock = null;
         }
 
-        public bool IsPaired()
+        public async Task<bool> IsPaired()
         {
             return timerMock != null;
         }

@@ -14,7 +14,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://medstorm:5001;http://medstorm:5000"
+      "applicationUrl": "https://medstorm:5001;http://medstorm:5000",
+      "nativeDebugging": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

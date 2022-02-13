@@ -76,10 +76,10 @@ var app = (function () {
 		let incomingObject = parseData(message);
 
 		// Messages received within 800ms of each other will create squiggles in the graph.
-		if (incomingObject.timestamp - lastTimestamp < 800) {
-			incomingObject.timestamp = lastTimestamp + 800;
-			console.log("Adjusting message timestamp.")
-		}
+		//if (incomingobject.timestamp - lasttimestamp < 800) {
+		//	incomingobject.timestamp = lasttimestamp + 800;
+		//	console.log("adjusting message timestamp.")
+		//}
 		addDataObject(incomingObject);
 		lastTimestamp = incomingObject.timestamp;
 
@@ -123,9 +123,9 @@ var app = (function () {
 	});
 
 	function startMonitor() {
-		console.log("Invoke StartAdvertising");
+		console.log("Invoke StartListningForPainSensors");
 
-		connection.invoke("StartAdvertising").catch(function (err) {
+		connection.invoke("StartListningForPainSensors").catch(function (err) {
 			return console.error(err.toString());
 		}).then(() => {
 			isConnected = true;
@@ -758,7 +758,7 @@ var app = (function () {
 	}
 
 	function stopMonitor() {
-		connection.invoke("StopAdvertising").catch(function (err) {
+		connection.invoke("StopScanningForPainSensors").catch(function (err) {
 			return console.error(err.toString());
 		}).then(() => {
 			isConnected = false;

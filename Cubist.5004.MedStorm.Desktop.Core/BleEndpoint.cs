@@ -9,20 +9,18 @@ namespace PSSApplication.Core
 {
     public class BleEndpoint : Hub
     {
-        private static class Globals
-        {
-            public static bool PageReloaded;
-            public static MonitorHandler Monitor;
-        }
+        public static bool m_pageReloaded;
+        public static MonitorHandler m_monitor;
 
         private MockData mock;
-        private BleAdvertisementWatcher bleAdvertisementWatcher;
+        private BleHub m_bleHub;
 
         private readonly IConfiguration _configuration;
         private IHubContext<BleEndpoint> _context;
 
         public BleEndpoint(IHubContext<BleEndpoint> context)
         {
+            Debug.WriteLine("BleEndpoint: ctor");
             var builder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true)
                 .AddEnvironmentVariables();
@@ -44,44 +42,46 @@ namespace PSSApplication.Core
             }
             else
             {
-                bleAdvertisementWatcher = new BleAdvertisementWatcher(context, _configuration.GetValue<string>("AdvertisingName"));
-                bleAdvertisementWatcher.NewMeasurement += AddMeasurement;
+                m_bleHub = new BleHub(context, _configuration.GetValue<string>("AdvertisingName"));
+                AdvertisementHandler.AdvertisementMgr.NewMeasurement += AddMeasurement;
             }
         }
 
-        public static BLEMeasurement LatestMeasurement { get; private set; }  = new BLEMeasurement(0, 0, 0, new double[5], 0);
+        public static BLEMeasurement LatestMeasurement { get; private set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
 
-        public Task StartAdvertising()
+        public Task StartListningForPainSensors()
         {
+            Debug.WriteLine("BleEndpoint: StartListningForPainSensors");
             DataExporter.CreateExcelFile();
 
-            mock?.StartAdvertising();
-            bleAdvertisementWatcher?.StartScanningForPainSensors();
+            mock?.StartListningForPainSensors();
+            m_bleHub?.StartScanningForPainSensors();
 
             return Task.CompletedTask;
         }
 
-        public void StopAdvertising()
+        public void StopScanningForPainSensors()
         {
-            mock?.StopAdvertising();
-            if (bleAdvertisementWatcher != null)
+            Debug.WriteLine("BleEndpoint: StopScanningForPainSensors");
+            mock?.StopListningForPainSensors();
+            if (m_bleHub != null)
             {
-                bleAdvertisementWatcher.StopAdvertising();
+                m_bleHub.StopScanningForPainSensors();
             }
         }
 
         public Task PageReloaded()
         {
-            DebugWrite("PageReloaded");
-            Globals.PageReloaded = true;
+            Debug.WriteLine("BleEndpoint-PageReloaded");
+            BleEndpoint.m_pageReloaded = true;
             return Task.CompletedTask;
         }
 
         public async Task AskServerToClose()
         {
-            DebugWrite("AskServerToClose");
+            DebugWrite("BleEndpoint.AskServerToClose");
             await Task.Delay(2000);
-            if (!Globals.PageReloaded)
+            if (!BleEndpoint.m_pageReloaded)
             {
                 await CloseApplication();
             }
@@ -90,32 +90,32 @@ namespace PSSApplication.Core
                 await SendConnectionStatus();
             }
 
-            Globals.PageReloaded = false;
+            BleEndpoint.m_pageReloaded = false;
         }
- 
+
         public async Task CloseApplication()
         {
-            DebugWrite("CloseApplication");
+            DebugWrite("BleEndpoint.CloseApplication");
             if (_context != null && _context.Clients != null)
             {
                 await _context.Clients.All.SendAsync("ClosingApplication");
             }
             mock?.CloseApplication();
-            if (bleAdvertisementWatcher != null)
+            if (m_bleHub != null)
             {
-                bleAdvertisementWatcher.CloseApplication();
+                m_bleHub.CloseApplication();
             }
 
-            DataExporter.DeleteIfNotAlreadyDeleted();
+            DataExporter.DeleteTempFile();
 
             Environment.Exit(0);
         }
 
         public async Task ConnectToMonitor()
         {
-            DebugWrite("Connecting to monitor");
-            Globals.Monitor = new MonitorHandler(_configuration);
-            var connectionSuccessful = Globals.Monitor.ConnectToMonitor();
+            DebugWrite("BleEndpoint: Connecting to monitor");
+             m_monitor = new MonitorHandler(_configuration);
+            var connectionSuccessful =  m_monitor.ConnectToMonitor();
 
             if (_context != null && _context.Clients != null)
                 await _context.Clients.All.SendAsync("MonitorConnectionResult", connectionSuccessful);
@@ -123,8 +123,8 @@ namespace PSSApplication.Core
         }
         public void DisconnectMonitor()
         {
-            DebugWrite("Disconnecting monitor");
-            Globals.Monitor.DisconnectMonitor();
+            DebugWrite("BleEndpoint: Disconnecting monitor");
+             m_monitor.DisconnectMonitor();
         }
 
         public static void DebugWrite(string str, bool onlyDebug = false)
@@ -136,8 +136,14 @@ namespace PSSApplication.Core
 
         private async Task SendConnectionStatus()
         {
-            DebugWrite("SendConnectionStatus");
-            bool isPaired = mock?.IsPaired() ?? bleAdvertisementWatcher.IsPaired();
+            DebugWrite("BleEndpoint: SendConnectionStatus");
+            bool isPaired;
+            if (mock != null)
+                isPaired = await mock.IsPaired();
+            else
+                isPaired = await AdvertisementHandler.AdvertisementMgr.IsPaired();
+
+            //bool isPaired = mock?.IsPaired() ?? AdvertisementHandler.AdvertisementMgr.IsPaired();
 
             if (_context != null && _context.Clients != null)
             {
