@@ -15,26 +15,26 @@ namespace PSSApplication.Core
         private MockData mock;
         private BleHub m_bleHub;
 
-        private readonly IConfiguration _configuration;
-        private IHubContext<BleEndpoint> _context;
-
+        private readonly IConfiguration m_configuration;
+        private IHubContext<BleEndpoint> m_context;
+        private static bool m_firstCallToConstructor = true;
         public BleEndpoint(IHubContext<BleEndpoint> context)
         {
-            Debug.WriteLine("BleEndpoint: ctor");
+            Debug.WriteLine($"BleEndpoint: ctor, m_firstCallToConstructor={m_firstCallToConstructor}");
             var builder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true)
                 .AddEnvironmentVariables();
 
-            _configuration = builder.Build();
-            _context = context;
+            m_context = context;
+            m_configuration = builder.Build();
 
-            var debug = _configuration.GetValue<string>("Debug").ToLower() == "true";
-            if (_context != null && _context.Clients != null)
+            var debug = m_configuration.GetValue<string>("Debug").ToLower() == "true";
+            if (m_context != null && m_context.Clients != null)
             {
-                _context.Clients.All.SendAsync("CheckIfDebug", debug);
+                m_context.Clients.All.SendAsync("CheckIfDebug", debug);
             }
 
-            var isMock = (_configuration.GetValue<string>("Mock").ToLower() == "true");
+            var isMock = (m_configuration.GetValue<string>("Mock").ToLower() == "true");
             if (isMock)
             {
                 mock = new MockData();
@@ -42,8 +42,13 @@ namespace PSSApplication.Core
             }
             else
             {
-                m_bleHub = new BleHub(context, _configuration.GetValue<string>("AdvertisingName"));
-                AdvertisementHandler.AdvertisementMgr.NewMeasurement += AddMeasurement;
+                m_bleHub = new BleHub(context, m_configuration.GetValue<string>("AdvertisingName"));
+                if (m_firstCallToConstructor)
+                {
+                    Debug.WriteLine("BleEndpoint.ctor - Adding AddMeasurement");
+                    m_firstCallToConstructor = false;
+                    AdvertisementHandler.AdvertisementMgr.NewMeasurement += AddMeasurement;
+                }
             }
         }
 
@@ -96,9 +101,9 @@ namespace PSSApplication.Core
         public async Task CloseApplication()
         {
             DebugWrite("BleEndpoint.CloseApplication");
-            if (_context != null && _context.Clients != null)
+            if (m_context != null && m_context.Clients != null)
             {
-                await _context.Clients.All.SendAsync("ClosingApplication");
+                await m_context.Clients.All.SendAsync("ClosingApplication");
             }
             mock?.CloseApplication();
             if (m_bleHub != null)
@@ -114,17 +119,17 @@ namespace PSSApplication.Core
         public async Task ConnectToMonitor()
         {
             DebugWrite("BleEndpoint: Connecting to monitor");
-             m_monitor = new MonitorHandler(_configuration);
-            var connectionSuccessful =  m_monitor.ConnectToMonitor();
+            m_monitor = new MonitorHandler(m_configuration);
+            var connectionSuccessful = m_monitor.ConnectToMonitor();
 
-            if (_context != null && _context.Clients != null)
-                await _context.Clients.All.SendAsync("MonitorConnectionResult", connectionSuccessful);
+            if (m_context != null && m_context.Clients != null)
+                await m_context.Clients.All.SendAsync("MonitorConnectionResult", connectionSuccessful);
 
         }
         public void DisconnectMonitor()
         {
             DebugWrite("BleEndpoint: Disconnecting monitor");
-             m_monitor.DisconnectMonitor();
+            m_monitor.DisconnectMonitor();
         }
 
         public static void DebugWrite(string str, bool onlyDebug = false)
@@ -145,9 +150,9 @@ namespace PSSApplication.Core
 
             //bool isPaired = mock?.IsPaired() ?? AdvertisementHandler.AdvertisementMgr.IsPaired();
 
-            if (_context != null && _context.Clients != null)
+            if (m_context != null && m_context.Clients != null)
             {
-                await _context.Clients.All.SendAsync("SendConnectionStatus", isPaired);
+                await m_context.Clients.All.SendAsync("SendConnectionStatus", isPaired);
             }
         }
 
@@ -162,9 +167,9 @@ namespace PSSApplication.Core
                 //DebugWrite($"New measurement   {e.Message}");
                 //Debug.Flush();
 
-                if (_context != null && _context.Clients != null)
+                if (m_context != null && m_context.Clients != null)
                 {
-                    await _context.Clients.All.SendAsync("SendMessage", $"combined {e.Message}");
+                    await m_context.Clients.All.SendAsync("SendMessage", $"combined {e.Message}");
                 }
 
                 DataExportObject dataExportObject = new DataExportObject(DateTime.Now.ToString(), e.Measurement.PSS, e.Measurement.AUC, e.Measurement.NBV, e.Measurement.BS, e.Measurement.SC);

@@ -22,6 +22,7 @@ namespace PSSApplication.Core
         // This constructor is called everytime the client page is reloaded
         public BleHub(IHubContext<BleEndpoint> context, string advertisementName)
         {
+            Debug.WriteLine("BleHub: ctor");
             m_hubContext = context;
             m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(this, advertisementName);
         }
@@ -34,13 +35,13 @@ namespace PSSApplication.Core
 
         public void StartScanningForPainSensors()
         {
-            BleEndpoint.DebugWrite("BleHub: StartScanningForPainSensors");
+            Debug.WriteLine("BleHub: StartScanningForPainSensors");
             m_advHandler.StartScanningForPainSensors();
         }
 
         public void StopScanningForPainSensors()
         {
-            BleEndpoint.DebugWrite("BleHub: StopScanningForPainSensors");
+            Debug.WriteLine("BleHub: StopScanningForPainSensors");
             m_advHandler.StopScanningForPainSensors();
         }
     }
@@ -95,7 +96,7 @@ namespace PSSApplication.Core
             IsRunning = false;
         }
 
-        public static AdvertisementHandler m_advertisementHandlerSingleton;
+        public static AdvertisementHandler m_advertisementHandlerSingleton=null;
         public static AdvertisementHandler AdvertisementMgr
         {
             get => m_advertisementHandlerSingleton; private set => m_advertisementHandlerSingleton = value;
@@ -113,7 +114,7 @@ namespace PSSApplication.Core
         {
             m_bleHub = bleHub;
             AdvertisementName = advertisementName;
-            BleEndpoint.DebugWrite("AdvertisementHandler.ctor - New watcher created");
+            Debug.WriteLine("AdvertisementHandler.ctor - createing new watcher");
             m_Watcher = new BluetoothLEAdvertisementWatcher();
             m_Watcher.Received += Watcher_Received;
             m_Watcher.Stopped += Watcher_Stopped;
@@ -123,7 +124,7 @@ namespace PSSApplication.Core
             if (string.IsNullOrWhiteSpace(advertisementName))
                 throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
 
-            Timer timer = new Timer(CheckStatus, null, 30000, 10000);    // wait 30 seconds, and then check every 10th. seconds
+            m_timer = new Timer(CheckStatus, null, 30000, 10000);    // wait 30 seconds, and then check every 10th. seconds
         }
 
         public void CheckStatus(Object stateInfo)
@@ -260,7 +261,7 @@ namespace PSSApplication.Core
 
         private async void Watcher_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
         {
-            Debug.WriteLine($"AdvertisementHandler.Watcher_Received: m_busy={m_isBusy}, BluetoothAddress={args.BluetoothAddress} ");
+            //Debug.WriteLine($"AdvertisementHandler.Watcher_Received: m_busy={m_isBusy}, BluetoothAddress={args.BluetoothAddress} ");
             if (m_isBusy)
                 return;
 
