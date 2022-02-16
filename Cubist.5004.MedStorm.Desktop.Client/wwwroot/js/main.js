@@ -78,9 +78,6 @@ var app = (function () {
         addDataObject(incomingObject);
         lastTimestamp = incomingObject.timestamp;
 
-        // aaa
-        console.log(lastTimestamp);
-
         if (isFirst) {
             isFirst = false;
             d3.select('#monitor').selectAll("*").remove();
@@ -686,27 +683,6 @@ var app = (function () {
         }
     }
 
-    function skinCondDataGraphChangeZoom(seconds) {
-        let monitor = d3.select('#skinCondDataMonitor');
-        let id = 'skinCond';
-        let now = Date.now();
-        skinCondDataDomain = seconds;
-
-        x[id].domain([(now - skinCondDataDomain * 1000), (now - 1000)]);
-
-        updateGridAndAxis(monitor, id);
-
-        if (skinCondDataDomain != 15) {
-            isDefault.x = false;
-            d3.select(`#zoomOutX`).classed("clicked", true);
-        } else {
-            isDefault.x = true;
-            d3.selectAll(`#zoomOutX`).classed("clicked", false);
-        }
-
-        d3.select('#zoomSC').classed("addBorder", (!isDefault.x || !isDefault.y));
-    }
-
     function toggleZoom() {
         let zoomButtons = d3.selectAll('.zoomSkinCond').classed("hideZoomButtons", !d3.selectAll('.zoomSkinCond').classed("hideZoomButtons"));
 
@@ -951,7 +927,6 @@ var app = (function () {
         closeModal: (id) => { closeModal(id); },
         changeApplication: (application) => { changeApplication(application); },
         zoom: () => { toggleZoom(); },
-        skinCondDataGraphChangeZoom: (seconds) => { skinCondDataGraphChangeZoom(seconds); },
         closeApplication: () => { closeApplication(); },
         onSaveClick: (save) => { onSaveClick(save); },
         openModal: (id) => { openModal(id); },
