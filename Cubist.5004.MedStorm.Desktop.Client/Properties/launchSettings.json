@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://medstorm:53658",
+      "applicationUrl": "https://127.0.0.1:5001",
       "sslPort": 44311
     }
   },
@@ -14,8 +14,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      //"applicationUrl": "https://medstorm:5001;http://medstorm:5000;",
-      "applicationUrl": "https://127.0.0.1:5001/",
+      //"applicationUrl": "https://medstorm:5001",
+      "applicationUrl": "https://127.0.0.1:5001",
       "nativeDebugging": true
     },
     "IIS Express": {

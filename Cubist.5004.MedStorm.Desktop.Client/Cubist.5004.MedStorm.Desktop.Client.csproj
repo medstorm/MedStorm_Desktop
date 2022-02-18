@@ -8,9 +8,14 @@
 	 <OutputType>Exe</OutputType>
 	 <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
 	 <ApplicationIcon>StartIcon.ico</ApplicationIcon>
+	 <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
 
