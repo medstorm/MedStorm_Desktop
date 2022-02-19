@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -40,8 +41,11 @@ namespace PSSApplication.Client
             }
             try
             {
-                Log.Information("Starting up");
+                Log.Information($"Starting up, CurrentDirectory = {Directory.GetCurrentDirectory()}");
+                //Process.Start("http://127.0.0.1:5001/");
+                Process.Start("Start.bat");
                 CreateHostBuilder(args, config, certificate).Build().Run();
+                Log.Information($"CurrentDirectory = {Directory.GetCurrentDirectory()}");
             }
             catch (Exception ex)
             {
@@ -74,7 +78,5 @@ namespace PSSApplication.Client
                     webBuilder.UseUrls("https://medstorm:5001");
                     
                 });
-        
-
     }
 }

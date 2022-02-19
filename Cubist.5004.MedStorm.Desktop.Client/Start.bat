@@ -1,6 +1,2 @@
-
-start ./Cubist.5004.MedStorm.Desktop.Client.exe -PassThru
-
-timeout 2
-
-start https://medstorm:5001
+timeout 6
+start https://127.0.0.1:5001/Index
