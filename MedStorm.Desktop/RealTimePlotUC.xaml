@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Plot.RealTimePlotUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" 
+             Loaded="PlotUserControl_Loaded" 
+             SizeChanged="PlotUserControl_SizeChanged"
+             x:Name="PlotControl">
+    <Grid Background="Black">
+        <Canvas Margin="30" x:Name="plotCanvas" Background="Black" />
+        <Canvas x:Name="leftSlad" Width="30" HorizontalAlignment="Left" Background="Black"/>
+        <Canvas x:Name="rightSlad" Width="5" HorizontalAlignment="Right" Background="Black"/>
+        <Canvas Margin="30" x:Name="gridCanvas" Background="Transparent" >
+            <TextBlock Width="80" Text="{Binding PlotTitle, ElementName=PlotControl}"  
+                       Canvas.Top="-20" Canvas.Left="0" Foreground="White" Background="Green" FontSize="12" FontFamily="Courier" />
+            <Grid Canvas.Top="-20" Canvas.Left="0">
+                <TextBlock Width="80" Text="{Binding PlotTitle, ElementName=PlotControl}"  
+                       Foreground="White" Background="Black" FontSize="12" FontFamily="Courier" />
+            </Grid>
+
+        </Canvas>
+        <Grid  Margin="27,0,10,7"
+               Height="13" VerticalAlignment="Bottom"
+               Width="{Binding ElementName=PlotControl,Path=ActualWidth}">
+            <StackPanel x:Name="timeLabels" Orientation="Horizontal"/>
+        </Grid>
+        <Grid  Margin="0,23,0,10"
+               Width="18" HorizontalAlignment="Left"
+               Height="{Binding ElementName=PlotControl,Path=ActualHeight}">
+            <StackPanel x:Name="valueLabels" Orientation="Vertical" />
+        </Grid>
+    </Grid>
+</UserControl>

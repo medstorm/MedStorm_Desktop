@@ -18,12 +18,12 @@ namespace PSSApplication.Core
             SC = sc;
             BS = bs;
         }
-        public byte PSS { get; set; }
-        public byte AUC { get; set; }
+        public byte PSS { get; set; }   // PPS value
+        public byte AUC { get; set; }   // Area Value
 
-        public byte NBV { get; set; } 
-        public double [] SC { get; set; }
+        public byte NBV { get; set; }   // Nerve-Block value
+        public double [] SC { get; set; }   // Skin Conductivity 
 
-        public byte BS { get; set; }
+        public byte BS { get; set; }    // Bad Signal value
     }
 }

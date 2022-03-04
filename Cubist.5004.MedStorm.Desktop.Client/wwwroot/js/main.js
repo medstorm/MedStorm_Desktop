@@ -77,6 +77,9 @@ var app = (function () {
         
         addDataObject(incomingObject);
         lastTimestamp = incomingObject.timestamp;
+        if (lastTimestamp < (Date.now() - 2000)) {
+            console.log('To big differense on incoming data, last=' + lastTimestamp + ', now=' + Date.now());
+        }
 
         if (isFirst) {
             isFirst = false;

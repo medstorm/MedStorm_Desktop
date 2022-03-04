@@ -1,0 +1,89 @@
+﻿<Window x:Class="MedStorm.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedStorm.Desktop"
+        mc:Ignorable="d"
+        xmlns:plot="clr-namespace:Plot"
+        Loaded="Window_Loaded"
+        Title="PainSensor - Desktop" x:Name="TopWindow" Height="450" Width="800">
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2.7*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- 0. column, Skin Condiction and buttons -->       
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="10,10,0,10" HorizontalAlignment="Left">
+                <Button Width="100" x:Name="connect_diconnect" Content="Connect"
+                        Click="connect_diconnect_Click"/>
+            </Grid>
+
+            <Grid Grid.Row="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <plot:RealTimePlotUC Grid.Row="0" x:Name="skinPlot" HasFixedVerticalLabels="False" PlotTitle="MicroSiemens" NoOfSecondsToShow="20.0" PlotCurveWithArea="false"/>
+            </Grid>
+        </Grid>
+
+        <!-- 1. column, Numbers and labelse -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" >
+                <TextBlock Text="Pain-Nociceptive" Foreground="#FFB32B59" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="PainNociceptiveValue" 
+                           Foreground="#FFB32B59" FontSize="30" HorizontalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" >
+                <TextBlock Text="Awakening" Foreground="#FF598C7B" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="AwakeningValue" Foreground="#FF598C7B" FontSize="30" HorizontalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" VerticalAlignment="Center" >
+                <TextBlock Text="Nerve Block" Foreground="#FFB27843" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="NerveBlockValue"  Foreground="#FFB27843" FontSize="30" HorizontalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+
+        <!-- 2. column, Time-plot with area -->
+        <Grid Grid.Column="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <plot:RealTimePlotUC Grid.Row="0" x:Name="PainNociceptive"
+                                 FillAreaBrush="#FFB32B59"
+                                 NoOfSecondsToShow="60.0" 
+                                 MaxValue="10" 
+                                 NoOfHorizontalGridLines="5" 
+                                 PlotCurveWithArea="true"/>
+            
+            <plot:RealTimePlotUC Grid.Row="1" x:Name="Awakening" 
+                                 FillAreaBrush="#FF598C7B"
+                                 NoOfSecondsToShow="60.0" 
+                                 MaxValue="100" 
+                                 NoOfHorizontalGridLines="5" 
+                                 PlotCurveWithArea="true"/>
+            
+            <plot:RealTimePlotUC Grid.Row="2" x:Name="NerveBlock" 
+                                 FillAreaBrush="#FFB27843"
+                                 NoOfSecondsToShow="60.0" 
+                                 MaxValue="10" 
+                                 NoOfHorizontalGridLines="5" 
+                                 PlotCurveWithArea="true"/>
+        </Grid>
+    </Grid>
+</Window>

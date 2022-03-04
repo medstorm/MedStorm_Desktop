@@ -200,8 +200,7 @@ namespace PSSApplication.Core
 
         private async Task<DevicePairingResult> PairDevice()
         {
-            Debug.WriteLine("PairDevice:");
-            Debug.WriteLine("AdvertisementHandler.UnpairDevice:");
+            Debug.WriteLine("AdvertisementHandler.PairDevice:");
             BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
             if (bleDevice == null)
             {
@@ -642,7 +641,7 @@ namespace PSSApplication.Core
 
                 //Try reconnect
                 StartScanningForPainSensors();
-                if (m_bleHub.Clients != null)
+                if (m_bleHub!=null && m_bleHub.Clients != null)
                     await m_bleHub.Clients.All.SendAsync("ReconnectDevice");    // Fire signals to clients
             }
         }

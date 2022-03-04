@@ -16,8 +16,13 @@ namespace PSSApplication.Core
         private BleHub m_bleHub;
 
         private readonly IConfiguration m_configuration;
-        private IHubContext<BleEndpoint> m_context;
+        private IHubContext<BleEndpoint> m_context=null;
         private static bool m_firstCallToConstructor = true;
+
+        public BleEndpoint()
+        {
+
+        }
         public BleEndpoint(IHubContext<BleEndpoint> context)
         {
             Debug.WriteLine($"BleEndpoint: ctor, m_firstCallToConstructor={m_firstCallToConstructor}");
@@ -177,7 +182,7 @@ namespace PSSApplication.Core
             }
         }
 
-        private bool IsAcceptedRange(BLEMeasurement measurement)
+        public bool IsAcceptedRange(BLEMeasurement measurement)
         {
             const int ppsMax = 10;
             const int aucMax = 100;
