@@ -14,33 +14,53 @@
             <ColumnDefinition Width="2.7*"/>
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
-        
-        <!-- 0. column, Skin Condiction and buttons -->       
+
+        <!-- 0. column, Skin Condiction and buttons -->
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="10,10,0,10" HorizontalAlignment="Left">
-                <Button Width="100" x:Name="connect_diconnect" Content="Connect"
-                        Click="connect_diconnect_Click"/>
-            </Grid>
+            <Button Grid.Row="0" Margin="10,10,0,2" Width="192" x:Name="enter_patient_ID" HorizontalAlignment="Left"
+                    Content="Enter Patient ID" Foreground="White" Background="#FF03303F"/>
+            <ComboBox x:Name="ApplicationsComboBox" Grid.Row="1" Margin="10,0,10,10"  Width="192" HorizontalAlignment="Left"
+                      SelectionChanged="ApplicationsComboBox_SelectionChanged">
+                <ComboBoxItem>Anaesthesia</ComboBoxItem>
+                <ComboBoxItem>PostOperative</ComboBoxItem>
+                <ComboBoxItem>Icu</ComboBoxItem>
+                <ComboBoxItem>Infants</ComboBoxItem>
+                <ComboBoxItem>Withdrawal</ComboBoxItem>
+                <ComboBoxItem>NeuralBlock</ComboBoxItem>
+            </ComboBox>
 
-            <Grid Grid.Row="1" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <plot:RealTimePlotUC Grid.Row="0" x:Name="skinPlot" HasFixedVerticalLabels="False" PlotTitle="MicroSiemens" NoOfSecondsToShow="20.0" PlotCurveWithArea="false"/>
-            </Grid>
+            <plot:RealTimePlotUC Grid.Row="2" x:Name="skinPlot" HasFixedVerticalLabels="False" PlotTitle="MicroSiemens" NoOfSecondsToShow="20.0" PlotCurveWithArea="false"/>
+
+            <StackPanel Grid.Row="3" Margin="10,10,0,3" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button  Content="Close" Foreground="White" Background="#FF03303F" Margin="0,0,2,0" Width="50"/>
+                <Button  Width="140"
+                    Content="Comment" Foreground="White" Background="#FF03303F" />
+            </StackPanel>
+
+            <Button Grid.Row="4" Margin="10,0,0,0" Width="192" HorizontalAlignment="Left"
+                    Content="Connect Monitor" Foreground="White" Background="#FF03303F" />
+
+            <Button Grid.Row="5" Margin="10,2,0,10" Width="192" x:Name="connect_diconnect" HorizontalAlignment="Left"
+                    Content="Connect" Foreground="White" Background="#FF03303F"
+                    Click="connect_diconnect_Click"/>
+
         </Grid>
 
         <!-- 1. column, Numbers and labelse -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="{Binding ElementName=TopWindow,Path=PainNociceptiveRow}"/>
+                <RowDefinition Height="{Binding ElementName=TopWindow,Path=AwakeningRow}"/>
+                <RowDefinition Height="{Binding ElementName=TopWindow,Path=NerveBlockRow}"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" VerticalAlignment="Center" >
                 <TextBlock Text="Pain-Nociceptive" Foreground="#FFB32B59" FontSize="16" HorizontalAlignment="Center" />
@@ -60,25 +80,29 @@
         <!-- 2. column, Time-plot with area -->
         <Grid Grid.Column="2" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="{Binding ElementName=TopWindow,Path=PainNociceptiveRow}"/>
+                <RowDefinition Height="{Binding ElementName=TopWindow,Path=AwakeningRow}"/>
+                <RowDefinition Height="{Binding ElementName=TopWindow,Path=NerveBlockRow}"/>
             </Grid.RowDefinitions>
+
             <plot:RealTimePlotUC Grid.Row="0" x:Name="PainNociceptive"
+                                 Visibility="{Binding ElementName=TopWindow,Path=PainNociceptiveVisibility}"
                                  FillAreaBrush="#FFB32B59"
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="10" 
                                  NoOfHorizontalGridLines="5" 
                                  PlotCurveWithArea="true"/>
-            
+
             <plot:RealTimePlotUC Grid.Row="1" x:Name="Awakening" 
+                                 Visibility="{Binding ElementName=TopWindow,Path=AwakeningVisibility}"
                                  FillAreaBrush="#FF598C7B"
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="100" 
                                  NoOfHorizontalGridLines="5" 
                                  PlotCurveWithArea="true"/>
-            
+
             <plot:RealTimePlotUC Grid.Row="2" x:Name="NerveBlock" 
+                                 Visibility="{Binding ElementName=TopWindow,Path=NerveBlockVisibility}"
                                  FillAreaBrush="#FFB27843"
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="10" 

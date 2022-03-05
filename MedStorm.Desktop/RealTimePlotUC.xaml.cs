@@ -61,7 +61,7 @@ namespace Plot
         {
             Init();
             DispatcherTimer animationTimer = new DispatcherTimer();
-            animationTimer.Interval = TimeSpan.FromMilliseconds(10);
+            animationTimer.Interval = TimeSpan.FromMilliseconds(15);
             animationTimer.Tick += AnimationTimer_Tick;
             animationTimer.Start();
         }
