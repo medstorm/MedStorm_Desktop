@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:MedStorm.Desktop"
         mc:Ignorable="d"
         xmlns:plot="clr-namespace:Plot"
-        Loaded="Window_Loaded"
-        Title="PainSensor - Desktop" x:Name="TopWindow" Height="450" Width="800">
+        Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="None"
+        Title="PainSensor - Desktop" x:Name="TopWindow" Height="450" Width="900">
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -21,6 +21,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -41,17 +42,19 @@
             <plot:RealTimePlotUC Grid.Row="2" x:Name="skinPlot" HasFixedVerticalLabels="False" PlotTitle="MicroSiemens" NoOfSecondsToShow="20.0" PlotCurveWithArea="false"/>
 
             <StackPanel Grid.Row="3" Margin="10,10,0,3" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button  Content="Close" Foreground="White" Background="#FF03303F" Margin="0,0,2,0" Width="50"/>
+                <Button x:Name="CloseButton" Click="CloseButton_Click" Content="Close" Foreground="White" Background="#FF03303F" Margin="0,0,2,0" Width="50"/>
                 <Button  Width="140"
                     Content="Comment" Foreground="White" Background="#FF03303F" />
             </StackPanel>
 
-            <Button Grid.Row="4" Margin="10,0,0,0" Width="192" HorizontalAlignment="Left"
-                    Content="Connect Monitor" Foreground="White" Background="#FF03303F" />
+            <Button x:Name="ConnectMonitorButton" Grid.Row="4" Margin="10,0,0,0" Width="192" HorizontalAlignment="Left"
+                    Content="Connect Monitor" Foreground="White" Background="#FF03303F" RenderTransformOrigin="1.432,49.718"
+                    Click="ConnectMonitorButton_Click"/>
 
-            <Button Grid.Row="5" Margin="10,2,0,10" Width="192" x:Name="connect_diconnect" HorizontalAlignment="Left"
+            <Button x:Name="ConnectDisconnectButton" Grid.Row="5" Margin="10,2,0,10" Width="192" HorizontalAlignment="Left"
                     Content="Connect" Foreground="White" Background="#FF03303F"
                     Click="connect_diconnect_Click"/>
+            <Image Grid.Row="6" Source="logo_medstorm.png" Margin="10" Width="150" HorizontalAlignment="Left"/>
 
         </Grid>
 
@@ -63,17 +66,17 @@
                 <RowDefinition Height="{Binding ElementName=TopWindow,Path=NerveBlockRow}"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" VerticalAlignment="Center" >
-                <TextBlock Text="Pain-Nociceptive" Foreground="#FFB32B59" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="PainNociceptiveValue" 
+                <TextBlock x:Name="PainNociceptiveTextBox" Text="Pain-Nociceptive" Foreground="#FFB32B59" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="PainNociceptiveValue" Text="--"
                            Foreground="#FFB32B59" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="1" VerticalAlignment="Center" >
-                <TextBlock Text="Awakening" Foreground="#FF598C7B" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="AwakeningValue" Foreground="#FF598C7B" FontSize="30" HorizontalAlignment="Center" />
+                <TextBlock  Text="Awakening" Foreground="#FF598C7B" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="AwakeningValue" Text="--" Foreground="#FF598C7B" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="2" VerticalAlignment="Center" >
                 <TextBlock Text="Nerve Block" Foreground="#FFB27843" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="NerveBlockValue"  Foreground="#FFB27843" FontSize="30" HorizontalAlignment="Center" />
+                <TextBlock x:Name="NerveBlockValue" Text="--" Foreground="#FFB27843" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
         </Grid>
 

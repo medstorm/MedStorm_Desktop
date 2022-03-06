@@ -9,7 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="logo_medstorm.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Cubist.5004.MedStorm.Desktop.Core\Cubist.5004.MedStorm.Desktop.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="logo_medstorm.png" />
   </ItemGroup>
 
 </Project>

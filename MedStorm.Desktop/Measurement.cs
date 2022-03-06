@@ -10,5 +10,6 @@ namespace Plot
     {
         public double Value { get; set; }
         public DateTime TimeStamp { get; set; }
+        public bool IsBadSignal { get; set; }
     }
 }

@@ -32,7 +32,6 @@ namespace Plot
         public double MaxValue { get; set; } = 10;
         public int NoOfVerticalGridLines { get; set; } = 5;
         public List<Measurement> DataPoints { get; private set; }
-
         public Brush FillAreaBrush { get; set; }
 
         double m_maxValue = 1;
@@ -43,7 +42,9 @@ namespace Plot
         double m_secondToPixel = 0;
         PathSegmentCollection m_pathSegments = new PathSegmentCollection();
         Path m_path = new Path();
+        Path m_badSignalPath = new Path();
         CurveGenerator m_curveGenerator;
+        DateTime m_startTime;
         public RealTimePlotUC()
         {
             InitializeComponent();
@@ -68,13 +69,13 @@ namespace Plot
 
         public void AddData(Measurement sample)
         {
+            m_startTime = DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow);
             DataPoints.Add(sample);
 
             // Remove old data
-            DateTime startTime = DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow);
             for (int i = DataPoints.Count - 1; i >= 0; i--)
             {
-                if (DataPoints[i].TimeStamp < (startTime - TimeSpan.FromSeconds(1)))
+                if (DataPoints[i].TimeStamp < (m_startTime - TimeSpan.FromSeconds(1)))
                     DataPoints.RemoveAt(i);
             }
         }
@@ -87,43 +88,51 @@ namespace Plot
 
         private void AnimationTimer_Tick(object? sender, EventArgs e)
         {
-            m_path = new Path();
-            m_curveGenerator = new CurveGenerator(m_path);
-
-            if (PlotCurveWithArea)
-                PlotWithArea();
-            else
-                Plot();
-
-
-            plotCanvas.Children.Clear();
-            plotCanvas.Children.Add(m_path);
-
-            // Add value-labels if they are not fixed
-            if (!HasFixedVerticalLabels)
+            try
             {
-                valueLabels.Children.Clear();
-                string valueLabelText="";
-                double valueRange = m_maxValue - m_minValue;
-                double valueStep = valueRange / NoOfHorizontalGridLines;
-                for (int i = 0; i <= NoOfHorizontalGridLines; i++)
-                {
-                    double labelValue = valueStep * (NoOfHorizontalGridLines - i) + m_minValue;
-                    if (valueRange <= 10)
-                        valueLabelText = string.Format("{0:f1}", labelValue);
-                    else
-                        valueLabelText = string.Format("{0:f0}", labelValue);
+                m_startTime = DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow);
+                m_path = new Path();
+                m_curveGenerator = new CurveGenerator(m_path);
 
-                    valueLabels.Children.Add(new TextBlock
+                if (PlotCurveWithArea)
+                    PlotWithArea();
+                else
+                    Plot();
+
+                plotCanvas.Children.Clear();
+                plotCanvas.Children.Add(m_path);
+                plotCanvas.Children.Add(m_badSignalPath);
+
+                // Add value-labels if they are not fixed
+                if (!HasFixedVerticalLabels)
+                {
+                    valueLabels.Children.Clear();
+                    string valueLabelText = "";
+                    double valueRange = m_maxValue - m_minValue;
+                    double valueStep = valueRange / NoOfHorizontalGridLines;
+                    for (int i = 0; i <= NoOfHorizontalGridLines; i++)
                     {
-                        Text = valueLabelText,
-                        FontFamily = new FontFamily("Courier"),
-                        FontSize = 10,
-                        Foreground = Brushes.White,
-                        TextAlignment = TextAlignment.Right,
-                        Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
-                    });
+                        double labelValue = valueStep * (NoOfHorizontalGridLines - i) + m_minValue;
+                        if (valueRange <= 10)
+                            valueLabelText = string.Format("{0:f1}", labelValue);
+                        else
+                            valueLabelText = string.Format("{0:f0}", labelValue);
+
+                        valueLabels.Children.Add(new TextBlock
+                        {
+                            Text = valueLabelText,
+                            FontFamily = new FontFamily("Courier"),
+                            FontSize = 10,
+                            Foreground = Brushes.White,
+                            TextAlignment = TextAlignment.Right,
+                            Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
+                        });
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -168,7 +177,7 @@ namespace Plot
                         FontSize = 10,
                         Foreground = Brushes.White,
                         TextAlignment = TextAlignment.Right,
-                        Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines)-12)
+                        Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
                     });
                 }
             }
@@ -228,6 +237,21 @@ namespace Plot
                     m_pathSegments.Add(new LineSegment(new Point(valuePoints.First().X, m_pixelHeight), false));
                     m_pathSegments.Add(new LineSegment(new Point(valuePoints.First().X, valuePoints.First().Y), false));
                 }
+
+                // Add paths to indicate bad signals
+                m_badSignalPath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0 };
+                PathFigure badSignalFigure = MakePathFigure(m_badSignalPath);
+                foreach (var item in DataPoints)
+                {
+                    if (item.IsBadSignal && item.TimeStamp > (m_startTime - TimeSpan.FromSeconds(1)))
+                    {
+                        TimeSpan timeSpan = item.TimeStamp - m_startTime;
+                        double x = timeSpan.TotalSeconds * m_secondToPixel;
+                        double y = m_pixelHeight;
+                        badSignalFigure.Segments.Add(new LineSegment(new Point(x, 0), false));  // Move
+                        badSignalFigure.Segments.Add(new LineSegment(new Point(x, y), true));  // Draw
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -270,14 +294,16 @@ namespace Plot
             }
             m_valueToPixel = m_pixelHeight / m_maxValue;
 
-            DateTime startTime = DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow);
             List<Point> valuePoints = new List<Point>();
             foreach (var item in DataPoints)
             {
-                TimeSpan timeSpan = item.TimeStamp - startTime;
-                double x = timeSpan.TotalSeconds * m_secondToPixel;
-                double y = m_pixelHeight - item.Value * m_valueToPixel;
-                valuePoints.Add(new Point(x, y));
+                if (item.TimeStamp > (m_startTime - TimeSpan.FromSeconds(1)))
+                {
+                    TimeSpan timeSpan = item.TimeStamp - m_startTime;
+                    double x = timeSpan.TotalSeconds * m_secondToPixel;
+                    double y = m_pixelHeight - item.Value * m_valueToPixel;
+                    valuePoints.Add(new Point(x, y));
+                }
             }
 
             return valuePoints;

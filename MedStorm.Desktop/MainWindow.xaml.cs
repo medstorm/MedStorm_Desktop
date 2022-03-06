@@ -101,22 +101,60 @@ namespace MedStorm.Desktop
                 DataExporter.AddData(dataExportObject);
             }
 
-            skinPlot.AddData(new Measurement { Value = e.Measurement.SC[0], TimeStamp = now });
-            PainNociceptive.AddData(new Measurement { Value = e.Measurement.PSS, TimeStamp = now });
-            Awakening.AddData(new Measurement { Value = e.Measurement.AUC, TimeStamp = now });
-            NerveBlock.AddData(new Measurement { Value = e.Measurement.NBV, TimeStamp = now });
+            bool isBadSignal = e.Measurement.BS != 0;
+
+            skinPlot.AddData(new Measurement { Value = e.Measurement.SC[0], TimeStamp = now, IsBadSignal = isBadSignal });
+            PainNociceptive.AddData(new Measurement { Value = e.Measurement.PSS, TimeStamp = now, IsBadSignal = isBadSignal });
+            Awakening.AddData(new Measurement { Value = e.Measurement.AUC, TimeStamp = now, IsBadSignal = isBadSignal });
+            NerveBlock.AddData(new Measurement { Value = e.Measurement.NBV, TimeStamp = now, IsBadSignal = isBadSignal });
 
             Dispatcher.Invoke(new Action(() =>
             {
-                PainNociceptiveValue.Text = e.Measurement.PSS.ToString();
-                AwakeningValue.Text = e.Measurement.AUC.ToString();
-                NerveBlockValue.Text = e.Measurement.NBV.ToString();
+                if (isBadSignal)
+                {
+                    PainNociceptiveValue.Text = "--";
+                    AwakeningValue.Text = "--";
+                    NerveBlockValue.Text = "--";
+                }
+                else
+                {
+                    PainNociceptiveValue.Text = e.Measurement.PSS.ToString();
+                    AwakeningValue.Text = e.Measurement.AUC.ToString();
+                    NerveBlockValue.Text = e.Measurement.NBV.ToString();
+                }
             }));
         }
 
         private void connect_diconnect_Click(object sender, RoutedEventArgs e)
         {
-            m_advHandler.StartScanningForPainSensors();
+
+            if (ConnectDisconnectButton.Content.ToString() == "Connect")
+            {
+                try
+                {
+                    m_advHandler.StartScanningForPainSensors();
+                    ConnectDisconnectButton.Content = "Disconnect";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Not able to Connect to sensor, error={ex.Message}", "Connection Error", MessageBoxButton.OK);
+                    ConnectDisconnectButton.Content = "Connect";
+                }
+            }
+            else // Disconnect
+            {
+                try
+                {
+                    m_advHandler.StopScanningForPainSensors();
+                    ConnectDisconnectButton.Content = "Connect";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Not able to Disconnect to sensor, error={ex.Message}", "Connection Error", MessageBoxButton.OK);
+                    ConnectDisconnectButton.Content = "Connect";
+                }
+            }
+
         }
 
         private void Switch(bool on, PlotType plotType)
@@ -168,6 +206,7 @@ namespace MedStorm.Desktop
         }
         private void ApplicationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            PainNociceptiveTextBox.Text = "Pain - Nociceptive"; // Default
             string? application = ((ComboBoxItem)ApplicationsComboBox.SelectedItem)?.Content?.ToString();
             switch (application)
             {
@@ -179,7 +218,7 @@ namespace MedStorm.Desktop
                     break;
 
                 case "PostOperative":
-                    Debug.WriteLine("postOperative");                  
+                    Debug.WriteLine("postOperative");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
                     Switch(on: false, PlotType.NerveBlock);
@@ -201,6 +240,7 @@ namespace MedStorm.Desktop
 
                 case "Withdrawal":
                     Debug.WriteLine("withdrawal");
+                    PainNociceptiveTextBox.Text = "Withdrawal";
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
                     Switch(on: false, PlotType.NerveBlock);
@@ -218,8 +258,17 @@ namespace MedStorm.Desktop
             }
 
         }
-    }
 
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ConnectMonitorButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 
     public enum PlotType
     {
