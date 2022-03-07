@@ -30,6 +30,8 @@ namespace Plot
         public bool PlotCurveWithArea { get; set; }
         public int NoOfHorizontalGridLines { get; set; } = 5;
         public double MaxValue { get; set; } = 10;
+        public int UpperLimit { get; set; } = 4;
+        public int LowerLimit { get; set; } = 1;
         public int NoOfVerticalGridLines { get; set; } = 5;
         public List<Measurement> DataPoints { get; private set; }
         public Brush FillAreaBrush { get; set; }
@@ -205,6 +207,25 @@ namespace Plot
                     Width = 30,
                     Margin = new Thickness(0, 0, m_pixelWidth / NoOfVerticalGridLines - 30, 0)
                 });
+            }
+
+            // Add limit sections
+            if (PlotCurveWithArea)
+            {
+                Path limitPath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0, Fill = Brushes.Green, Opacity = 0.4 };
+                PathFigure limitFigure = MakePathFigure(limitPath);
+                limitFigure.IsClosed = true;
+
+                double valueToPixel = m_pixelHeight / MaxValue;
+                double yLower = m_pixelHeight - LowerLimit * valueToPixel;
+                double yUpper = m_pixelHeight - UpperLimit * valueToPixel;
+                limitFigure.StartPoint = new Point(0, yLower);
+                limitFigure.Segments.Add(new LineSegment(new Point(x: 0, yUpper), isStroked: false));
+                limitFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth, y: yUpper), isStroked: true));
+                limitFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth, y: yLower), isStroked: false));
+                limitFigure.Segments.Add(new LineSegment(new Point(x: 0, y: yLower), isStroked: true));
+
+                gridCanvas.Children.Add(limitPath);
             }
         }
 

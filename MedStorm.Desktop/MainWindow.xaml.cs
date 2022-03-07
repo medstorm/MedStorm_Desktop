@@ -78,6 +78,7 @@ namespace MedStorm.Desktop
         private BleEndpoint m_bleEndpoint = new BleEndpoint();
         AdvertisementHandler m_advHandler;
         private static BLEMeasurement LatestMeasurement { get; set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
+        string m_temporarComment;
         public MainWindow()
         {
             InitializeComponent();
@@ -207,6 +208,7 @@ namespace MedStorm.Desktop
         private void ApplicationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PainNociceptiveTextBox.Text = "Pain - Nociceptive"; // Default
+            PainNociceptive.UpperLimit = 3;
             string? application = ((ComboBoxItem)ApplicationsComboBox.SelectedItem)?.Content?.ToString();
             switch (application)
             {
@@ -218,6 +220,7 @@ namespace MedStorm.Desktop
                     break;
 
                 case "PostOperative":
+                    PainNociceptive.UpperLimit = 5;
                     Debug.WriteLine("postOperative");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
@@ -256,7 +259,6 @@ namespace MedStorm.Desktop
                 default:
                     break;
             }
-
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -267,6 +269,38 @@ namespace MedStorm.Desktop
         private void ConnectMonitorButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            m_temporarComment= CommentTextBox.Text;
+            CommentPopUp.IsOpen = true;
+        }
+
+        private void CancelCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommentTextBox.Text = m_temporarComment;
+            CommentPopUp.IsOpen = false;
+        }
+
+        private void SaveCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommentPopUp.IsOpen = false;
+        }
+
+        private void CanelPatientIdButton_Click(object sender, RoutedEventArgs e)
+        {
+            PatientIdPopUp.IsOpen = false;
+        }
+
+        private void SavePatientIdButton_Click(object sender, RoutedEventArgs e)
+        {
+            PatientIdPopUp.IsOpen = false;
+        }
+
+        private void PatientIdButton_Click(object sender, RoutedEventArgs e)
+        {
+            PatientIdPopUp.IsOpen = true;
         }
     }
 

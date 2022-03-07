@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:plot="clr-namespace:Plot"
         Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="None"
-        Title="PainSensor - Desktop" x:Name="TopWindow" Height="450" Width="900">
+        Title="PainSensor - Desktop" x:Name="TopWindow" Height="650" Width="900">
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -15,21 +15,56 @@
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
 
+        <Popup x:Name="CommentPopUp" Placement="Center">
+            <Grid Background="#FF03303F" Width="400" Height="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.6*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Add comment:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Bottom"/>
+                <TextBox Grid.Row="1" x:Name="CommentTextBox" TextWrapping="Wrap" Margin="10" />
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button x:Name="CancelCommentButton" Click="CancelCommentButton_Click" Margin="10,0,0,10" Width="70"
+                        Content="Cancel" Foreground="White" Background="#FF03303F"/>
+                    <Button x:Name="SaveCommentButton" Click="SaveCommentButton_Click" Margin="10,0,0,10" Width="70" 
+                        Content="Save" Foreground="White" Background="#FF03303F"/>
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="PatientIdPopUp" Placement="Center">
+            <Grid Background="#FF03303F" Width="400" Height="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.6*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Enter Patient Id:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Bottom"/>
+                <TextBox Grid.Row="1" x:Name="PatientIdTextBox" Margin="10" />
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button x:Name="CanelPatientIdButton" Click="CanelPatientIdButton_Click"  Margin="10,0,0,10" Width="70"
+                        Content="Cancel" Foreground="White" Background="#FF03303F"/>
+                    <Button x:Name="SavePatientIdButton"  Margin="10,0,0,10" Width="70" 
+                        Content="Save" Foreground="White" Click="SavePatientIdButton_Click" Background="#FF03303F"/>
+                </StackPanel>
+            </Grid>
+        </Popup>
+
         <!-- 0. column, Skin Condiction and buttons -->
-        <Grid >
+        <Grid Margin='0,10,0,0'>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="11*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Margin="10,10,0,2" Width="192" x:Name="enter_patient_ID" HorizontalAlignment="Left"
+            <Button x:Name="PatientIdButton" Click="PatientIdButton_Click" Grid.Row="0" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
                     Content="Enter Patient ID" Foreground="White" Background="#FF03303F"/>
-            <ComboBox x:Name="ApplicationsComboBox" Grid.Row="1" Margin="10,0,10,10"  Width="192" HorizontalAlignment="Left"
+            <ComboBox x:Name="ApplicationsComboBox" Grid.Row="1" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
                       SelectionChanged="ApplicationsComboBox_SelectionChanged">
                 <ComboBoxItem>Anaesthesia</ComboBoxItem>
                 <ComboBoxItem>PostOperative</ComboBoxItem>
@@ -39,19 +74,27 @@
                 <ComboBoxItem>NeuralBlock</ComboBoxItem>
             </ComboBox>
 
-            <plot:RealTimePlotUC Grid.Row="2" x:Name="skinPlot" HasFixedVerticalLabels="False" PlotTitle="MicroSiemens" NoOfSecondsToShow="20.0" PlotCurveWithArea="false"/>
+            <plot:RealTimePlotUC Grid.Row="2" x:Name="skinPlot" Margin='0,5,0,10'
+                                 HasFixedVerticalLabels="False" 
+                                 PlotTitle="MicroSiemens" 
+                                 NoOfSecondsToShow="20.0" 
+                                 PlotCurveWithArea="false"/>
 
-            <StackPanel Grid.Row="3" Margin="10,10,0,3" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button x:Name="CloseButton" Click="CloseButton_Click" Content="Close" Foreground="White" Background="#FF03303F" Margin="0,0,2,0" Width="50"/>
-                <Button  Width="140"
+            <Grid Grid.Row="3" Margin="10,0,0,3" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="CloseButton" Grid.Column="0" Click="CloseButton_Click" Content="Close" Foreground="White" Background="#FF03303F"/>
+                <Button x:Name="CommentButton" Grid.Column="1" Click="CommentButton_Click" Margin="3,0,0,0"
                     Content="Comment" Foreground="White" Background="#FF03303F" />
-            </StackPanel>
+            </Grid>
 
-            <Button x:Name="ConnectMonitorButton" Grid.Row="4" Margin="10,0,0,0" Width="192" HorizontalAlignment="Left"
-                    Content="Connect Monitor" Foreground="White" Background="#FF03303F" RenderTransformOrigin="1.432,49.718"
+            <Button x:Name="ConnectMonitorButton" Grid.Row="4" Margin="10,0,0,3" HorizontalAlignment="Stretch"
+                    Content="Connect Monitor" Foreground="White" Background="#FF03303F" 
                     Click="ConnectMonitorButton_Click"/>
 
-            <Button x:Name="ConnectDisconnectButton" Grid.Row="5" Margin="10,2,0,10" Width="192" HorizontalAlignment="Left"
+            <Button x:Name="ConnectDisconnectButton" Grid.Row="5" Margin="10,0,0,3" HorizontalAlignment="Stretch"
                     Content="Connect" Foreground="White" Background="#FF03303F"
                     Click="connect_diconnect_Click"/>
             <Image Grid.Row="6" Source="logo_medstorm.png" Margin="10" Width="150" HorizontalAlignment="Left"/>
@@ -94,7 +137,9 @@
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="10" 
                                  NoOfHorizontalGridLines="5" 
-                                 PlotCurveWithArea="true"/>
+                                 PlotCurveWithArea="true"
+                                 UpperLimit="3"
+                                 LowerLimit="1"/>
 
             <plot:RealTimePlotUC Grid.Row="1" x:Name="Awakening" 
                                  Visibility="{Binding ElementName=TopWindow,Path=AwakeningVisibility}"
@@ -102,7 +147,10 @@
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="100" 
                                  NoOfHorizontalGridLines="5" 
-                                 PlotCurveWithArea="true"/>
+                                 PlotCurveWithArea="true"
+                                 UpperLimit="40"
+                                 LowerLimit="0"
+                                 />
 
             <plot:RealTimePlotUC Grid.Row="2" x:Name="NerveBlock" 
                                  Visibility="{Binding ElementName=TopWindow,Path=NerveBlockVisibility}"
@@ -110,7 +158,9 @@
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="10" 
                                  NoOfHorizontalGridLines="5" 
-                                 PlotCurveWithArea="true"/>
+                                 PlotCurveWithArea="true"
+                                 UpperLimit="1"
+                                 LowerLimit="0"/>
         </Grid>
     </Grid>
 </Window>
