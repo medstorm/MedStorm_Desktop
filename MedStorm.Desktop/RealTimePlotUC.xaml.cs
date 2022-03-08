@@ -29,12 +29,14 @@ namespace Plot
         public double NoOfSecondsToShow { get; set; } = 15;
         public bool PlotCurveWithArea { get; set; }
         public int NoOfHorizontalGridLines { get; set; } = 5;
-        public double MaxValue { get; set; } = 10;
+        public int MaxValue { get; set; } = 10;
         public int UpperLimit { get; set; } = 4;
         public int LowerLimit { get; set; } = 1;
         public int NoOfVerticalGridLines { get; set; } = 5;
         public List<Measurement> DataPoints { get; private set; }
         public Brush FillAreaBrush { get; set; }
+
+        public string HorizontalAxisLabels { get; set; } = ""; //0, 1, 3, 5, 7, 8, 10
 
         double m_maxValue = 1;
         double m_minValue = 0;
@@ -47,6 +49,7 @@ namespace Plot
         Path m_badSignalPath = new Path();
         CurveGenerator m_curveGenerator;
         DateTime m_startTime;
+        List<int> m_horizontalAxisValues = new List<int>();
         public RealTimePlotUC()
         {
             InitializeComponent();
@@ -63,6 +66,17 @@ namespace Plot
         private void PlotUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             Init();
+
+            m_horizontalAxisValues.Clear();
+            string[] labels = HorizontalAxisLabels.Split(',');
+            foreach (var label in labels)
+            {
+                if (int.TryParse(label, out int labelValue))
+                {
+                    m_horizontalAxisValues.Add(labelValue);
+                }
+            }
+
             DispatcherTimer animationTimer = new DispatcherTimer();
             animationTimer.Interval = TimeSpan.FromMilliseconds(15);
             animationTimer.Tick += AnimationTimer_Tick;
@@ -157,32 +171,29 @@ namespace Plot
             gridFigure.StartPoint = new Point(-10, m_pixelHeight);
 
             // Add horizontal lines
-            double step = m_pixelHeight / NoOfHorizontalGridLines;
-            for (int i = NoOfHorizontalGridLines; i >= 0; i--)
+            double step;
+            if (m_horizontalAxisValues.Count > 0)
             {
-                gridFigure.Segments.Add(new LineSegment(new Point(x: -10, y: i * step), isStroked: false));
-                gridFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth + 10, y: i * step), isStroked: true));
-            }
-
-            // Add value-labels if they ar fixed
-            if (HasFixedVerticalLabels)
-            {
-                valueLabels.Children.Clear();
-                double valueStep = MaxValue / NoOfHorizontalGridLines;
-                for (int i = 0; i < NoOfHorizontalGridLines; i++)
+                step = m_pixelHeight / MaxValue;
+                foreach (var i in m_horizontalAxisValues)
                 {
-                    //Control.HorizontalContentAlignment=
-                    valueLabels.Children.Add(new TextBlock
-                    {
-                        Text = (valueStep * (NoOfHorizontalGridLines - i)).ToString(),
-                        FontFamily = new FontFamily("Courier"),
-                        FontSize = 10,
-                        Foreground = Brushes.White,
-                        TextAlignment = TextAlignment.Right,
-                        Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
-                    });
+                    double y = m_pixelHeight - i * step;
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: -10, y), isStroked: false));
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth + 10, y: y), isStroked: true));
                 }
             }
+            else
+            {
+                step = m_pixelHeight / NoOfHorizontalGridLines;
+                for (int i = NoOfHorizontalGridLines; i >= 0; i--)
+                {
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: -10, y: i * step), isStroked: false));
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth + 10, y: i * step), isStroked: true));
+                }
+            }
+
+            // Add value-labels if they are fixed
+            AddValueLabelsForAreaPlots();
 
             // Add vertical lines
             step = m_pixelWidth / NoOfVerticalGridLines;
@@ -229,10 +240,59 @@ namespace Plot
             }
         }
 
-        private static PathFigure MakePathFigure(Path gridPath)
+        private void AddValueLabelsForAreaPlots()
+        {
+            if (!HasFixedVerticalLabels)
+                return;
+
+            valueLabels.Children.Clear();
+
+            if (m_horizontalAxisValues.Count == 0)
+            {
+                double valueStep = MaxValue / NoOfHorizontalGridLines;
+                for (int i = 0; i < NoOfHorizontalGridLines; i++)
+                {
+                    //Control.HorizontalContentAlignment=
+                    valueLabels.Children.Add(new TextBlock
+                    {
+                        Text = (valueStep * (NoOfHorizontalGridLines - i)).ToString(),
+                        FontFamily = new FontFamily("Courier"),
+                        FontSize = 10,
+                        Foreground = Brushes.White,
+                        TextAlignment = TextAlignment.Right,
+                        Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
+                    });
+                }
+            }
+            else // Use predefined labels
+            {
+                double step = m_pixelHeight / MaxValue;
+                for (int i = MaxValue; i >= 0; i--)
+                {
+                    string text;
+                    if (m_horizontalAxisValues.Contains(i))
+                        text = (i).ToString();
+                    else
+                        text = " ";
+
+                    valueLabels.Children.Add(new TextBlock
+                    {
+                        Text = text,
+                        FontFamily = new FontFamily("Courier"),
+                        FontSize = 10,
+                        Foreground = Brushes.White,
+                        TextAlignment = TextAlignment.Right,
+                        Margin = new Thickness(0, 0, 0, (m_pixelHeight / m_horizontalAxisValues.Count) - 18.5)
+                    });
+                }
+            }
+
+        }
+
+        private static PathFigure MakePathFigure(Path path)
         {
             PathGeometry pathGeometry = new PathGeometry();
-            gridPath.Data = pathGeometry;
+            path.Data = pathGeometry;
             PathFigure pathFigure = new PathFigure();
             pathGeometry.Figures.Add(pathFigure);
             return pathFigure;
@@ -245,8 +305,19 @@ namespace Plot
                 if (DataPoints.Count > 2)
                 {
                     List<Point> valuePoints = MakeValuePoints();
-                    Point[] result_points = m_curveGenerator.MakeCurvePoints(valuePoints, 0.4);
-                    m_pathSegments = m_curveGenerator.MakeBezierPath(result_points, isClosed: true);
+                    //Point[] result_points = m_curveGenerator.MakeCurvePoints(valuePoints, 0.4);
+                    //m_pathSegments = m_curveGenerator.MakeBezierPath(result_points, isClosed: true);
+
+
+                    //Path curvePath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0 };
+                    PathFigure curveFigure = MakePathFigure(m_path);
+                    curveFigure.StartPoint = new Point(x: valuePoints.First().X, y: valuePoints.First().Y);
+                    m_pathSegments = curveFigure.Segments;
+                    foreach (var pixelPoint in valuePoints)
+                    {
+                        m_pathSegments.Add(new LineSegment(new Point(pixelPoint.X, pixelPoint.Y), true));
+                    }
+
                     m_path.Stroke = Brushes.White;
                     m_path.Fill = FillAreaBrush;
                     m_path.Opacity = 0.7;
@@ -300,6 +371,7 @@ namespace Plot
 
         private List<Point> MakeValuePoints()
         {
+            m_valueToPixel = m_pixelHeight / m_maxValue;
             if (HasFixedVerticalLabels)
             {
                 m_maxValue = MaxValue;
@@ -313,7 +385,12 @@ namespace Plot
                 m_minValue = m_maxValue;
                 DataPoints.ForEach(x => { if (x.Value < m_minValue) m_minValue = x.Value; });
             }
-            m_valueToPixel = m_pixelHeight / m_maxValue;
+            double valueRange = m_maxValue - m_minValue;
+            double scale;
+            if (valueRange > 0.001)
+                scale = m_maxValue / (m_maxValue - m_minValue);
+            else
+                scale = 100; // Max. scale
 
             List<Point> valuePoints = new List<Point>();
             foreach (var item in DataPoints)
@@ -322,7 +399,12 @@ namespace Plot
                 {
                     TimeSpan timeSpan = item.TimeStamp - m_startTime;
                     double x = timeSpan.TotalSeconds * m_secondToPixel;
-                    double y = m_pixelHeight - item.Value * m_valueToPixel;
+                    double y;
+                    if (HasFixedVerticalLabels)
+                        y = m_pixelHeight - item.Value * m_valueToPixel;
+                    else
+                        y = m_pixelHeight - (item.Value  - m_minValue) * scale * m_valueToPixel;
+
                     valuePoints.Add(new Point(x, y));
                 }
             }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MedStorm.Desktop"
         mc:Ignorable="d"
         xmlns:plot="clr-namespace:Plot"
-        Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="None"
+        Loaded="Window_Loaded" WindowState="Normal" WindowStyle="None"
         Title="PainSensor - Desktop" x:Name="TopWindow" Height="650" Width="900">
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
@@ -136,6 +136,7 @@
                                  FillAreaBrush="#FFB32B59"
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="10" 
+                                 HorizontalAxisLabels="0, 1, 3, 5, 7, 8, 10"
                                  NoOfHorizontalGridLines="5" 
                                  PlotCurveWithArea="true"
                                  UpperLimit="3"
