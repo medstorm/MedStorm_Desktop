@@ -50,9 +50,9 @@ namespace PSSApplication.Core.PatientMonitor
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                Console.WriteLine("Unable to connect to monitor");
+                Console.WriteLine($"Unable to connect to monitor, Error={ex.Message}");
                 monitorRunner = null;
                 return false;
             }

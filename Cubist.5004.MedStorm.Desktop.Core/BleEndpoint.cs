@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using PSSApplication.Core.PatientMonitor;
+using Serilog;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace PSSApplication.Core
         }
         public BleEndpoint(IHubContext<BleEndpoint> context)
         {
-            Debug.WriteLine($"BleEndpoint: ctor, m_firstCallToConstructor={m_firstCallToConstructor}");
+            Log.Debug($"BleEndpoint: ctor, m_firstCallToConstructor={m_firstCallToConstructor}");
             var builder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true)
                 .AddEnvironmentVariables();
@@ -50,7 +51,7 @@ namespace PSSApplication.Core
                 m_bleHub = new BleHub(context, m_configuration.GetValue<string>("AdvertisingName"));
                 if (m_firstCallToConstructor)
                 {
-                    Debug.WriteLine("BleEndpoint.ctor - Adding AddMeasurement");
+                    Log.Debug("BleEndpoint.ctor - Adding AddMeasurement");
                     m_firstCallToConstructor = false;
                     AdvertisementHandler.AdvertisementMgr.NewMeasurement += AddMeasurement;
                 }
@@ -61,7 +62,7 @@ namespace PSSApplication.Core
 
         public Task StartListningForPainSensors()
         {
-            Debug.WriteLine("BleEndpoint: StartListningForPainSensors");
+            Log.Debug("BleEndpoint: StartListningForPainSensors");
             DataExporter.CreateExcelFile();
 
             mock?.StartListningForPainSensors();
@@ -72,7 +73,7 @@ namespace PSSApplication.Core
 
         public void StopScanningForPainSensors()
         {
-            Debug.WriteLine("BleEndpoint: StopScanningForPainSensors");
+            Log.Debug("BleEndpoint: StopScanningForPainSensors");
             mock?.StopListningForPainSensors();
             if (m_bleHub != null)
             {
@@ -82,7 +83,7 @@ namespace PSSApplication.Core
 
         public Task PageReloaded()
         {
-            Debug.WriteLine("BleEndpoint-PageReloaded");
+            Log.Debug("BleEndpoint-PageReloaded");
             BleEndpoint.m_pageReloaded = true;
             return Task.CompletedTask;
         }
@@ -139,7 +140,7 @@ namespace PSSApplication.Core
 
         public static void DebugWrite(string str, bool onlyDebug = false)
         {
-            Debug.WriteLine(str);
+            Log.Debug(str);
             if (!onlyDebug)
                 Console.WriteLine(str);
         }

@@ -1,5 +1,6 @@
 ﻿using BezierCurve;
 using PSSApplication.Core;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,10 +33,9 @@ namespace Plot
         public int MaxValue { get; set; } = 10;
         public int UpperLimit { get; set; } = 4;
         public int LowerLimit { get; set; } = 1;
-        public int NoOfVerticalGridLines { get; set; } = 5;
+        public int NoOfVerticalGridLines { get; set; } = 3;
         public List<Measurement> DataPoints { get; private set; }
         public Brush FillAreaBrush { get; set; }
-
         public string HorizontalAxisLabels { get; set; } = ""; //0, 1, 3, 5, 7, 8, 10
 
         double m_maxValue = 1;
@@ -44,12 +44,14 @@ namespace Plot
         double m_pixelHeight = 0;
         double m_pixelWidth = 0;
         double m_secondToPixel = 0;
+        object m_threadLock = new object();
         PathSegmentCollection m_pathSegments = new PathSegmentCollection();
         Path m_path = new Path();
         Path m_badSignalPath = new Path();
         CurveGenerator m_curveGenerator;
         DateTime m_startTime;
         List<int> m_horizontalAxisValues = new List<int>();
+        Brush m_upperLowerLimitBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#055d7a"));//#FF03303F"));
         public RealTimePlotUC()
         {
             InitializeComponent();
@@ -86,13 +88,16 @@ namespace Plot
         public void AddData(Measurement sample)
         {
             m_startTime = DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow);
-            DataPoints.Add(sample);
-
-            // Remove old data
-            for (int i = DataPoints.Count - 1; i >= 0; i--)
+            lock (m_threadLock)
             {
-                if (DataPoints[i].TimeStamp < (m_startTime - TimeSpan.FromSeconds(1)))
-                    DataPoints.RemoveAt(i);
+                DataPoints.Add(sample);
+
+                // Remove old data
+                for (int i = DataPoints.Count - 1; i >= 0; i--)
+                {
+                    if (DataPoints[i].TimeStamp < (m_startTime - TimeSpan.FromSeconds(1)))
+                        DataPoints.RemoveAt(i);
+                }
             }
         }
 
@@ -104,51 +109,54 @@ namespace Plot
 
         private void AnimationTimer_Tick(object? sender, EventArgs e)
         {
-            try
+            lock (m_threadLock)
             {
-                m_startTime = DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow);
-                m_path = new Path();
-                m_curveGenerator = new CurveGenerator(m_path);
-
-                if (PlotCurveWithArea)
-                    PlotWithArea();
-                else
-                    Plot();
-
-                plotCanvas.Children.Clear();
-                plotCanvas.Children.Add(m_path);
-                plotCanvas.Children.Add(m_badSignalPath);
-
-                // Add value-labels if they are not fixed
-                if (!HasFixedVerticalLabels)
+                try
                 {
-                    valueLabels.Children.Clear();
-                    string valueLabelText = "";
-                    double valueRange = m_maxValue - m_minValue;
-                    double valueStep = valueRange / NoOfHorizontalGridLines;
-                    for (int i = 0; i <= NoOfHorizontalGridLines; i++)
-                    {
-                        double labelValue = valueStep * (NoOfHorizontalGridLines - i) + m_minValue;
-                        if (valueRange <= 10)
-                            valueLabelText = string.Format("{0:f1}", labelValue);
-                        else
-                            valueLabelText = string.Format("{0:f0}", labelValue);
+                    m_startTime = DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow);
+                    m_path = new Path();
+                    m_curveGenerator = new CurveGenerator(m_path);
 
-                        valueLabels.Children.Add(new TextBlock
+                    if (PlotCurveWithArea)
+                        PlotWithArea();
+                    else
+                        Plot();
+
+                    plotCanvas.Children.Clear();
+                    plotCanvas.Children.Add(m_path);
+                    plotCanvas.Children.Add(m_badSignalPath);
+
+                    // Add value-labels if they are not fixed
+                    if (!HasFixedVerticalLabels)
+                    {
+                        valueLabels.Children.Clear();
+                        string valueLabelText = "";
+                        double valueRange = m_maxValue - m_minValue;
+                        double valueStep = valueRange / NoOfHorizontalGridLines;
+                        for (int i = 0; i <= NoOfHorizontalGridLines; i++)
                         {
-                            Text = valueLabelText,
-                            FontFamily = new FontFamily("Courier"),
-                            FontSize = 10,
-                            Foreground = Brushes.White,
-                            TextAlignment = TextAlignment.Right,
-                            Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
-                        });
+                            double labelValue = valueStep * (NoOfHorizontalGridLines - i) + m_minValue;
+                            if (valueRange <= 10)
+                                valueLabelText = string.Format("{0:f1}", labelValue);
+                            else
+                                valueLabelText = string.Format("{0:f0}", labelValue);
+
+                            valueLabels.Children.Add(new TextBlock
+                            {
+                                Text = valueLabelText,
+                                FontFamily = new FontFamily("Courier"),
+                                FontSize = 10,
+                                Foreground = Brushes.White,
+                                TextAlignment = TextAlignment.Right,
+                                Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
+                            });
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"AnimationTimer_Tick: {ex.Message}");
+                }
             }
         }
 
@@ -206,12 +214,12 @@ namespace Plot
 
             // Add time-labels
             timeLabels.Children.Clear();
-            int secondStep = (int)NoOfSecondsToShow / (int)(NoOfVerticalGridLines + 1);
+            int secondStep = (int)NoOfSecondsToShow / (int)(NoOfVerticalGridLines);
             for (int i = NoOfVerticalGridLines; i >= 0; i--)
             {
                 timeLabels.Children.Add(new TextBlock
                 {
-                    Text = (secondStep * i).ToString(),
+                    Text = (secondStep * -i).ToString(),
                     FontFamily = new FontFamily("Courier"),
                     FontSize = 10,
                     Foreground = Brushes.White,
@@ -223,7 +231,7 @@ namespace Plot
             // Add limit sections
             if (PlotCurveWithArea)
             {
-                Path limitPath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0, Fill = Brushes.Green, Opacity = 0.4 };
+                Path limitPath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0, Fill = m_upperLowerLimitBrush, Opacity = 0.5 };
                 PathFigure limitFigure = MakePathFigure(limitPath);
                 limitFigure.IsClosed = true;
 
@@ -305,11 +313,10 @@ namespace Plot
                 if (DataPoints.Count > 2)
                 {
                     List<Point> valuePoints = MakeValuePoints();
-                    //Point[] result_points = m_curveGenerator.MakeCurvePoints(valuePoints, 0.4);
-                    //m_pathSegments = m_curveGenerator.MakeBezierPath(result_points, isClosed: true);
+                    if (valuePoints.Count == 0)
+                        return;
 
-
-                    //Path curvePath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0 };
+                    // Connect points with straight lines
                     PathFigure curveFigure = MakePathFigure(m_path);
                     curveFigure.StartPoint = new Point(x: valuePoints.First().X, y: valuePoints.First().Y);
                     m_pathSegments = curveFigure.Segments;
@@ -347,7 +354,7 @@ namespace Plot
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Error($"PlotWithArea: {ex.Message}");
             }
         }
         private void Plot()
@@ -365,7 +372,7 @@ namespace Plot
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Error($"Plot: {ex.Message}");
             }
         }
 

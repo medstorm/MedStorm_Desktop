@@ -1,8 +1,12 @@
-﻿using Plot;
+﻿using Microsoft.Extensions.Configuration;
+using Plot;
 using PSSApplication.Core;
+using PSSApplication.Core.PatientMonitor;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,13 +78,25 @@ namespace MedStorm.Desktop
         public static readonly DependencyProperty NerveBlockRowProperty =
             DependencyProperty.Register("NerveBlockRow", typeof(GridLength), typeof(MainWindow), new PropertyMetadata(GridLength.Auto));
 
-
-        private BleEndpoint m_bleEndpoint = new BleEndpoint();
-        AdvertisementHandler m_advHandler;
+        AdvertisementHandler? m_advHandler = null;
         private static BLEMeasurement LatestMeasurement { get; set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
-        string m_temporarComment;
+        MonitorHandler m_monitor;
+        IConfigurationRoot m_configuration;
+        bool m_isWaitingForPatientId=false;
         public MainWindow()
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Debug()
+                .WriteTo.File("log.txt")
+                .CreateLogger();
+
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json");
+
+            m_configuration = builder.Build();
+            m_monitor = new MonitorHandler(m_configuration);
+
             InitializeComponent();
         }
 
@@ -89,25 +105,26 @@ namespace MedStorm.Desktop
             m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(null, "PainSensor");
             m_advHandler.NewMeasurement += AddMeasurement;
             ApplicationsComboBox.SelectedIndex = 0;
+            PatientIdPopUp.Closed += PatientIdPopUp_Closed;
         }
 
-        private void AddMeasurement(object? sender, MeasurementEventArgs e)
+        private void AddMeasurement(object? sender, MeasurementEventArgs eventArgs)
         {
-            LatestMeasurement = e.Measurement;
+            LatestMeasurement = eventArgs.Measurement;
             DateTime now = DateTime.Now;
 
-            if (m_bleEndpoint.IsAcceptedRange(e.Measurement) && e.Message != "")
+            if (eventArgs.IsAcceptedRange() && eventArgs.Message != "")
             {
-                DataExportObject dataExportObject = new DataExportObject(now.ToString(), e.Measurement.PSS, e.Measurement.AUC, e.Measurement.NBV, e.Measurement.BS, e.Measurement.SC);
+                DataExportObject dataExportObject = new DataExportObject(now.ToString(), eventArgs.Measurement.PSS, eventArgs.Measurement.AUC, eventArgs.Measurement.NBV, eventArgs.Measurement.BS, eventArgs.Measurement.SC);
                 DataExporter.AddData(dataExportObject);
             }
 
-            bool isBadSignal = e.Measurement.BS != 0;
+            bool isBadSignal = eventArgs.Measurement.BS != 0;
 
-            skinPlot.AddData(new Measurement { Value = e.Measurement.SC[0], TimeStamp = now, IsBadSignal = isBadSignal });
-            PainNociceptive.AddData(new Measurement { Value = e.Measurement.PSS, TimeStamp = now, IsBadSignal = isBadSignal });
-            Awakening.AddData(new Measurement { Value = e.Measurement.AUC, TimeStamp = now, IsBadSignal = isBadSignal });
-            NerveBlock.AddData(new Measurement { Value = e.Measurement.NBV, TimeStamp = now, IsBadSignal = isBadSignal });
+            skinPlot.AddData(new Measurement { Value = eventArgs.Measurement.SC[0], TimeStamp = now, IsBadSignal = isBadSignal });
+            PainNociceptive.AddData(new Measurement { Value = eventArgs.Measurement.PSS, TimeStamp = now, IsBadSignal = isBadSignal });
+            Awakening.AddData(new Measurement { Value = eventArgs.Measurement.AUC, TimeStamp = now, IsBadSignal = isBadSignal });
+            NerveBlock.AddData(new Measurement { Value = eventArgs.Measurement.NBV, TimeStamp = now, IsBadSignal = isBadSignal });
 
             Dispatcher.Invoke(new Action(() =>
             {
@@ -119,21 +136,32 @@ namespace MedStorm.Desktop
                 }
                 else
                 {
-                    PainNociceptiveValue.Text = e.Measurement.PSS.ToString();
-                    AwakeningValue.Text = e.Measurement.AUC.ToString();
-                    NerveBlockValue.Text = e.Measurement.NBV.ToString();
+                    PainNociceptiveValue.Text = eventArgs.Measurement.PSS.ToString();
+                    AwakeningValue.Text = eventArgs.Measurement.AUC.ToString();
+                    NerveBlockValue.Text = eventArgs.Measurement.NBV.ToString();
                 }
             }));
         }
 
+        private void PatientIdPopUp_Closed(object? sender, EventArgs e)
+        {
+            if (m_isWaitingForPatientId)
+            {
+                m_isWaitingForPatientId = false;
+                DataExporter.SaveFile(PatientIdTextBox.Text);
+            }
+        }
         private void connect_diconnect_Click(object sender, RoutedEventArgs e)
         {
-
             if (ConnectDisconnectButton.Content.ToString() == "Connect")
             {
                 try
                 {
-                    m_advHandler.StartScanningForPainSensors();
+                    CommentTextBox.Text = "";
+                    PatientIdTextBox.Text = "";
+                    Log.Debug("MainWindow: connect-Click, creating Excel-File");
+                    DataExporter.CreateExcelFile();
+                    m_advHandler?.StartScanningForPainSensors();
                     ConnectDisconnectButton.Content = "Disconnect";
                 }
                 catch (Exception ex)
@@ -146,16 +174,18 @@ namespace MedStorm.Desktop
             {
                 try
                 {
-                    m_advHandler.StopScanningForPainSensors();
+                    Log.Debug("MainWindow: diconnect-Click, creating Excel-File");
+                    m_advHandler?.StopScanningForPainSensors();
+                    m_isWaitingForPatientId = true;
+                    PatientIdPopUp.IsOpen = true;
                     ConnectDisconnectButton.Content = "Connect";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Not able to Disconnect to sensor, error={ex.Message}", "Connection Error", MessageBoxButton.OK);
+                    MessageBox.Show($"Not able to Disconnect to sensor!\n error={ex.Message}", "Connection Error", MessageBoxButton.OK);
                     ConnectDisconnectButton.Content = "Connect";
                 }
             }
-
         }
 
         private void Switch(bool on, PlotType plotType)
@@ -213,7 +243,7 @@ namespace MedStorm.Desktop
             switch (application)
             {
                 case "Anaesthesia":
-                    Debug.WriteLine("anaesthesia");
+                    Log.Debug("anaesthesia");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: true, PlotType.Awakening);
                     Switch(on: true, PlotType.NerveBlock);
@@ -221,28 +251,28 @@ namespace MedStorm.Desktop
 
                 case "PostOperative":
                     PainNociceptive.UpperLimit = 5;
-                    Debug.WriteLine("postOperative");
+                    Log.Debug("postOperative");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
                     Switch(on: false, PlotType.NerveBlock);
                     break;
 
                 case "Icu":
-                    Debug.WriteLine("icu");
+                    Log.Debug("icu");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: true, PlotType.Awakening);
                     Switch(on: false, PlotType.NerveBlock);
                     break;
 
                 case "Infants":
-                    Debug.WriteLine("infants");
+                    Log.Debug("infants");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
                     Switch(on: false, PlotType.NerveBlock);
                     break;
 
                 case "Withdrawal":
-                    Debug.WriteLine("withdrawal");
+                    Log.Debug("withdrawal");
                     PainNociceptiveTextBox.Text = "Withdrawal";
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
@@ -250,7 +280,7 @@ namespace MedStorm.Desktop
                     break;
 
                 case "NeuralBlock":
-                    Debug.WriteLine("neuralBlock");
+                    Log.Debug("neuralBlock");
                     Switch(on: false, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
                     Switch(on: true, PlotType.NerveBlock);
@@ -268,24 +298,49 @@ namespace MedStorm.Desktop
 
         private void ConnectMonitorButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (ConnectMonitorButton.Content.ToString() == "Connect Monitor")
+                {
+                    bool connectionSuccessful = m_monitor.ConnectToMonitor();
+                    if (connectionSuccessful)
+                    {
+                        Log.Debug("MainWindow: Connected to monitor");
+                        ConnectMonitorButton.Content = "Disconnect Monitor";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not connect to monitor!", "Error", MessageBoxButton.OK);
+                    }
+                }
+                else
+                {
+                    m_monitor.DisconnectMonitor();
+                    ConnectMonitorButton.Content = "Connect Monitor";
+                    Log.Debug("MainWindow: Disconnected from monitor");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Connection to monitor failed! \n {ex.Message}", "Error", MessageBoxButton.OK);
+            }
         }
 
         private void CommentButton_Click(object sender, RoutedEventArgs e)
         {
-            m_temporarComment= CommentTextBox.Text;
             CommentPopUp.IsOpen = true;
         }
 
         private void CancelCommentButton_Click(object sender, RoutedEventArgs e)
         {
-            CommentTextBox.Text = m_temporarComment;
             CommentPopUp.IsOpen = false;
         }
 
         private void SaveCommentButton_Click(object sender, RoutedEventArgs e)
         {
             CommentPopUp.IsOpen = false;
+            DataExporter.AddComment(DateTime.Now, CommentTextBox.Text);
+            CommentTextBox.Text = "";
         }
 
         private void CanelPatientIdButton_Click(object sender, RoutedEventArgs e)

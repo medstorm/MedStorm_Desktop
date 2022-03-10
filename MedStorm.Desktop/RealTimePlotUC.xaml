@@ -9,12 +9,12 @@
              SizeChanged="PlotUserControl_SizeChanged"
              x:Name="PlotControl">
     <Grid Background="Black">
+        <TextBlock Width="80" Height="20" Margin="32,0,0,0" Text="{Binding PlotTitle, ElementName=PlotControl}"  
+                       VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="12" FontFamily="Courier" />
         <Canvas Margin="30" x:Name="plotCanvas" Background="Black" />
         <Canvas x:Name="leftSlad" Width="30" HorizontalAlignment="Left" Background="Black"/>
         <Canvas x:Name="rightSlad" Width="5" HorizontalAlignment="Right" Background="Black"/>
         <Canvas Margin="30" x:Name="gridCanvas" Background="Transparent" >
-            <TextBlock Width="80" Text="{Binding PlotTitle, ElementName=PlotControl}"  
-                       Canvas.Top="-20" Canvas.Left="0" Foreground="White" Background="Green" FontSize="12" FontFamily="Courier" />
             <Grid Canvas.Top="-20" Canvas.Left="0">
                 <TextBlock Width="80" Text="{Binding PlotTitle, ElementName=PlotControl}"  
                        Foreground="White" Background="Black" FontSize="12" FontFamily="Courier" />

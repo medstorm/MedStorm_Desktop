@@ -66,6 +66,12 @@
                     Content="Enter Patient ID" Foreground="White" Background="#FF03303F"/>
             <ComboBox x:Name="ApplicationsComboBox" Grid.Row="1" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
                       SelectionChanged="ApplicationsComboBox_SelectionChanged">
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF022E3D" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
                 <ComboBoxItem>Anaesthesia</ComboBoxItem>
                 <ComboBoxItem>PostOperative</ComboBoxItem>
                 <ComboBoxItem>Icu</ComboBoxItem>
@@ -74,10 +80,11 @@
                 <ComboBoxItem>NeuralBlock</ComboBoxItem>
             </ComboBox>
 
-            <plot:RealTimePlotUC Grid.Row="2" x:Name="skinPlot" Margin='0,5,0,10'
+            <plot:RealTimePlotUC Grid.Row="2" x:Name="skinPlot" Margin='0,15,0,15'
                                  HasFixedVerticalLabels="False" 
                                  PlotTitle="MicroSiemens" 
                                  NoOfSecondsToShow="20.0" 
+                                 NoOfVerticalGridLines="2"
                                  PlotCurveWithArea="false"/>
 
             <Grid Grid.Row="3" Margin="10,0,0,3" HorizontalAlignment="Stretch">
@@ -109,17 +116,17 @@
                 <RowDefinition Height="{Binding ElementName=TopWindow,Path=NerveBlockRow}"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" VerticalAlignment="Center" >
-                <TextBlock x:Name="PainNociceptiveTextBox" Text="Pain-Nociceptive" Foreground="#FFB32B59" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="PainNociceptiveTextBox" Text="Pain-Nociceptive" Foreground="#FF3D7F" FontSize="16" HorizontalAlignment="Center" />
                 <TextBlock x:Name="PainNociceptiveValue" Text="--"
-                           Foreground="#FFB32B59" FontSize="30" HorizontalAlignment="Center" />
+                           Foreground="#FF3D7F" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="1" VerticalAlignment="Center" >
-                <TextBlock  Text="Awakening" Foreground="#FF598C7B" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="AwakeningValue" Text="--" Foreground="#FF598C7B" FontSize="30" HorizontalAlignment="Center" />
+                <TextBlock  Text="Awakening" Foreground="#7FC7AF" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="AwakeningValue" Text="--" Foreground="#7FC7AF" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="2" VerticalAlignment="Center" >
-                <TextBlock Text="Nerve Block" Foreground="#FFB27843" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="NerveBlockValue" Text="--" Foreground="#FFB27843" FontSize="30" HorizontalAlignment="Center" />
+                <TextBlock Text="Nerve Block" Foreground="#FEAB5F" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="NerveBlockValue" Text="--" Foreground="#FEAB5F" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
         </Grid>
 
@@ -133,7 +140,7 @@
 
             <plot:RealTimePlotUC Grid.Row="0" x:Name="PainNociceptive"
                                  Visibility="{Binding ElementName=TopWindow,Path=PainNociceptiveVisibility}"
-                                 FillAreaBrush="#FFB32B59"
+                                 FillAreaBrush="#FF3D7F"
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="10" 
                                  HorizontalAxisLabels="0, 1, 3, 5, 7, 8, 10"
@@ -144,7 +151,7 @@
 
             <plot:RealTimePlotUC Grid.Row="1" x:Name="Awakening" 
                                  Visibility="{Binding ElementName=TopWindow,Path=AwakeningVisibility}"
-                                 FillAreaBrush="#FF598C7B"
+                                 FillAreaBrush="#7FC7AF"
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="100" 
                                  NoOfHorizontalGridLines="5" 
@@ -155,7 +162,7 @@
 
             <plot:RealTimePlotUC Grid.Row="2" x:Name="NerveBlock" 
                                  Visibility="{Binding ElementName=TopWindow,Path=NerveBlockVisibility}"
-                                 FillAreaBrush="#FFB27843"
+                                 FillAreaBrush="#FEAB5F"
                                  NoOfSecondsToShow="60.0" 
                                  MaxValue="10" 
                                  NoOfHorizontalGridLines="5" 

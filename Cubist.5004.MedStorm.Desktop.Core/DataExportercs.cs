@@ -51,10 +51,9 @@ public class DataExporter : Hub
                                  new Column("Skin Conductivity 3", "H"),
                                  new Column("Skin Conductivity 4", "I"),
                                  new Column("Skin Conductivity 5", "J"),
-                                 new Column("Comment", "K")
+                                 new Column("Comment Time", "K"),
+                                 new Column("Comment", "L")
     };
-
-    private static DateTime m_epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
     private static SpreadsheetDocument m_spreadSheet;
 
@@ -150,7 +149,7 @@ public class DataExporter : Hub
             InsertCell("B", m_currentRow, new CellValue(obj.Pain), CellValues.Number, worksheetPart);
             InsertCell("C", m_currentRow, new CellValue(obj.Awakening), CellValues.Number, worksheetPart);
             InsertCell("D", m_currentRow, new CellValue(obj.Nerveblock), CellValues.Number, worksheetPart);
-            InsertCell("E", m_currentRow, new CellValue(getBadSignalString(obj.BadSignal)), CellValues.String, worksheetPart);
+            InsertCell("E", m_currentRow, new CellValue(obj.BadSignal == 0 ? "False" : "True"), CellValues.String, worksheetPart);
 
             InsertCell("F", m_currentRow, new CellValue(Math.Round(obj.SkinCond[0], 3)), CellValues.String, worksheetPart);
             InsertCell("G", m_currentRow, new CellValue(Math.Round(obj.SkinCond[1], 3)), CellValues.String, worksheetPart);
@@ -174,7 +173,7 @@ public class DataExporter : Hub
             cell.CellValue = value;
         }
     }
-    public async Task SaveFile(string patientId)
+    public static void SaveFile(string patientId)
     {
         DataExporter.UpdatePatientId(patientId);
         m_spreadSheet.Close();
@@ -188,7 +187,7 @@ public class DataExporter : Hub
 
         File.Copy(Path.Combine(m_tempPath, m_fileName), targetFile);
         DeleteTempFile();
-        await AlertFilePath(targetFile);
+        //await AlertFilePath(targetFile);
     }
 
     public static void DeleteTempFile()
@@ -202,16 +201,19 @@ public class DataExporter : Hub
             }
         }
     }
-    public void AddComment(double timestamp, string comment)
+    public static void AddComment(DateTime timestamp, string comment)
     {
         //using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(Path.Combine(m_tempPath, m_fileName), true))
         //{
-        uint row = getCommentRow(timestamp);
-        string timestring = m_epoch.AddMilliseconds(timestamp).ToLocalTime().ToString();
-        WorksheetPart worksheetPart = m_spreadSheet.WorkbookPart.WorksheetParts.First();
+        string timestring = timestamp.ToShortTimeString();
+        lock (m_lockKey)
+        {
+            int row = getLastRowNo();   // getCommentRow(timestamp);
+            WorksheetPart worksheetPart = m_spreadSheet.WorkbookPart.WorksheetParts.First();
 
-        InsertCell("F", row, new CellValue(comment), new EnumValue<CellValues>(CellValues.String), worksheetPart);
-        //}
+            InsertCell("K", (uint)row, new CellValue(timestring), new EnumValue<CellValues>(CellValues.String), worksheetPart);
+            InsertCell("L", (uint)row, new CellValue(comment), new EnumValue<CellValues>(CellValues.String), worksheetPart);
+        }
     }
     public static void UpdatePatientId(string patientId)
     {
@@ -233,13 +235,6 @@ public class DataExporter : Hub
         }
     }
 
-    private static string getBadSignalString(int badSignal)
-    {
-        if (badSignal == 0)
-            return "False";
-
-        return "True";
-    }
     private static string getFileName()
     {
         DateTime currentDateTime = DateTime.UtcNow;
@@ -247,27 +242,43 @@ public class DataExporter : Hub
 
         return fileName;
     }
-    private uint getCommentRow(double timestamp)
-    {
-        uint firstDataRow = 4;
-        DateTime firstRowDateTime = getCellValue("A" + firstDataRow);
-        var commentDateTime = m_epoch.AddMilliseconds(timestamp).ToLocalTime();
 
-        uint elapsedTime = (uint)((commentDateTime - firstRowDateTime).TotalSeconds);
-        uint commentRow = firstDataRow + elapsedTime;
-
-        return commentRow;
-    }
-    private DateTime getCellValue(string cellReference)
+    private static int getLastRowNo()
     {
         WorkbookPart workbookPart = m_spreadSheet.WorkbookPart;
         Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().Where(s => s.Name == m_sheetName).FirstOrDefault();
         WorksheetPart worksheetPart = (WorksheetPart)(workbookPart.GetPartById(sheet.Id));
 
-        Cell cell = worksheetPart.Worksheet.Descendants<Cell>().Where(c => c.CellReference == cellReference).FirstOrDefault();
-        var cellValue = DateTime.Parse(cell.InnerText);
-
-        return cellValue;
+        var rowList = worksheetPart.Worksheet.Descendants<Row>();
+        if (rowList != null && rowList.Count() > 0)
+            return rowList.Count();
+        else
+            return 5;
     }
+
+    //private uint getCommentRowNo(DateTime timestamp)
+    //{
+    //uint firstDataRow = 4;
+    //DateTime firstRowDateTime = getCellValue("A" + firstDataRow);
+    //return commentRow;
+
+    //var commentDateTime = m_epoch.AddMilliseconds(timestamp).ToLocalTime();
+
+    //uint elapsedTime = (uint)((commentDateTime - firstRowDateTime).TotalSeconds);
+    //uint commentRow = firstDataRow + elapsedTime;
+
+    //return commentRow;
+    //}
+    //private DateTime getCellValue(string cellReference)
+    //{
+    //    WorkbookPart workbookPart = m_spreadSheet.WorkbookPart;
+    //    Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().Where(s => s.Name == m_sheetName).FirstOrDefault();
+    //    WorksheetPart worksheetPart = (WorksheetPart)(workbookPart.GetPartById(sheet.Id));
+
+    //    Cell cell = worksheetPart.Worksheet.Descendants<Cell>().Where(c => c.CellReference == cellReference).FirstOrDefault();
+    //    var cellValue = DateTime.Parse(cell.InnerText);
+
+    //    return cellValue;
+    //}
 }
 
