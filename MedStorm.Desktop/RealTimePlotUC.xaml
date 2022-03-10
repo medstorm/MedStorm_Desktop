@@ -31,5 +31,6 @@
                Height="{Binding ElementName=PlotControl,Path=ActualHeight}">
             <StackPanel x:Name="valueLabels" Orientation="Vertical" />
         </Grid>
+        <TextBlock Text="sec." Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,8" />
     </Grid>
 </UserControl>

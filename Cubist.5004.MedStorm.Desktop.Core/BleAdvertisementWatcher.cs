@@ -408,7 +408,7 @@ namespace PSSApplication.Core
             }
             catch (Exception ex)
             {
-                BleEndpoint.DebugWrite("ConfigureSensorService Error: " + ex.Message);
+                Log.Error("ConfigureSensorService Error: " + ex.Message);
             }
         }
 
