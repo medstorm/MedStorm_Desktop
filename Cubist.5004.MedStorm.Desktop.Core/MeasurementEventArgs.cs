@@ -14,8 +14,8 @@ namespace PSSApplication.Core
             Measurement = new BLEMeasurement(ppsValue, areaValue, nerveBlockValue, conductivityItems, badSignalValue);
             string condItemsString = string.Join(",", conductivityItems.Select(f => f.ToString(CultureInfo.InvariantCulture.NumberFormat)));
             long timestamp = (long)(DateTime.UtcNow - DateTime.UnixEpoch.ToUniversalTime()).TotalMilliseconds;
-            if (timestamp > lastTimestamp + 2000)
-                Log.Debug($"Timelag - timestamp={timestamp}, lastTimestamp={lastTimestamp}");
+            if (lastTimestamp != 0 && timestamp > lastTimestamp + 2000)
+                Log.Error($"MeasurementEventArgs: Timelag - timestamp={timestamp}, lastTimestamp={lastTimestamp}");
 
             Message = string.Format("Timestamp:{0}|PPS:{1}|Area:{2}|SkinCond:[{3}]|MeanRiseTime:{4}|NerveBlock:{5}|BadSignal:{6}",
                                             timestamp, ppsValue, areaValue, condItemsString, meanRiseTimeValue.ToString(CultureInfo.InvariantCulture.NumberFormat), nerveBlockValue, badSignalValue);
@@ -39,7 +39,7 @@ namespace PSSApplication.Core
             int bs = Measurement.BS;
             if (pps > ppsMax || pps < 0 || auc > aucMax || auc < 0 || nb > nbMax || nb < 0 || bs > 1 || bs < 0)
             {
-                BleEndpoint.DebugWrite("Accepted range failure. All values are not within accepted range.");
+                Log.Debug("Accepted range failure. All values are not within accepted range.");
                 return false;
             }
 
@@ -47,7 +47,7 @@ namespace PSSApplication.Core
             {
                 if (i > scMax || i < 0)
                 {
-                    BleEndpoint.DebugWrite("Accepted range failure. All values are not within accepted range.");
+                    Log.Debug("Accepted range failure. All values are not within accepted range.");
                     return false;
                 }
             }

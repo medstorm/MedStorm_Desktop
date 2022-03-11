@@ -197,7 +197,7 @@ namespace PSSApplication.Core
             int bs = measurement.BS;
             if (pps > ppsMax || pps < 0 || auc > aucMax || auc < 0 || nb > nbMax || nb < 0 || bs > 1 || bs < 0)
             {
-                BleEndpoint.DebugWrite("Accepted range failure. All values are not within accepted range.");
+                Log.Debug("Accepted range failure. All values are not within accepted range.");
                 return false;
             }
 
@@ -205,7 +205,7 @@ namespace PSSApplication.Core
             {
                 if (i > scMax || i < 0)
                 {
-                    BleEndpoint.DebugWrite("Accepted range failure. All values are not within accepted range.");
+                    Log.Debug("Accepted range failure. All values are not within accepted range.");
                     return false;
                 }
             }

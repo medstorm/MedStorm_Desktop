@@ -85,16 +85,14 @@ namespace MedStorm.Desktop
         bool m_isWaitingForPatientId=false;
         public MainWindow()
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Debug()
-                .WriteTo.File("log.txt")
-                .CreateLogger();
-
             var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
-
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json");
             m_configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+                        .ReadFrom.Configuration(m_configuration)
+                        .CreateLogger();
             m_monitor = new MonitorHandler(m_configuration);
 
             InitializeComponent();
@@ -159,6 +157,7 @@ namespace MedStorm.Desktop
                 {
                     CommentTextBox.Text = "";
                     PatientIdTextBox.Text = "";
+                    Log.Debug("--------------------------------------------------------------------");
                     Log.Debug("MainWindow: connect-Click, creating Excel-File");
                     DataExporter.CreateExcelFile();
                     m_advHandler?.StartScanningForPainSensors();
@@ -166,15 +165,18 @@ namespace MedStorm.Desktop
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Not able to Connect to sensor, error={ex.Message}", "Connection Error", MessageBoxButton.OK);
+                    string errorMsg= $"Not able to Connect to sensor, error={ex.Message}";
+                    MessageBox.Show(errorMsg, "Connection Error", MessageBoxButton.OK);
                     ConnectDisconnectButton.Content = "Connect";
+                    Log.Error($"MainWindow: Error={errorMsg}");
                 }
             }
             else // Disconnect
             {
                 try
                 {
-                    Log.Debug("MainWindow: diconnect-Click, creating Excel-File");
+                    Log.Debug("MainWindow: diconnect-Click");
+                    Log.Debug("--------------------------------------------------------------------");
                     m_advHandler?.StopScanningForPainSensors();
                     m_isWaitingForPatientId = true;
                     PatientIdPopUp.IsOpen = true;
@@ -182,8 +184,10 @@ namespace MedStorm.Desktop
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Not able to Disconnect to sensor!\n error={ex.Message}", "Connection Error", MessageBoxButton.OK);
+                    string errMsg = $"Not able to Disconnect to sensor!\n error={ex.Message}";
+                    MessageBox.Show(errMsg, "Connection Error", MessageBoxButton.OK);
                     ConnectDisconnectButton.Content = "Connect";
+                    Log.Error($"MainWindow: diconnect-Click, error={errMsg}");
                 }
             }
         }
@@ -340,6 +344,7 @@ namespace MedStorm.Desktop
         {
             CommentPopUp.IsOpen = false;
             DataExporter.AddComment(DateTime.Now, CommentTextBox.Text);
+            Log.Debug($"Comment added={CommentTextBox.Text}");
             CommentTextBox.Text = "";
         }
 
