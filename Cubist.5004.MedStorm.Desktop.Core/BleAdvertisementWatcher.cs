@@ -55,7 +55,7 @@ namespace PSSApplication.Core
         static readonly string CombinedUuid = "14abde20-31ed-4e0a-bdcf-7efc40f3fffb";
 
         readonly object m_ThreadLock = new object();
-        //BluetoothLEDevice m_bluetoothLeDevice = null;
+        BluetoothLEDevice m_bleDevice = null;
         GattDeviceService m_service = null;
         GattCharacteristic m_characteristic = null;
         //string m_deviceId = null;
@@ -81,14 +81,14 @@ namespace PSSApplication.Core
                 Log.Error("AdvertisementHandler.GetBluetoothLEDevice: Sensor not available m_bluetoothAddress==null");
                 return null;
             }
-            var bleDevice = await BluetoothLEDevice.FromBluetoothAddressAsync(m_bluetoothAddress.Value);
-            if (bleDevice == null)
+            m_bleDevice = await BluetoothLEDevice.FromBluetoothAddressAsync(m_bluetoothAddress.Value);
+            if (m_bleDevice == null)
             {
                 m_isBusy = false;
                 Log.Error("AdvertisementHandler.GetBluetoothLEDevice: Not able to get bleDevice (Sensor)");
                 return null;
             }
-            return bleDevice;
+            return m_bleDevice;
         }
 
         DateTime lastReceivedData = DateTime.MinValue;
@@ -125,14 +125,14 @@ namespace PSSApplication.Core
             if (string.IsNullOrWhiteSpace(advertisementName))
                 throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
 
-            m_timer = new Timer(CheckStatus, null, 30000, 10000);    // wait 30 seconds, and then check every 10th. seconds
+            //m_timer = new Timer(CheckStatus, null, 30000, 10000);    // wait 30 seconds, and then check every 10th. seconds
         }
 
         public void CheckStatus(Object stateInfo)
         {
             if (IsRunning && lastReceivedData < (DateTime.Now-TimeSpan.FromSeconds(10)))
             {
-                Log.Debug("Expected datastream dosn't work. Restarting connection to sensor");
+                Log.Error($"Expected datastream dosn't work. lastReceivedData={lastReceivedData.ToLocalTime()} Restarting connection to sensor");
                 m_timer.Change(30000, 10000);
                 StopScanningForPainSensors();
                 StartScanningForPainSensors();
@@ -166,14 +166,14 @@ namespace PSSApplication.Core
                 m_Watcher.Stop();
 
             await StopAllBluetoothConnections();
-            await UnpairDevice();
+            //await UnpairDevice();
         }
 
         private async Task<DeviceUnpairingResult> UnpairDevice()
         {
             Log.Debug("AdvertisementHandler.UnpairDevice:");
-            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
-            if (bleDevice == null)
+            //BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (m_bleDevice == null)
             {
                 Log.Error("AdvertisementHandler.UnpairDevice: Not able to get bleDevice ");
                 return null;
@@ -186,7 +186,7 @@ namespace PSSApplication.Core
             //Try to unpair for 30 seconds, then fail
             do
             {
-                unpairResult = await bleDevice.DeviceInformation.Pairing.UnpairAsync();
+                unpairResult = await m_bleDevice.DeviceInformation.Pairing.UnpairAsync();
                 Log.Debug($"AdvertisementHandler.UnpairDevice: Pairing Result= {unpairResult.Status}");
             }
             while (unpairResult.Status != DeviceUnpairingResultStatus.Unpaired
@@ -202,8 +202,8 @@ namespace PSSApplication.Core
         private async Task<DevicePairingResult> PairDevice()
         {
             Log.Debug("AdvertisementHandler.PairDevice");
-            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
-            if (bleDevice == null)
+            //BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (m_bleDevice == null)
             {
                 Log.Error("AdvertisementHandler.PairDevice: Not able to get bleDevice ");
                 return null;
@@ -220,9 +220,9 @@ namespace PSSApplication.Core
                 while (!isPaired && stopwatch.ElapsedMilliseconds < 30000)
                 {
                     Log.Debug($"AdvertisementHandler.PairDevice: Pairing...");
-                    bleDevice.DeviceInformation.Pairing.Custom.PairingRequested += Custom_PairingRequested;
-                    devicePairingResult = await bleDevice.DeviceInformation.Pairing.Custom.PairAsync(DevicePairingKinds.ConfirmOnly);
-                    bleDevice.DeviceInformation.Pairing.Custom.PairingRequested -= Custom_PairingRequested;
+                    m_bleDevice.DeviceInformation.Pairing.Custom.PairingRequested += Custom_PairingRequested;
+                    devicePairingResult = await m_bleDevice.DeviceInformation.Pairing.Custom.PairAsync(DevicePairingKinds.ConfirmOnly);
+                    m_bleDevice.DeviceInformation.Pairing.Custom.PairingRequested -= Custom_PairingRequested;
                     Log.Debug($"AdvertisementHandler.PairDevice: result: {devicePairingResult.Status}");
 
                     //if (m_bluetoothLeDevice.DeviceInformation.Pairing.IsPaired)
@@ -244,14 +244,14 @@ namespace PSSApplication.Core
         public async Task<bool> IsPaired()
         {
             Log.Debug("AdvertisementHandlerIsPaired:");
-            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
-            if (bleDevice == null)
+            //BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (m_bleDevice == null)
             {
                 Log.Debug("AdvertisementHandler.AdvertisementHandler: Not able to get bleDevice ");
                 return false;
             }
 
-            return bleDevice.DeviceInformation.Pairing.IsPaired;
+            return m_bleDevice.DeviceInformation.Pairing.IsPaired;
         }
 
         public void CloseApplication()
@@ -276,37 +276,39 @@ namespace PSSApplication.Core
                 m_isBusy = true;
                 m_Watcher.Stop();
 
-                Log.Debug("AdvertisementHandler.Watcher_Received: pairing...");
+                Log.Debug("AdvertisementHandler.Watcher_Received: Stoped watcher, Starting to pair...");
                 m_bluetoothAddress = args.BluetoothAddress;
-                BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+                await GetBluetoothLEDevice();
 
-                if (bleDevice == null)
+                if (m_bleDevice == null)
                 {
-                    Log.Error("AdvertisementHandler.Watcher_Received: Not able to get bleDevice ");
+                    Log.Error("AdvertisementHandler.Watcher_Received: Not able to get m_bleDevice ");
                     m_isBusy = false;
                     m_Watcher.Start();
                     return;
                 }
 
-                Log.Debug($"AdvertisementHandler.Watcher_Received: attached BluetoothAddress={bleDevice.BluetoothAddress}");
+                Log.Debug($"AdvertisementHandler.Watcher_Received: bleDevice.ID={m_bleDevice.GetHashCode()} attached BluetoothAddress={m_bleDevice.BluetoothAddress}");
 
                 // Start connection
-                Log.Information($"AdvertisementHandler.Watcher_Received: Connection={bleDevice.ConnectionStatus}");
+                Log.Information($"AdvertisementHandler.Watcher_Received: Connection={m_bleDevice.ConnectionStatus}");
 
-                bleDevice = await BluetoothLEDevice.FromIdAsync(bleDevice.DeviceId);
-                bleDevice.ConnectionStatusChanged += ConnectionStatusChangeHandler;
-                Log.Debug($"AdvertisementHandler.Watcher_Received: after FromIdAsync - Connection={bleDevice.ConnectionStatus}");
+                //bleDevice = await BluetoothLEDevice.FromIdAsync(bleDevice.DeviceId);
+                m_bleDevice.ConnectionStatusChanged += ConnectionStatusChangeHandler;
+                Log.Debug($"AdvertisementHandler.Watcher_Received: Adding ConnectionStatusChanged-handler to bleDevice.ID={m_bleDevice.GetHashCode()} - Connection={m_bleDevice.ConnectionStatus}");
 
                 DeviceUnpairingResult unpairingResult = null;
-                if (bleDevice.DeviceInformation.Pairing.IsPaired)
+                if (m_bleDevice.DeviceInformation.Pairing.IsPaired)
                 {
+                    Log.Debug($"AdvertisementHandler.Watcher_Received: Unparing Device, before Pairing");
                     unpairingResult = await UnpairDevice();
                 }
 
+                Log.Debug($"AdvertisementHandler.Watcher_Received: Pairing Device");
                 DevicePairingResult result = await PairDevice();
                 if (result.Status == DevicePairingResultStatus.Paired)
                 {
-                    Log.Information($"AdvertisementHandler.Watcher_Received: Paired to {args.BluetoothAddress}, connectionOk= {bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected}");
+                    Log.Information($"AdvertisementHandler.Watcher_Received: Paired to {args.BluetoothAddress}, connectionOk= {m_bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected}");
                     m_isBusy = false;
                 }
                 else
@@ -321,22 +323,24 @@ namespace PSSApplication.Core
             {
                 Log.Error($"AdvertisementHandler.Watcher_Received error: ex.Message={ex.Message}");
                 //await UnpairDevice();
+                Log.Error($"AdvertisementHandler.Watcher_Received error: Starting Watcher");
                 m_Watcher.Start();
                 m_isBusy = false;
             }
         }
 
-        private async Task ConfigureSensorService(BluetoothLEDevice bleDevice)
+        //private async Task ConfigureSensorService(BluetoothLEDevice bleDevice)
+        private async Task ConfigureSensorService()
         {
-            Log.Debug($"AdvertisementHandler.ConfigureSensorService Connection={bleDevice?.ConnectionStatus}");
+            Log.Debug($"AdvertisementHandler.ConfigureSensorService Connection={m_bleDevice?.ConnectionStatus}");
             try
             {
                 var Notify = GattCharacteristicProperties.Notify;
                 var NotifValue = GattClientCharacteristicConfigurationDescriptorValue.Notify;
 
-                if (bleDevice != null)
+                if (m_bleDevice != null)
                 {
-                    var result = await bleDevice.GetGattServicesForUuidAsync(Guid.Parse(ServiceUuid));
+                    var result = await m_bleDevice.GetGattServicesForUuidAsync(Guid.Parse(ServiceUuid));
                     if (result.Status == GattCommunicationStatus.Success)
                     {
                         var services = result.Services;
@@ -380,7 +384,7 @@ namespace PSSApplication.Core
                                 {
                                     while (status != GattCommunicationStatus.Success && loopCounter-- > 0)
                                     {
-                                        if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
+                                        if (m_bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
                                         {
                                             Log.Debug($"AdvertisementHandler.ConfigureSensorService: CCCD Notify");
                                             status = await m_characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(NotifValue);
@@ -587,16 +591,16 @@ namespace PSSApplication.Core
         private async Task StopAllBluetoothConnections()
         {
             Log.Debug("AdvertisementHandler.StopAllBluetoothConnections");
-            BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
-            if (bleDevice != null)
+            //BluetoothLEDevice bleDevice = await GetBluetoothLEDevice();
+            if (m_bleDevice != null)
             {
-                bleDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
+                m_bleDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
+                Log.Debug($"AdvertisementHandler.StopAllBluetoothConnections removed handler, bleDevice.ID={m_bleDevice.GetHashCode()} ");
             }
             else
             {
                 Log.Debug("AdvertisementHandler.StopAllBluetoothConnections no bleDevice to Stop");
             }
-
 
             if (m_characteristic != null)
             {
@@ -608,10 +612,10 @@ namespace PSSApplication.Core
                 m_service.Dispose();
                 //m_service = null;
             }
-            if (bleDevice != null)
+            if (m_bleDevice != null)
             {
-                bleDevice.Dispose();
-                bleDevice = null;
+                //m_bleDevice.Dispose();
+                m_bleDevice = null;
                 GC.Collect();
             }
         }
@@ -621,24 +625,26 @@ namespace PSSApplication.Core
             m_bluetoothAddress = bleDevice.BluetoothAddress;
             if (bleDevice == null)
             {
-                Log.Debug($"ConnectionStatusChangeHandler: m_bluetoothLeDevice != bluetoothLEDevice ConnectionStatus={bleDevice?.ConnectionStatus} on bluetoothLEDevice={bleDevice?.GetHashCode()}");
+                Log.Debug($"ConnectionStatusChangeHandler: m_bluetoothLeDevice != bluetoothLEDevice ConnectionStatus={bleDevice?.ConnectionStatus} on bleDevice.ID={bleDevice?.GetHashCode()}");
                 return;
             }
 
-            Log.Debug($"ConnectionStatusChangeHandler: ConnectionStatus={bleDevice.ConnectionStatus} on BluetoothAddress={bleDevice.BluetoothAddress}");
-            Log.Debug($"ConnectionStatusChangeHandler: IsPaired={bleDevice.DeviceInformation.Pairing.IsPaired}");
+            Log.Debug($"AdvertisementHandler.ConnectionStatusChangeHandler: ConnectionStatus={bleDevice.ConnectionStatus} on BluetoothAddress={bleDevice.BluetoothAddress}");
+            Log.Debug($"AdvertisementHandler.ConnectionStatusChangeHandler: IsPaired={bleDevice.DeviceInformation.Pairing.IsPaired}");
 
             if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
             {
                 m_Watcher.Stop();
-                await ConfigureSensorService(bleDevice);
+                await ConfigureSensorService();
             }
 
             if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Disconnected)
             {
                 //StopAllBluetoothConnections();
                 //await DeviceDisconnected();
-                Log.Debug($"ConnectionStatusChangeHandler: after disconneced on BluetoothAddress={bleDevice.BluetoothAddress}");
+                Log.Debug($"ConnectionStatusChangeHandler: Disconneced on BluetoothAddress={bleDevice.BluetoothAddress}, trying to restart");
+                if (m_bleDevice != null)
+                    m_bleDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
 
                 //Try reconnect
                 StartScanningForPainSensors();

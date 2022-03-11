@@ -100,6 +100,7 @@ namespace MedStorm.Desktop
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Log.Information("Starting MedStrom.Desktop..........................................");  
             m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(null, "PainSensor");
             m_advHandler.NewMeasurement += AddMeasurement;
             ApplicationsComboBox.SelectedIndex = 0;
