@@ -15,7 +15,7 @@ namespace PSSApplication.Core
             string condItemsString = string.Join(",", conductivityItems.Select(f => f.ToString(CultureInfo.InvariantCulture.NumberFormat)));
             long timestamp = (long)(DateTime.UtcNow - DateTime.UnixEpoch.ToUniversalTime()).TotalMilliseconds;
             if (lastTimestamp != 0 && timestamp > lastTimestamp + 2000)
-                Log.Error($"MeasurementEventArgs: Timelag - timestamp={timestamp}, lastTimestamp={lastTimestamp}");
+                Log.Warning($"MeasurementEventArgs: Timelag - timestamp={timestamp}, lastTimestamp={lastTimestamp}");
 
             Message = string.Format("Timestamp:{0}|PPS:{1}|Area:{2}|SkinCond:[{3}]|MeanRiseTime:{4}|NerveBlock:{5}|BadSignal:{6}",
                                             timestamp, ppsValue, areaValue, condItemsString, meanRiseTimeValue.ToString(CultureInfo.InvariantCulture.NumberFormat), nerveBlockValue, badSignalValue);
