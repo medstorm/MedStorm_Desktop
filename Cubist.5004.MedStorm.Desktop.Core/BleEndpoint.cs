@@ -152,7 +152,7 @@ namespace PSSApplication.Core
             if (mock != null)
                 isPaired = await mock.IsPaired();
             else
-                isPaired = await AdvertisementHandler.AdvertisementMgr.IsPaired();
+                isPaired = AdvertisementHandler.AdvertisementMgr.IsPaired();
 
             //bool isPaired = mock?.IsPaired() ?? AdvertisementHandler.AdvertisementMgr.IsPaired();
 
