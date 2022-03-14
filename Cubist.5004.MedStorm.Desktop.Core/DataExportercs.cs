@@ -9,6 +9,7 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.SignalR;
+using Serilog;
 
 public struct DataExportObject
 {
@@ -75,6 +76,7 @@ public class DataExporter : Hub
         m_currentRow = 3;
         m_fileName = getFileName();
         m_tempPath = Path.GetTempPath();
+        Log.Information($"DataExporter.CreateExcelFile: temp-path={m_tempPath}, fileName{m_fileName}");
 
         m_spreadSheet = SpreadsheetDocument.Create(Path.Combine(m_tempPath, m_fileName), SpreadsheetDocumentType.Workbook);
 
@@ -175,6 +177,7 @@ public class DataExporter : Hub
     }
     public static void SaveFile(string patientId)
     {
+        Log.Information($"DataExporter.SaveFile: Update patiend ID and Save");
         DataExporter.UpdatePatientId(patientId);
         m_spreadSheet.Close();
         m_spreadSheet = null;   // To stop unwated updates to the spredsheets
@@ -182,6 +185,7 @@ public class DataExporter : Hub
         // Make a copy of the spredsheet to PSS Application directory
         string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
         string targetFile = Path.Combine(targetPath, m_fileName);
+        Log.Information($"DataExporter.SaveFile: path={targetPath}, fileName{m_fileName}");
 
         Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
 

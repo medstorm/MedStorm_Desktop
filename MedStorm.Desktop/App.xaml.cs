@@ -16,7 +16,7 @@ namespace MedStorm.Desktop
     {
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            Log.Information("MedStorm.Desktop exit");
+            Log.Information($"MedStorm.Desktop exit,exit code= {e.ApplicationExitCode}");
             Log.CloseAndFlush();
         }
 
@@ -49,7 +49,7 @@ namespace MedStorm.Desktop
             try
             {
                 System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
-                Log.Error($"LogUnhandledException: Unhandled exception in {assemblyName.Name} version={assemblyName.Version}");
+                Log.Error($"LogUnhandledException: Unhandled exception in {assemblyName.Name} version={assemblyName.Version}, Error={exception.Message}");
                 Log.Error($"LogUnhandledException: StrackTrace={exception.StackTrace}");
             }
             catch (Exception ex)

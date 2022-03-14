@@ -169,15 +169,15 @@ namespace PSSApplication.Core
             await StopAllBluetoothConnections();
         }
 
-        private async Task<DeviceUnpairingResult> UnpairDevice(bool closeConnection=false)
+        private async Task<DeviceUnpairingResult> UnpairDevice(bool closeConnection=true)
         {
             Log.Debug("AdvertisementHandler.UnpairDevice:");
-            if (m_bleDevice == null)
+            if (m_bleDevice?.DeviceInformation?.Pairing == null)
             {
-                Log.Error("AdvertisementHandler.UnpairDevice: Not able to get bleDevice ");
+                Log.Error("AdvertisementHandler.UnpairDevice: Not able to get m_bleDevice.DeviceInformation.Pairing ");
                 return null;
             }
-
+            
             DeviceUnpairingResult unpairResult = null;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -299,7 +299,7 @@ namespace PSSApplication.Core
                 if (m_bleDevice.DeviceInformation.Pairing.IsPaired)
                 {
                     Log.Debug($"AdvertisementHandler.Watcher_Received: Unparing Device, IsPaird=true before UnpairDevice()");
-                    unpairingResult = await UnpairDevice();
+                    unpairingResult = await UnpairDevice(closeConnection: false);
                 }
 
                 Log.Debug($"AdvertisementHandler.Watcher_Received: Pairing Device");
@@ -319,7 +319,7 @@ namespace PSSApplication.Core
             catch (Exception ex)
             {
                 Log.Error($"AdvertisementHandler.Watcher_Received error: ex.Message={ex.Message},");
-                await UnpairDevice(closeConnection: true);
+                await UnpairDevice();
                 Log.Error($"AdvertisementHandler.Watcher_Received: Starting Watcher");
                 m_Watcher.Start();
                 m_isBusy = false;
@@ -545,7 +545,7 @@ namespace PSSApplication.Core
             {
                 m_bleDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
                 Log.Debug($"AdvertisementHandler.StopAllBluetoothConnections removed handler, bleDevice.ID={m_bleDevice.GetHashCode()} ");
-                await UnpairDevice(closeConnection:true);
+                await UnpairDevice();
             }
             else
             {
@@ -590,9 +590,10 @@ namespace PSSApplication.Core
                     m_bleDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
 
                 //Try reconnect, by unpairing device and start watcher (other way of reconnecting, dosn't seem to work) 
-                if (m_bleDevice?.DeviceInformation?.Pairing != null && m_bleDevice.DeviceInformation.Pairing.IsPaired)
+                //if (m_bleDevice?.DeviceInformation?.Pairing != null && m_bleDevice.DeviceInformation.Pairing.IsPaired)
+                if (m_bleDevice?.DeviceInformation?.Pairing != null)
                 {
-                    await UnpairDevice(closeConnection:true);
+                    await UnpairDevice();
                 }
 
                 Log.Debug("AdvertisementHandler.ConnectionStatusChangeHandler: Starting watcher");
