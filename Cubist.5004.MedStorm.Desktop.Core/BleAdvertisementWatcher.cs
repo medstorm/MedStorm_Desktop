@@ -383,7 +383,7 @@ namespace PSSApplication.Core
                                     {
                                         if (m_bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
                                         {
-                                            Log.Debug($"AdvertisementHandler.ConfigureSensorService: CCCD Notify");
+                                            Log.Debug($"AdvertisementHandler.ConfigureSensorService: Connected, sending CCCD Notify to receive measurement from PainSensor");
                                             status = await m_characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(NotifValue);
                                             if (status != GattCommunicationStatus.Success)
                                                 await Task.Delay(SleepTimer);
@@ -526,7 +526,7 @@ namespace PSSApplication.Core
 
             MeasurementEventArgs measurementsArgs = new MeasurementEventArgs(ppsValue, areaValue, nerveBlockValue, ConductivityItems, badSignalValue, meanRiseTimeValue);
 
-            Log.Debug(measurementsArgs.Message);
+            Log.Verbose(measurementsArgs.Message);
             NewMeasurement?.Invoke(this, measurementsArgs);
         }
 

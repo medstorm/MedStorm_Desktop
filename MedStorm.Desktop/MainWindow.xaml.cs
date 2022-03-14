@@ -93,6 +93,9 @@ namespace MedStorm.Desktop
             Log.Logger = new LoggerConfiguration()
                         .ReadFrom.Configuration(m_configuration)
                         .CreateLogger();
+
+            Log.Information("Starting MedStrom.Desktop..........................................");
+
             m_monitor = new MonitorHandler(m_configuration);
 
             InitializeComponent();
@@ -100,7 +103,6 @@ namespace MedStorm.Desktop
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Log.Information("Starting MedStrom.Desktop..........................................");  
             m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(null, "PainSensor");
             m_advHandler.NewMeasurement += AddMeasurement;
             ApplicationsComboBox.SelectedIndex = 0;
