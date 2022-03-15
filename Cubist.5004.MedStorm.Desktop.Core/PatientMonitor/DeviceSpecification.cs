@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.IO;
 
 namespace PSSApplication.Core.PatientMonitor
@@ -14,14 +15,14 @@ namespace PSSApplication.Core.PatientMonitor
 
         public byte[] ReadBinary()
         {
-            Console.WriteLine($"Reading specification binary from {Path.ChangeExtension(_specificationTextFile, "bin")}");
+            Log.Debug($"Reading specification binary from {Path.ChangeExtension(_specificationTextFile, "bin")}");
             try
             {
                 return File.ReadAllBytes(Path.ChangeExtension(_specificationTextFile, "bin"));
             }
             catch (System.IO.DirectoryNotFoundException)
             {
-                Console.WriteLine($"Unable to read specification file at path {_specificationTextFile}");
+                Log.Error($"Unable to read specification file at path {_specificationTextFile}");
                 throw;
             }
 
@@ -43,7 +44,7 @@ namespace PSSApplication.Core.PatientMonitor
 
         public byte[] ReadDeviceIdentifier()
         {
-            Console.WriteLine($"Reading device identifier from {Path.ChangeExtension(_specificationTextFile, "rpt")}");
+            Log.Debug($"Reading device identifier from {Path.ChangeExtension(_specificationTextFile, "rpt")}");
             try
             {
                 var reportFile = Path.ChangeExtension(_specificationTextFile, ".rpt");

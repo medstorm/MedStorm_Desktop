@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.IO;
 using System.IO.Ports;
 using System.Management;
@@ -63,11 +64,11 @@ namespace PSSApplication.Core.PatientMonitor
             var comPortSearcher = new ManagementObjectSearcher(connectionScope, objectQuery);
             using (comPortSearcher)
             {
-                Console.WriteLine("Searching for available COM port");
+                Log.Information("Searching for available COM port");
                 var deviceObjects = comPortSearcher.Get();
                 if (deviceObjects.Count == 0)
                 {
-                    Console.WriteLine("Unable to load any devices, cannot search for monitor COM port");
+                    Log.Warning("Unable to load any devices, cannot search for monitor COM port");
                     return false;
                 }
                 foreach (var o in deviceObjects)
@@ -80,7 +81,7 @@ namespace PSSApplication.Core.PatientMonitor
                     if (!caption.Contains("(COM")) continue;
 
                     var name = caption.Substring(caption.LastIndexOf("(COM")).Replace("(", string.Empty).Replace(")", string.Empty);
-                    Console.WriteLine($"Localized COM port with name: {name} and description \n{caption}");
+                    Log.Information($"Localized COM port with name: {name} and description \n{caption}");
                     if (caption.Contains("Prolific USB-to-Serial Comm Port") || caption.Contains("USB Serial Port (COM4)"))
                     { 
                         ComPortName = name;
@@ -88,7 +89,7 @@ namespace PSSApplication.Core.PatientMonitor
                     }
                 }
             }
-            Console.WriteLine("Located devices, but did not find Philips monitor COM port. Is the USB cable connected?");
+            Log.Error("Located devices, but did not find Philips monitor COM port. Is the USB cable connected?");
             return false;
         }
         public MonitorServerRunner(MonitorServer server, CancellationToken token)

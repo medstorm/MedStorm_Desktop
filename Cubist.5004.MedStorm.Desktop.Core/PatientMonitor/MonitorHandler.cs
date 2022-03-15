@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace PSSApplication.Core.PatientMonitor
 {
@@ -36,7 +37,7 @@ namespace PSSApplication.Core.PatientMonitor
                 Path.Join(Directory.GetCurrentDirectory(), "PatientMonitor");
             
             var specificationPath = Path.Join(pathWithSpecTool, "SpecTool", "MedStorm.txt");
-            Console.WriteLine( $"Using path {specificationPath} for monitor specification");
+            Log.Information( $"Using path {specificationPath} for monitor specification");
 
             monitorServer = new MonitorServer(specificationPath);
             monitorServer.OperatingDataRequest += GetPainData; //Analysis.GetPainAreaInView;
@@ -52,7 +53,7 @@ namespace PSSApplication.Core.PatientMonitor
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unable to connect to monitor, Error={ex.Message}");
+                Log.Error($"Unable to connect to monitor, Error={ex.Message}");
                 monitorRunner = null;
                 return false;
             }
@@ -72,7 +73,7 @@ namespace PSSApplication.Core.PatientMonitor
 
         private BLEMeasurement GetPainData()
         {
-            var paindata = BleEndpoint.LatestMeasurement;
+            var paindata = AdvertisementHandler.LatestMeasurement;
             return paindata;
         }
     }

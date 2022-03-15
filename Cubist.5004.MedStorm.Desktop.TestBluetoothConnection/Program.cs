@@ -27,7 +27,7 @@ namespace Testing
 
             try
             {
-                var watcher = new BleHub(null, configuration.GetValue<string>("AdvertisingName"));
+                var watcher = new BleHub(configuration.GetValue<string>("AdvertisingName"));
                 var monitor = new MonitorHandler(configuration);
                 Console.WriteLine("Enter 's' to start monitor");
                 Console.WriteLine("Enter 't' to stop monitor");

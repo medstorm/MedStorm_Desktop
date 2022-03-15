@@ -39,7 +39,7 @@ namespace PSSApplication.Core
             int bs = Measurement.BS;
             if (pps > ppsMax || pps < 0 || auc > aucMax || auc < 0 || nb > nbMax || nb < 0 || bs > 1 || bs < 0)
             {
-                Log.Debug("Accepted range failure. All values are not within accepted range.");
+                Log.Warning("Accepted range failure. All values are not within accepted range.");
                 return false;
             }
 
@@ -47,7 +47,7 @@ namespace PSSApplication.Core
             {
                 if (i > scMax || i < 0)
                 {
-                    Log.Debug("Accepted range failure. All values are not within accepted range.");
+                    Log.Warning("Accepted range failure. All values are not within accepted range.");
                     return false;
                 }
             }

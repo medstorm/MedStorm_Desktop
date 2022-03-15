@@ -60,7 +60,7 @@ namespace PSSApplication.Client
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHub<BleEndpoint>("/blehub");
+                //endpoints.MapHub<BleEndpoint>("/blehub");
                 endpoints.MapHub<DataExporter>("/dataExporthub");
             });
         }

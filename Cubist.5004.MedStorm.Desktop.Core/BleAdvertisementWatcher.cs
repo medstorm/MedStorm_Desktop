@@ -17,14 +17,14 @@ namespace PSSApplication.Core
 {
     public class BleHub : Hub
     {
-        IHubContext<BleEndpoint> m_hubContext;
+        //IHubContext<BleEndpoint> m_hubContext;
         AdvertisementHandler m_advHandler;
 
         // This constructor is called everytime the client page is reloaded
-        public BleHub(IHubContext<BleEndpoint> context, string advertisementName)
+        public BleHub( string advertisementName)
         {
             Log.Debug("BleHub: ctor");
-            m_hubContext = context;
+           // m_hubContext = context;
             m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(this, advertisementName);
         }
 
@@ -50,6 +50,7 @@ namespace PSSApplication.Core
     public class AdvertisementHandler
     {
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
+        public static BLEMeasurement LatestMeasurement { get; private set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
 
         static readonly string ServiceUuid = "264eaed6-c1da-4436-b98c-db79a7cc97b5";
         static readonly string CombinedUuid = "14abde20-31ed-4e0a-bdcf-7efc40f3fffb";
@@ -417,18 +418,6 @@ namespace PSSApplication.Core
             args.Accept();
         }
 
-        private static void WatcherStartedListening()
-        {
-            Console.WriteLine("WatcherStartedListening");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-        }
-
-        //private static void WatcherDeviceTimeout(BLEDevice device)
-        //{
-        //    Console.ForegroundColor = ConsoleColor.Red;
-        //    Console.WriteLine($"Device timeout: {device}");
-        //}
-
         private static void WatcherStoppedListening()
         {
             Log.Debug("WatcherStoppedListening");
@@ -528,7 +517,7 @@ namespace PSSApplication.Core
             byte badSignalValue = bArray[27];
 
             MeasurementEventArgs measurementsArgs = new MeasurementEventArgs(ppsValue, areaValue, nerveBlockValue, ConductivityItems, badSignalValue, meanRiseTimeValue);
-
+            LatestMeasurement = measurementsArgs.Measurement;
             Log.Verbose(measurementsArgs.Message);
             NewMeasurement?.Invoke(this, measurementsArgs);
         }
