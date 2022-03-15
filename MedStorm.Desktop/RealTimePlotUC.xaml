@@ -8,16 +8,19 @@
              Loaded="PlotUserControl_Loaded" 
              SizeChanged="PlotUserControl_SizeChanged"
              x:Name="PlotControl">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="WhiteBrush" Color="#c5e3ee" />
+    </UserControl.Resources>
     <Grid Background="Black">
         <TextBlock Width="80" Height="20" Margin="32,0,0,0" Text="{Binding PlotTitle, ElementName=PlotControl}"  
-                       VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="12" FontFamily="Courier" />
+                       VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource WhiteBrush}" FontSize="12" FontFamily="Courier" />
         <Canvas Margin="30" x:Name="plotCanvas" Background="Black" />
         <Canvas x:Name="leftSlad" Width="30" HorizontalAlignment="Left" Background="Black"/>
         <Canvas x:Name="rightSlad" Width="5" HorizontalAlignment="Right" Background="Black"/>
         <Canvas Margin="30" x:Name="gridCanvas" Background="Transparent" >
             <Grid Canvas.Top="-20" Canvas.Left="0">
                 <TextBlock Width="80" Text="{Binding PlotTitle, ElementName=PlotControl}"  
-                       Foreground="White" Background="Black" FontSize="12" FontFamily="Courier" />
+                       Foreground="{StaticResource WhiteBrush}" Background="Black" FontSize="12" FontFamily="Courier" />
             </Grid>
 
         </Canvas>
@@ -31,6 +34,6 @@
                Height="{Binding ElementName=PlotControl,Path=ActualHeight}">
             <StackPanel x:Name="valueLabels" Orientation="Vertical" />
         </Grid>
-        <TextBlock Text="sec." Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,8" />
+        <TextBlock Text="sec." Foreground="{StaticResource WhiteBrush}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,8" />
     </Grid>
 </UserControl>

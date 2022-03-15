@@ -9,6 +9,9 @@
         Loaded="Window_Loaded" WindowState="Normal" WindowStyle="None"
         Title="PainSensor - Desktop" x:Name="TopWindow" Height="650" Width="900">
     <Window.Resources>
+        <SolidColorBrush x:Key="WhiteBrush" Color="#c5e3ee" />
+
+        <!--Combobox styling-->
         <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="Gray" />
         <SolidColorBrush x:Key="ComboBoxNormalBackgroundBrush" Color="#FF03303F" />
         <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#FF03303F" />
@@ -31,7 +34,7 @@
 
                 <Path Name="Arrow" Grid.Column="1" StrokeThickness="5"
                     Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
-                    HorizontalAlignment="Center" Fill="White"
+                    HorizontalAlignment="Center" Fill="{StaticResource WhiteBrush}"
                     VerticalAlignment="Center" />
             </Grid>
             <ControlTemplate.Triggers>
@@ -93,7 +96,7 @@
                                 <Grid Name="DropDown" SnapsToDevicePixels="True" Background="#FF03303F"
                                         MinWidth="{TemplateBinding FrameworkElement.ActualWidth}"
                                         MaxHeight="{TemplateBinding ComboBox.MaxDropDownHeight}">
-                                    <Border Name="DropDownBorder" Background="White" Margin="0, 1, 0, 0"
+                                    <Border Name="DropDownBorder" Background="{StaticResource WhiteBrush}"  Margin="0, 1, 0, 0"
                                             CornerRadius="0" BorderThickness="1,1,1,1" 
                                             BorderBrush="{StaticResource ComboBoxNormalBorderBrush}"/>
                                     <ScrollViewer Margin="4" SnapsToDevicePixels="True" Background="#FF03303F">
@@ -137,13 +140,13 @@
                     <RowDefinition Height="3*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Add comment:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Bottom"/>
+                <TextBlock Grid.Row="0" Text="Add comment:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="{StaticResource WhiteBrush}" VerticalAlignment="Bottom"/>
                 <TextBox Grid.Row="1" x:Name="CommentTextBox" TextWrapping="Wrap" Margin="10" />
-                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <StackPanel Grid.Row="2" Orientation="Horizontal" >
                     <Button x:Name="CancelCommentButton" Click="CancelCommentButton_Click" Margin="10,0,0,10" Width="70"
-                        Content="Cancel" Foreground="White" Background="#FF03303F"/>
+                        Content="Cancel" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F"/>
                     <Button x:Name="SaveCommentButton" Click="SaveCommentButton_Click" Margin="10,0,0,10" Width="70" 
-                        Content="Save" Foreground="White" Background="#FF03303F"/>
+                        Content="Save" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F"/>
                 </StackPanel>
             </Grid>
         </Popup>
@@ -155,13 +158,13 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Enter Patient Id:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Bottom"/>
+                <TextBlock Grid.Row="0" Text="Enter Patient Id:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="{StaticResource WhiteBrush}" VerticalAlignment="Bottom"/>
                 <TextBox Grid.Row="1" x:Name="PatientIdTextBox" Margin="10" />
                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                     <Button x:Name="CanelPatientIdButton" Click="CanelPatientIdButton_Click"  Margin="10,0,0,10" Width="70"
-                        Content="Cancel" Foreground="White" Background="#FF03303F"/>
+                        Content="Cancel" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F"/>
                     <Button x:Name="SavePatientIdButton"  Margin="10,0,0,10" Width="70" 
-                        Content="Save" Foreground="White" Click="SavePatientIdButton_Click" Background="#FF03303F"/>
+                        Content="Save" Foreground="{StaticResource WhiteBrush}" Click="SavePatientIdButton_Click" Background="#FF03303F"/>
                 </StackPanel>
             </Grid>
         </Popup>
@@ -178,8 +181,8 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Button x:Name="PatientIdButton" Click="PatientIdButton_Click" Grid.Row="0" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
-                    Content="Enter Patient ID" Foreground="White" Background="#FF03303F"/>
-            <ComboBox x:Name="ApplicationsComboBox" Foreground="White" Grid.Row="1" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
+                    Content="Enter Patient ID" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F"/>
+            <ComboBox x:Name="ApplicationsComboBox" Foreground="{StaticResource WhiteBrush}" Grid.Row="1" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
                       SelectionChanged="ApplicationsComboBox_SelectionChanged">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
@@ -207,17 +210,17 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="CloseButton" Grid.Column="0" Click="CloseButton_Click" Content="Close" Foreground="White" Background="#FF03303F"/>
+                <Button x:Name="CloseButton" Grid.Column="0" Click="CloseButton_Click" Content="Close" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F"/>
                 <Button x:Name="CommentButton" Grid.Column="1" Click="CommentButton_Click" Margin="3,0,0,0"
-                    Content="Comment" Foreground="White" Background="#FF03303F" />
+                    Content="Comment" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F" />
             </Grid>
 
             <Button x:Name="ConnectMonitorButton" Grid.Row="4" Margin="10,0,0,3" HorizontalAlignment="Stretch"
-                    Content="Connect Monitor" Foreground="White" Background="#FF03303F" 
+                    Content="Connect Monitor" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F" 
                     Click="ConnectMonitorButton_Click"/>
 
             <Button x:Name="ConnectDisconnectButton" Grid.Row="5" Margin="10,0,0,3" HorizontalAlignment="Stretch"
-                    Content="Connect" Foreground="White" Background="#FF03303F"
+                    Content="Connect" Foreground="{StaticResource WhiteBrush}" Background="#FF03303F"
                     Click="connect_diconnect_Click"/>
             <Image Grid.Row="6" Source="logo_medstorm.png" Margin="10" Width="150" HorizontalAlignment="Left"/>
         </Grid>

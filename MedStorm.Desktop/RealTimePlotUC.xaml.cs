@@ -25,6 +25,7 @@ namespace Plot
     /// </summary>
     public partial class RealTimePlotUC : UserControl
     {
+        public Brush FillAreaBrush { get; set; }
         public string PlotTitle { get; set; } = string.Empty;
         public bool HasFixedVerticalLabels { get; set; } = true;
         public double NoOfSecondsToShow { get; set; } = 15;
@@ -35,8 +36,8 @@ namespace Plot
         public int LowerLimit { get; set; } = 1;
         public int NoOfVerticalGridLines { get; set; } = 3;
         public List<Measurement> DataPoints { get; private set; }
-        public Brush FillAreaBrush { get; set; }
         public string HorizontalAxisLabels { get; set; } = ""; //0, 1, 3, 5, 7, 8, 10
+
 
         double m_maxValue = 1;
         double m_minValue = 0;
@@ -52,6 +53,8 @@ namespace Plot
         DateTime m_startTime;
         List<int> m_horizontalAxisValues = new List<int>();
         Brush m_upperLowerLimitBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#055d7a"));//#FF03303F"));
+        Brush m_whiteBrush = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#c5e3ee"));
+        Brush m_badSignalBrush = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#8B9DA1"));
         public RealTimePlotUC()
         {
             InitializeComponent();
@@ -146,7 +149,7 @@ namespace Plot
                                 Text = valueLabelText,
                                 FontFamily = new FontFamily("Courier"),
                                 FontSize = 10,
-                                Foreground = Brushes.White,
+                                Foreground = m_whiteBrush,
                                 TextAlignment = TextAlignment.Right,
                                 Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
                             });
@@ -165,7 +168,7 @@ namespace Plot
             gridCanvas.Children.Clear();
 
             // Draw axis
-            Path axsisPath = new Path() { Stroke = Brushes.White, StrokeThickness = 2.5 };
+            Path axsisPath = new Path() { Stroke = m_whiteBrush, StrokeThickness = 1.5 };
             PathFigure axisFigure = MakePathFigure(axsisPath);
             axisFigure.StartPoint = new Point(x: 0, y: -10);
             axisFigure.Segments.Add(new LineSegment(new Point(x: 0, y: m_pixelHeight + 10), isStroked: true));
@@ -174,7 +177,7 @@ namespace Plot
             gridCanvas.Children.Add(axsisPath);
 
             // Draw GridLines
-            Path gridPath = new Path() { Stroke = Brushes.White, StrokeThickness = 0.5 };
+            Path gridPath = new Path() { Stroke = m_whiteBrush, StrokeThickness = 0.5 };
             PathFigure gridFigure = MakePathFigure(gridPath);
             gridFigure.StartPoint = new Point(-10, m_pixelHeight);
 
@@ -222,7 +225,7 @@ namespace Plot
                     Text = (secondStep * -i).ToString(),
                     FontFamily = new FontFamily("Courier"),
                     FontSize = 10,
-                    Foreground = Brushes.White,
+                    Foreground = m_whiteBrush,
                     Width = 30,
                     Margin = new Thickness(0, 0, m_pixelWidth / NoOfVerticalGridLines - 30, 0)
                 });
@@ -231,7 +234,7 @@ namespace Plot
             // Add limit sections
             if (PlotCurveWithArea)
             {
-                Path limitPath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0, Fill = m_upperLowerLimitBrush, Opacity = 0.5 };
+                Path limitPath = new Path() { Stroke = m_whiteBrush, StrokeThickness = 1.0, Fill = m_upperLowerLimitBrush, Opacity = 0.5 };
                 PathFigure limitFigure = MakePathFigure(limitPath);
                 limitFigure.IsClosed = true;
 
@@ -265,7 +268,7 @@ namespace Plot
                         Text = (valueStep * (NoOfHorizontalGridLines - i)).ToString(),
                         FontFamily = new FontFamily("Courier"),
                         FontSize = 10,
-                        Foreground = Brushes.White,
+                        Foreground = m_whiteBrush,
                         TextAlignment = TextAlignment.Right,
                         Margin = new Thickness(0, 0, 0, (m_pixelHeight / NoOfHorizontalGridLines) - 12)
                     });
@@ -288,9 +291,8 @@ namespace Plot
                         Height = 0.7 * m_pixelHeight / m_horizontalAxisValues.Count,
                         FontFamily = new FontFamily("Courier"),
                         FontSize = 10,
-                        Foreground = Brushes.White,
+                        Foreground = m_whiteBrush,
                         TextAlignment = TextAlignment.Right,
-                        //Margin = new Thickness(0, 0, 0, (m_pixelHeight / m_horizontalAxisValues.Count) - 18.5)
                     });
                 }
             }
@@ -325,7 +327,7 @@ namespace Plot
                         m_pathSegments.Add(new LineSegment(new Point(pixelPoint.X, pixelPoint.Y), true));
                     }
 
-                    m_path.Stroke = Brushes.White;
+                    m_path.Stroke = m_whiteBrush;
                     m_path.Fill = FillAreaBrush;
                     m_path.Opacity = 0.7;
                     m_path.StrokeThickness = 1.0;
@@ -338,7 +340,7 @@ namespace Plot
                 }
 
                 // Add paths to indicate bad signals
-                m_badSignalPath = new Path() { Stroke = Brushes.White, StrokeThickness = 1.0 };
+                m_badSignalPath = new Path() { Stroke = m_badSignalBrush, StrokeThickness = 1.0 };
                 PathFigure badSignalFigure = MakePathFigure(m_badSignalPath);
                 foreach (var item in DataPoints)
                 {
@@ -366,7 +368,7 @@ namespace Plot
                     List<Point> valuePoints = MakeValuePoints();
                     Point[] result_points = m_curveGenerator.MakeCurvePoints(valuePoints, 0.4);
                     m_pathSegments = m_curveGenerator.MakeBezierPath(result_points);
-                    m_path.Stroke = Brushes.White;
+                    m_path.Stroke = m_whiteBrush;
                     m_path.StrokeThickness = 1.0;
                 }
             }
