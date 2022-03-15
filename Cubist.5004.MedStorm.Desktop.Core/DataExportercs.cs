@@ -174,6 +174,7 @@ public class DataExporter : Hub
             Cell cell = row.Elements<Cell>().Where(c => string.Compare(c.CellReference.Value, columnName + rowIndex, true) == 0).First();
             cell.CellValue = value;
         }
+        worksheetPart.Worksheet.Save();
     }
     public static void SaveFile(string patientId)
     {
@@ -185,13 +186,12 @@ public class DataExporter : Hub
         // Make a copy of the spredsheet to PSS Application directory
         string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
         string targetFile = Path.Combine(targetPath, m_fileName);
-        Log.Information($"DataExporter.SaveFile: path={targetPath}, fileName{m_fileName}");
 
         Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
 
         File.Copy(Path.Combine(m_tempPath, m_fileName), targetFile);
         DeleteTempFile();
-        //await AlertFilePath(targetFile);
+        Log.Information($"DataExporter.SaveFile: Saved file with path={targetPath}, fileName{m_fileName}");
     }
 
     public static void DeleteTempFile()
@@ -248,7 +248,7 @@ public class DataExporter : Hub
     }
 
     private static int getLastRowNo()
-    {
+    {       
         WorkbookPart workbookPart = m_spreadSheet.WorkbookPart;
         Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().Where(s => s.Name == m_sheetName).FirstOrDefault();
         WorksheetPart worksheetPart = (WorksheetPart)(workbookPart.GetPartById(sheet.Id));
@@ -259,30 +259,5 @@ public class DataExporter : Hub
         else
             return 5;
     }
-
-    //private uint getCommentRowNo(DateTime timestamp)
-    //{
-    //uint firstDataRow = 4;
-    //DateTime firstRowDateTime = getCellValue("A" + firstDataRow);
-    //return commentRow;
-
-    //var commentDateTime = m_epoch.AddMilliseconds(timestamp).ToLocalTime();
-
-    //uint elapsedTime = (uint)((commentDateTime - firstRowDateTime).TotalSeconds);
-    //uint commentRow = firstDataRow + elapsedTime;
-
-    //return commentRow;
-    //}
-    //private DateTime getCellValue(string cellReference)
-    //{
-    //    WorkbookPart workbookPart = m_spreadSheet.WorkbookPart;
-    //    Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().Where(s => s.Name == m_sheetName).FirstOrDefault();
-    //    WorksheetPart worksheetPart = (WorksheetPart)(workbookPart.GetPartById(sheet.Id));
-
-    //    Cell cell = worksheetPart.Worksheet.Descendants<Cell>().Where(c => c.CellReference == cellReference).FirstOrDefault();
-    //    var cellValue = DateTime.Parse(cell.InnerText);
-
-    //    return cellValue;
-    //}
 }
 

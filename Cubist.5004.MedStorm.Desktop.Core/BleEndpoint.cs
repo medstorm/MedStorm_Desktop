@@ -60,16 +60,16 @@ namespace PSSApplication.Core
 
         public static BLEMeasurement LatestMeasurement { get; private set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
 
-        public Task StartListningForPainSensors()
-        {
-            Log.Debug("BleEndpoint: StartListningForPainSensors");
-            DataExporter.CreateExcelFile();
+        //public Task StartListningForPainSensors()
+        //{
+        //    Log.Debug("BleEndpoint: StartListningForPainSensors");
+        //    DataExporter.CreateExcelFile();
 
-            mock?.StartListningForPainSensors();
-            m_bleHub?.StartScanningForPainSensors();
+        //    mock?.StartListningForPainSensors();
+        //    m_bleHub?.StartScanningForPainSensors();
 
-            return Task.CompletedTask;
-        }
+        //    return Task.CompletedTask;
+        //}
 
         public void StopScanningForPainSensors()
         {

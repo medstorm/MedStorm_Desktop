@@ -73,7 +73,7 @@ namespace PSSApplication.Core
         public static bool IsRunning { get; private set; }
 
         ulong? m_bluetoothAddress = null;
-        Timer m_timer;
+
         async Task<BluetoothLEDevice> GetBluetoothLEDevice()
         {
             if (m_bluetoothAddress == null)
@@ -133,7 +133,7 @@ namespace PSSApplication.Core
             if (IsRunning && lastReceivedData < (DateTime.Now - TimeSpan.FromSeconds(10)))
             {
                 Log.Error($"Expected datastream dosn't work. lastReceivedData={lastReceivedData.ToLocalTime()} Restarting connection to sensor");
-                m_timer.Change(30000, 10000);
+                //m_timer.Change(30000, 10000);
                 StopScanningForPainSensors();
                 StartScanningForPainSensors();
             }
@@ -195,7 +195,7 @@ namespace PSSApplication.Core
             stopwatch.Stop();
             if (closeConnection && m_bleDevice != null)
             {
-                Log.Debug($"AdvertisementHandler.UnpairDevice: Cosing connection, m_bleDevice.ID= {m_bleDevice.GetHashCode()}");
+                Log.Debug($"AdvertisementHandler.UnpairDevice: Closing connection, m_bleDevice.ID= {m_bleDevice.GetHashCode()}");
                 m_bleDevice.Dispose();
                 m_bleDevice = null;
             }
@@ -507,6 +507,9 @@ namespace PSSApplication.Core
         /// <returns></returns>
         private void SendMessageToClient(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
+            if (!IsRunning)
+                return;
+
             byte[] bArray = new byte[args.CharacteristicValue.Length];
             DataReader.FromBuffer(args.CharacteristicValue).ReadBytes(bArray);
             byte ppsValue = bArray[0];

@@ -260,7 +260,6 @@ namespace Plot
                 double valueStep = MaxValue / NoOfHorizontalGridLines;
                 for (int i = 0; i < NoOfHorizontalGridLines; i++)
                 {
-                    //Control.HorizontalContentAlignment=
                     valueLabels.Children.Add(new TextBlock
                     {
                         Text = (valueStep * (NoOfHorizontalGridLines - i)).ToString(),
@@ -286,11 +285,12 @@ namespace Plot
                     valueLabels.Children.Add(new TextBlock
                     {
                         Text = text,
+                        Height = 0.7 * m_pixelHeight / m_horizontalAxisValues.Count,
                         FontFamily = new FontFamily("Courier"),
                         FontSize = 10,
                         Foreground = Brushes.White,
                         TextAlignment = TextAlignment.Right,
-                        Margin = new Thickness(0, 0, 0, (m_pixelHeight / m_horizontalAxisValues.Count) - 18.5)
+                        //Margin = new Thickness(0, 0, 0, (m_pixelHeight / m_horizontalAxisValues.Count) - 18.5)
                     });
                 }
             }
