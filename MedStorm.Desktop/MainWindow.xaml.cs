@@ -78,11 +78,12 @@ namespace MedStorm.Desktop
         public static readonly DependencyProperty NerveBlockRowProperty =
             DependencyProperty.Register("NerveBlockRow", typeof(GridLength), typeof(MainWindow), new PropertyMetadata(GridLength.Auto));
 
+        string? Application => ((ComboBoxItem)ApplicationsComboBox.SelectedItem)?.Content?.ToString();
+        static BLEMeasurement LatestMeasurement { get; set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
         AdvertisementHandler? m_advHandler = null;
-        private static BLEMeasurement LatestMeasurement { get; set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
         MonitorHandler m_monitor;
         IConfigurationRoot m_configuration;
-        bool m_isWaitingForPatientId=false;
+        bool m_isWaitingForPatientId = false;
         public MainWindow()
         {
             var builder = new ConfigurationBuilder()
@@ -168,7 +169,7 @@ namespace MedStorm.Desktop
                 }
                 catch (Exception ex)
                 {
-                    string errorMsg= $"Not able to Connect to sensor, error={ex.Message}";
+                    string errorMsg = $"Not able to Connect to sensor, error={ex.Message}";
                     MessageBox.Show(errorMsg, "Connection Error", MessageBoxButton.OK);
                     ConnectDisconnectButton.Content = "Connect";
                     Log.Error($"MainWindow: Error={errorMsg}");
@@ -246,8 +247,7 @@ namespace MedStorm.Desktop
         {
             PainNociceptiveTextBox.Text = "Pain - Nociceptive"; // Default
             PainNociceptive.UpperLimit = 3;
-            string? application = ((ComboBoxItem)ApplicationsComboBox.SelectedItem)?.Content?.ToString();
-            switch (application)
+            switch (Application)
             {
                 case "Anaesthesia":
                     Log.Debug("anaesthesia");
