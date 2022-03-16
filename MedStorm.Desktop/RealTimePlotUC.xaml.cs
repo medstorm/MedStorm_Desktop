@@ -32,12 +32,26 @@ namespace Plot
         public bool PlotCurveWithArea { get; set; }
         public int NoOfHorizontalGridLines { get; set; } = 5;
         public int MaxValue { get; set; } = 10;
-        public int UpperLimit { get; set; } = 4;
         public int LowerLimit { get; set; } = 1;
         public int NoOfVerticalGridLines { get; set; } = 3;
         public List<Measurement> DataPoints { get; private set; }
         public string HorizontalAxisLabels { get; set; } = ""; //0, 1, 3, 5, 7, 8, 10
 
+        public int UpperLimit
+        {
+            get { return (int)GetValue(UpperLimitProperty); }
+            set { SetValue(UpperLimitProperty, value); }
+        }
+        public static readonly DependencyProperty UpperLimitProperty =
+            DependencyProperty.Register("UpperLimit", typeof(int), typeof(RealTimePlotUC),
+                new FrameworkPropertyMetadata(4, UpperLimitChanged));
+
+        private static void UpperLimitChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = d as RealTimePlotUC;
+            if (instance != null)
+                instance.PlotUserControl_SizeChanged(null, null);
+        }
 
         double m_maxValue = 1;
         double m_minValue = 0;
@@ -53,8 +67,8 @@ namespace Plot
         DateTime m_startTime;
         List<int> m_horizontalAxisValues = new List<int>();
         Brush m_upperLowerLimitBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#055d7a"));//#FF03303F"));
-        Brush m_whiteBrush = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#c5e3ee"));
-        Brush m_badSignalBrush = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#8B9DA1"));
+        Brush m_whiteBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c5e3ee"));
+        Brush m_badSignalBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8B9DA1"));
         public RealTimePlotUC()
         {
             InitializeComponent();
@@ -104,7 +118,7 @@ namespace Plot
             }
         }
 
-        private void PlotUserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void PlotUserControl_SizeChanged(object? sender, SizeChangedEventArgs? e)
         {
             Init();
             AddGrid();
@@ -412,7 +426,7 @@ namespace Plot
                     if (HasFixedVerticalLabels)
                         y = m_pixelHeight - item.Value * m_valueToPixel;
                     else
-                        y = m_pixelHeight - (item.Value  - m_minValue) * scale * m_valueToPixel;
+                        y = m_pixelHeight - (item.Value - m_minValue) * scale * m_valueToPixel;
 
                     valuePoints.Add(new Point(x, y));
                 }
