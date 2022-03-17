@@ -15,38 +15,6 @@ using Serilog;
 
 namespace PSSApplication.Core
 {
-    public class BleHub : Hub
-    {
-        //IHubContext<BleEndpoint> m_hubContext;
-        AdvertisementHandler m_advHandler;
-
-        // This constructor is called everytime the client page is reloaded
-        public BleHub( string advertisementName)
-        {
-            Log.Debug("BleHub: ctor");
-           // m_hubContext = context;
-            m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(this, advertisementName);
-        }
-
-        public void CloseApplication()
-        {
-            Log.Information("Closing Application");
-            m_advHandler.CloseApplication();
-        }
-
-        public void StartScanningForPainSensors()
-        {
-            Log.Information("BleHub: StartScanningForPainSensors");
-            m_advHandler.StartScanningForPainSensors();
-        }
-
-        public void StopScanningForPainSensors()
-        {
-            Log.Information("BleHub: StopScanningForPainSensors");
-            m_advHandler.StopScanningForPainSensors();
-        }
-    }
-
     public class AdvertisementHandler
     {
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
@@ -59,7 +27,6 @@ namespace PSSApplication.Core
         BluetoothLEDevice m_bleDevice = null;
         GattDeviceService m_service = null;
         GattCharacteristic m_characteristic = null;
-        //string m_deviceId = null;
         BluetoothLEAdvertisementWatcher m_Watcher; // The underlying bluetooth watcher class
 
         const int NumOfCondItems = 5;
@@ -68,7 +35,6 @@ namespace PSSApplication.Core
         readonly string AdvertisementName;
 
         bool m_isBusy = false;
-        static BleHub m_bleHub;
         public bool Listening => m_Watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started;
         public int SleepTimer = 1000;
         public static bool IsRunning { get; private set; }
@@ -105,28 +71,24 @@ namespace PSSApplication.Core
             get => m_advertisementHandlerSingleton; private set => m_advertisementHandlerSingleton = value;
         }
 
-        public static AdvertisementHandler CreateAdvertisementHandler(BleHub bleHub, string advertisementName)
+        public static AdvertisementHandler CreateAdvertisementHandler(string advertisementName)
         {
             if (m_advertisementHandlerSingleton == null)
-                m_advertisementHandlerSingleton = new AdvertisementHandler(bleHub, advertisementName);
+                m_advertisementHandlerSingleton = new AdvertisementHandler(advertisementName);
 
             return m_advertisementHandlerSingleton;
         }
-        // This constructor is called everytime the client page is reloaded
-        private AdvertisementHandler(BleHub bleHub, string advertisementName)
+        
+        private AdvertisementHandler(string advertisementName)
         {
-            m_bleHub = bleHub;
             AdvertisementName = advertisementName;
             Log.Debug("AdvertisementHandler.ctor - createing new watcher");
             m_Watcher = new BluetoothLEAdvertisementWatcher();
             m_Watcher.Received += Watcher_Received;
             m_Watcher.Stopped += Watcher_Stopped;
 
-            //HookEvents(this);
             if (string.IsNullOrWhiteSpace(advertisementName))
                 throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
-
-            //m_timer = new Timer(CheckStatus, null, 30000, 10000);    // wait 30 seconds, and then check every 10th. seconds
         }
 
         public void CheckStatus(Object stateInfo)
@@ -134,7 +96,6 @@ namespace PSSApplication.Core
             if (IsRunning && lastReceivedData < (DateTime.Now - TimeSpan.FromSeconds(10)))
             {
                 Log.Error($"Expected datastream dosn't work. lastReceivedData={lastReceivedData.ToLocalTime()} Restarting connection to sensor");
-                //m_timer.Change(30000, 10000);
                 StopScanningForPainSensors();
                 StartScanningForPainSensors();
             }
@@ -154,7 +115,6 @@ namespace PSSApplication.Core
 
             Log.Information($"AdvertisementHandler.StartScanningForPainSensors: Starting Watcher");
             m_Watcher.Start();
-            StartedListening(); // Inform listeners
             lastReceivedData = DateTime.Now;    // To reset status check timer
             IsRunning = true;
         }
@@ -257,11 +217,6 @@ namespace PSSApplication.Core
             return m_bleDevice.DeviceInformation.Pairing.IsPaired;
         }
 
-        public void CloseApplication()
-        {
-            StopScanningForPainSensors();
-        }
-
         private async void Watcher_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
         {
             //Log.Debug($"AdvertisementHandler.Watcher_Received: m_busy={m_isBusy}, BluetoothAddress={args.BluetoothAddress} ");
@@ -327,7 +282,6 @@ namespace PSSApplication.Core
             }
         }
 
-        //private async Task ConfigureSensorService(BluetoothLEDevice bleDevice)
         private async Task ConfigureSensorService()
         {
             Log.Debug($"AdvertisementHandler.ConfigureSensorService Connection={m_bleDevice?.ConnectionStatus}");
@@ -425,60 +379,6 @@ namespace PSSApplication.Core
         }
 
         /// <summary>
-        /// Fired when the bluetooth watcher stops listening
-        /// </summary>
-        private event Action StoppedListening = () => { };
-
-        /// <summary>
-        /// Fired when the bluetooth watcher starts listening
-        /// </summary>
-        private event Action StartedListening = () => { };
-
-        /// <summary>
-        /// Fired when a device is discovered
-        /// </summary>
-        //private event Action<BLEDevice> DeviceDiscovered = (device) => { };
-
-        /// <summary>
-        /// Fired when a new device is discovered
-        /// </summary>
-        //private event Action<BLEDevice> NewDeviceDiscovered = (device) => { };
-
-        /// <summary>
-        /// Fired when a device name changes
-        /// </summary>
-        //private event Action<BLEDevice> DeviceNameChanged = (device) => { };
-
-
-        /// <summary>
-        /// Fired when a device is removed for timing out
-        /// </summary>
-        //private event Action<BLEDevice> DeviceTimeout = (device) => { };
-
-        ///// <summary>
-        ///// Prune any timed out devices that we have not heard off
-        ///// </summary>
-        //private void CleanupTimeouts()
-        //{
-        //    lock ( mThreadLock)
-        //    {
-        //        // The date in time that if less than means a device has timed out
-        //        var threshold = DateTime.UtcNow - TimeSpan.FromSeconds(30);
-
-        //        // Any devices that have not sent a new broadcast within the heartbeat time
-        //         mDiscoveredDevices.Where(f => f.Value.BroadcastTime < threshold).ToList().ForEach(device =>
-        //        {
-        //            // Remove device
-        //             mDiscoveredDevices.Remove(device.Key);
-
-        //            // Inform listeners
-        //            // Raising a public event inside a lock is a really bad idea.
-        //            DeviceTimeout(device.Value);
-        //        });
-        //    }
-        //}
-
-        /// <summary>
         /// We will receive 28 byte array and parse it to a message string and send to front end.
         /// 
         /// Byte array order:
@@ -494,7 +394,7 @@ namespace PSSApplication.Core
         /// <param name="sender"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        private void SendMessageToClient(GattCharacteristic sender, GattValueChangedEventArgs args)
+        private void SendMessageToClient(GattValueChangedEventArgs args)
         {
             if (!IsRunning)
                 return;
@@ -522,14 +422,6 @@ namespace PSSApplication.Core
             NewMeasurement?.Invoke(this, measurementsArgs);
         }
 
-        public async Task DeviceDisconnected()
-        {
-            Log.Debug("DeviceDisconnected");
-            if (m_bleHub != null && m_bleHub.Clients != null)
-            {
-                await m_bleHub.Clients.All.SendAsync("DeviceDisconnected");
-            }
-        }
         private async Task StopAllBluetoothConnections()
         {
             Log.Debug("AdvertisementHandler.StopAllBluetoothConnections");
@@ -582,7 +474,6 @@ namespace PSSApplication.Core
                     m_bleDevice.ConnectionStatusChanged -= ConnectionStatusChangeHandler;
 
                 //Try reconnect, by unpairing device and start watcher (other way of reconnecting, dosn't seem to work) 
-                //if (m_bleDevice?.DeviceInformation?.Pairing != null && m_bleDevice.DeviceInformation.Pairing.IsPaired)
                 if (m_bleDevice?.DeviceInformation?.Pairing != null)
                 {
                     await UnpairDevice();
@@ -591,16 +482,13 @@ namespace PSSApplication.Core
                 Log.Debug("AdvertisementHandler.ConnectionStatusChangeHandler: Starting watcher");
                 m_isBusy = false;
                 m_Watcher.Start();
-
-                if (m_bleHub != null && m_bleHub.Clients != null)
-                    await m_bleHub.Clients.All.SendAsync("ReconnectDevice");    // Fire signals to clients
             }
         }
 
         public void Oncharacteristic_ValueChanged_Combined(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
             lastReceivedData = DateTime.Now;
-            SendMessageToClient(sender, args);
+            SendMessageToClient(args);
         }
     }
 }

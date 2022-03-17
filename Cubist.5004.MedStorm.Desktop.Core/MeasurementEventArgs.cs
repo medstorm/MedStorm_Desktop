@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PSSApplication.Core
 {
-    public struct MeasurementEventArgs //: EventArgs
+    public struct MeasurementEventArgs
     {
         static long lastTimestamp = 0;
         public MeasurementEventArgs(byte ppsValue, byte areaValue, byte nerveBlockValue, double[] conductivityItems, byte badSignalValue, float meanRiseTimeValue)

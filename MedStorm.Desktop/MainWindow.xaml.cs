@@ -105,7 +105,7 @@ namespace MedStorm.Desktop
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            m_advHandler = AdvertisementHandler.CreateAdvertisementHandler(null, "PainSensor");
+            m_advHandler = AdvertisementHandler.CreateAdvertisementHandler("PainSensor");
             m_advHandler.NewMeasurement += AddMeasurement;
             ApplicationsComboBox.SelectedIndex = 0;
             PatientIdPopUp.Closed += PatientIdPopUp_Closed;
@@ -118,7 +118,7 @@ namespace MedStorm.Desktop
 
             if (eventArgs.IsAcceptedRange() && eventArgs.Message != "")
             {
-                DataExportObject dataExportObject = new DataExportObject(now.ToString(), eventArgs.Measurement.PSS, eventArgs.Measurement.AUC, eventArgs.Measurement.NBV, eventArgs.Measurement.BS, eventArgs.Measurement.SC);
+                PainSensorData dataExportObject = new PainSensorData(now.ToString(), eventArgs.Measurement.PSS, eventArgs.Measurement.AUC, eventArgs.Measurement.NBV, eventArgs.Measurement.BS, eventArgs.Measurement.SC);
                 DataExporter.AddData(dataExportObject);
             }
 

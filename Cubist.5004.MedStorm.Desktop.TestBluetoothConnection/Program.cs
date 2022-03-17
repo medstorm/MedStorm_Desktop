@@ -27,7 +27,8 @@ namespace Testing
 
             try
             {
-                var watcher = new BleHub(configuration.GetValue<string>("AdvertisingName"));
+                //var watcher = new BleHub(configuration.GetValue<string>("AdvertisingName"));
+                var watcher =  AdvertisementHandler.CreateAdvertisementHandler("");
                 var monitor = new MonitorHandler(configuration);
                 Console.WriteLine("Enter 's' to start monitor");
                 Console.WriteLine("Enter 't' to stop monitor");
@@ -58,7 +59,6 @@ namespace Testing
                             case 'q':
                                 watcher.StopScanningForPainSensors();
                                 Thread.Sleep(2000);
-                                watcher.Dispose();
                                 watcher = null;
                                 return;
                             default:

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MedStorm.Desktop"
         mc:Ignorable="d"
         xmlns:plot="clr-namespace:Plot"
-        Loaded="Window_Loaded" WindowState="Normal" WindowStyle="None"
+        Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="None"
         Title="PainSensor - Desktop" x:Name="TopWindow" Height="650" Width="900">
     <Window.Resources>
         <SolidColorBrush x:Key="WhiteBrush" Color="#c5e3ee" />
@@ -152,7 +152,7 @@
         </Grid.ColumnDefinitions>
 
         <Popup x:Name="CommentPopUp" Placement="Center">
-            <Grid Background="#FF03303F" Width="400" Height="200">
+            <Grid Background="#FF03303F" Width="400" Height="200" Margin="0,0,0,600">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.6*" />
                     <RowDefinition Height="3*" />
@@ -170,7 +170,7 @@
         </Popup>
 
         <Popup x:Name="PatientIdPopUp" Placement="Center">
-            <Grid Background="#FF03303F" Width="400" Height="150">
+            <Grid Background="#FF03303F" Width="400" Height="150" Margin="0,0,0,600">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.6*" />
                     <RowDefinition Height="2*" />
