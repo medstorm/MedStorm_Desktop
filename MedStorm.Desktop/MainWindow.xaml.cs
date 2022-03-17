@@ -122,7 +122,6 @@ namespace MedStorm.Desktop
             if (eventArgs.IsAcceptedRange() && eventArgs.Message != "")
             {
                 PainSensorData dataExportObject = new PainSensorData(now.ToString(), eventArgs.Measurement.PSS, eventArgs.Measurement.AUC, eventArgs.Measurement.NBV, eventArgs.Measurement.BS, eventArgs.Measurement.SC);
-                DataExporter.AddData(dataExportObject);
             }
 
             bool isBadSignal = eventArgs.Measurement.BS != 0;
@@ -154,7 +153,6 @@ namespace MedStorm.Desktop
             if (m_isWaitingForPatientId)
             {
                 m_isWaitingForPatientId = false;
-                DataExporter.SaveFile(PatientIdTextBox.Text);
                 m_rawDataStorage.SaveRawDataFile(PatientIdTextBox.Text);
             }
         }
@@ -168,7 +166,6 @@ namespace MedStorm.Desktop
                     PatientIdTextBox.Text = "";
                     Log.Debug("--------------------------------------------------------------------");
                     Log.Debug("MainWindow: connect-Click, creating Excel-File");
-                    DataExporter.CreateExcelFile();
                     m_rawDataStorage.CreateRawDataFile();
                     m_advHandler?.StartScanningForPainSensors();
                     ConnectDisconnectButton.Content = "Disconnect";
@@ -309,7 +306,6 @@ namespace MedStorm.Desktop
             if (IsRunning)
             {
                 m_rawDataStorage?.SaveRawDataFile("?");
-                DataExporter.SaveFile("?");
             }
             Close();
         }
@@ -357,7 +353,6 @@ namespace MedStorm.Desktop
         private void SaveCommentButton_Click(object sender, RoutedEventArgs e)
         {
             CommentPopUp.IsOpen = false;
-            DataExporter.AddComment(DateTime.Now, CommentTextBox.Text);
             m_rawDataStorage.AddComment(DateTime.Now, CommentTextBox.Text);
             Log.Debug($"Comment added={CommentTextBox.Text}");
             CommentTextBox.Text = "";

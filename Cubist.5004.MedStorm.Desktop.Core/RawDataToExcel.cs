@@ -71,7 +71,7 @@ namespace PSSApplication.Core
             };
             sheets.Append(m_sheet);
 
-            var id= string.IsNullOrEmpty(patientId) ? "?" : patientId;
+            var id = string.IsNullOrEmpty(patientId) ? "?" : patientId;
             CreateColumns(id);
 
             StreamReader reader = new StreamReader(fileName);
@@ -176,8 +176,8 @@ namespace PSSApplication.Core
         }
         public static void AddComment(DateTime timestamp, string comment)
         {
-            InsertCell("K", m_currentRow-1, new CellValue(timestamp), new EnumValue<CellValues>(CellValues.String));
-            InsertCell("L", m_currentRow-1, new CellValue(comment), new EnumValue<CellValues>(CellValues.String));
+            InsertCell("K", m_currentRow - 1, new CellValue(timestamp), new EnumValue<CellValues>(CellValues.String));
+            InsertCell("L", m_currentRow - 1, new CellValue(comment), new EnumValue<CellValues>(CellValues.String));
         }
     }
 }
