@@ -84,10 +84,10 @@ namespace PSSApplication.Core
             CreateColumns();
             workbookpart.Workbook.Save();
         }
-        public static void AddData(PainSensorData dataExportObject)
+        public static void AddData(PainSensorData painSensorData)
         {
             if (m_spreadSheet != null)
-                Task.Run(() => InsertDataPackage(dataExportObject));
+                Task.Run(() => InsertDataPackage(painSensorData));
         }
         private static void CreateColumns()
         {
@@ -125,23 +125,23 @@ namespace PSSApplication.Core
             worksheet.Save();
         }
 
-        private static void InsertDataPackage(PainSensorData obj)
+        private static void InsertDataPackage(PainSensorData data)
         {
             lock (m_lockKey)
             {
                 WorksheetPart worksheetPart = m_spreadSheet.WorkbookPart.WorksheetParts.First();
 
-                InsertCell("A", m_currentRow, new CellValue(obj.Timestamp), CellValues.String, worksheetPart);
-                InsertCell("B", m_currentRow, new CellValue(obj.Pain), CellValues.Number, worksheetPart);
-                InsertCell("C", m_currentRow, new CellValue(obj.Awakening), CellValues.Number, worksheetPart);
-                InsertCell("D", m_currentRow, new CellValue(obj.Nerveblock), CellValues.Number, worksheetPart);
-                InsertCell("E", m_currentRow, new CellValue(obj.BadSignal == 0 ? "False" : "True"), CellValues.String, worksheetPart);
+                InsertCell("A", m_currentRow, new CellValue(data.Timestamp), CellValues.String, worksheetPart);
+                InsertCell("B", m_currentRow, new CellValue(data.Pain), CellValues.Number, worksheetPart);
+                InsertCell("C", m_currentRow, new CellValue(data.Awakening), CellValues.Number, worksheetPart);
+                InsertCell("D", m_currentRow, new CellValue(data.Nerveblock), CellValues.Number, worksheetPart);
+                InsertCell("E", m_currentRow, new CellValue(data.BadSignal == 0 ? "False" : "True"), CellValues.String, worksheetPart);
 
-                InsertCell("F", m_currentRow, new CellValue(Math.Round(obj.SkinCond[0], 3)), CellValues.String, worksheetPart);
-                InsertCell("G", m_currentRow, new CellValue(Math.Round(obj.SkinCond[1], 3)), CellValues.String, worksheetPart);
-                InsertCell("H", m_currentRow, new CellValue(Math.Round(obj.SkinCond[2], 3)), CellValues.String, worksheetPart);
-                InsertCell("I", m_currentRow, new CellValue(Math.Round(obj.SkinCond[3], 3)), CellValues.String, worksheetPart);
-                InsertCell("J", m_currentRow, new CellValue(Math.Round(obj.SkinCond[4], 3)), CellValues.String, worksheetPart);
+                InsertCell("F", m_currentRow, new CellValue(Math.Round(data.SkinCond[0], 3)), CellValues.String, worksheetPart);
+                InsertCell("G", m_currentRow, new CellValue(Math.Round(data.SkinCond[1], 3)), CellValues.String, worksheetPart);
+                InsertCell("H", m_currentRow, new CellValue(Math.Round(data.SkinCond[2], 3)), CellValues.String, worksheetPart);
+                InsertCell("I", m_currentRow, new CellValue(Math.Round(data.SkinCond[3], 3)), CellValues.String, worksheetPart);
+                InsertCell("J", m_currentRow, new CellValue(Math.Round(data.SkinCond[4], 3)), CellValues.String, worksheetPart);
 
                 m_currentRow += 1;
                 worksheetPart.Worksheet.Save();
@@ -213,14 +213,6 @@ namespace PSSApplication.Core
 
             worksheetPart.Worksheet.Save();
             //}
-        }
-
-        public async Task AlertFilePath(string path)
-        {
-            if (m_hubContext != null && m_hubContext.Clients != null)
-            {
-                await DataExporter.m_hubContext.Clients.All.SendAsync("AlertFilePath", path);
-            }
         }
 
         private static string getFileName()

@@ -85,6 +85,7 @@ namespace MedStorm.Desktop
         MonitorHandler m_monitor;
         IConfigurationRoot m_configuration;
         bool m_isWaitingForPatientId = false;
+        RawDataStorage m_rawDataStorage;
         public MainWindow()
         {
             var builder = new ConfigurationBuilder()
@@ -98,6 +99,7 @@ namespace MedStorm.Desktop
 
             Log.Information("Starting MedStrom.Desktop..........................................");
 
+            m_rawDataStorage = new RawDataStorage();
             m_monitor = new MonitorHandler(m_configuration);
 
             InitializeComponent();
@@ -113,6 +115,7 @@ namespace MedStorm.Desktop
 
         private void AddMeasurement(object? sender, MeasurementEventArgs eventArgs)
         {
+            m_rawDataStorage.InsertDataPackage(eventArgs.Measurement);
             LatestMeasurement = eventArgs.Measurement;
             DateTime now = DateTime.Now;
 
@@ -152,6 +155,7 @@ namespace MedStorm.Desktop
             {
                 m_isWaitingForPatientId = false;
                 DataExporter.SaveFile(PatientIdTextBox.Text);
+                m_rawDataStorage.SaveRawDataFile(PatientIdTextBox.Text);
             }
         }
         private void connect_diconnect_Click(object sender, RoutedEventArgs e)
@@ -165,6 +169,7 @@ namespace MedStorm.Desktop
                     Log.Debug("--------------------------------------------------------------------");
                     Log.Debug("MainWindow: connect-Click, creating Excel-File");
                     DataExporter.CreateExcelFile();
+                    m_rawDataStorage.CreateRawDataFile();
                     m_advHandler?.StartScanningForPainSensors();
                     ConnectDisconnectButton.Content = "Disconnect";
                 }
@@ -302,7 +307,10 @@ namespace MedStorm.Desktop
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             if (IsRunning)
+            {
+                m_rawDataStorage?.SaveRawDataFile("?");
                 DataExporter.SaveFile("?");
+            }
             Close();
         }
 
@@ -350,6 +358,7 @@ namespace MedStorm.Desktop
         {
             CommentPopUp.IsOpen = false;
             DataExporter.AddComment(DateTime.Now, CommentTextBox.Text);
+            m_rawDataStorage.AddComment(DateTime.Now, CommentTextBox.Text);
             Log.Debug($"Comment added={CommentTextBox.Text}");
             CommentTextBox.Text = "";
         }

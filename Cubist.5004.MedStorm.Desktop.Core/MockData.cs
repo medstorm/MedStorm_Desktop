@@ -40,7 +40,7 @@ namespace PSSApplication.Core
             }
         }
 
-        private void SendMockMessageToClient()
+        public static MeasurementEventArgs GenerateMockData()
         {
             var random = new Random();
             byte pps = (byte)random.Next(0, 11); //PPS is an int in range 0-10
@@ -55,7 +55,13 @@ namespace PSSApplication.Core
             var skinArr = Enumerable.Repeat(0, 5)
                 .Select(x => random.NextDouble() + (double)random.Next(0, 200)).ToArray();
 
-            NewMeasurement?.Invoke(this, new MeasurementEventArgs(pps, area, nerveBlock, skinArr, badSignal, meanRiseTime));
+            return new MeasurementEventArgs(pps, area, nerveBlock, skinArr, badSignal, meanRiseTime);
+        }
+
+        private void SendMockMessageToClient()
+        {
+            MeasurementEventArgs args= GenerateMockData();
+             NewMeasurement?.Invoke(this, args);
         }
 
         private void startTimerMock()
