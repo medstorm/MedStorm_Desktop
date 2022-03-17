@@ -32,7 +32,7 @@ namespace PSSApplication.Core
         const int NumOfCondItems = 5;
         const int NumBytesFloats = 4;
 
-        readonly string AdvertisementName;
+        //readonly string AdvertisementName;
 
         bool m_isBusy = false;
         public bool Listening => m_Watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started;
@@ -81,14 +81,14 @@ namespace PSSApplication.Core
         
         private AdvertisementHandler(string advertisementName)
         {
-            AdvertisementName = advertisementName;
+            //AdvertisementName = advertisementName;
             Log.Debug("AdvertisementHandler.ctor - createing new watcher");
             m_Watcher = new BluetoothLEAdvertisementWatcher();
             m_Watcher.Received += Watcher_Received;
             m_Watcher.Stopped += Watcher_Stopped;
 
-            if (string.IsNullOrWhiteSpace(advertisementName))
-                throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
+            //if (string.IsNullOrWhiteSpace(advertisementName))
+            //    throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
         }
 
         public void CheckStatus(Object stateInfo)
@@ -226,8 +226,8 @@ namespace PSSApplication.Core
             if (!string.IsNullOrWhiteSpace(args.Advertisement.LocalName))
                 Log.Debug($"AdvertisementHandler.Watcher_Received: Advertisement Discovered from {args.Advertisement.LocalName}");
 
-            if (args.Advertisement.LocalName != AdvertisementName)
-                return;
+            //if (args.Advertisement.LocalName != AdvertisementName)
+            //    return;
 
             try
             {
