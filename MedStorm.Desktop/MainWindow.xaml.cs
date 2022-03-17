@@ -81,7 +81,7 @@ namespace MedStorm.Desktop
         string? Application => ((ComboBoxItem)ApplicationsComboBox.SelectedItem)?.Content?.ToString();
         bool IsRunning => ConnectDisconnectButton.Content.ToString() == "Disconnect";
         static BLEMeasurement LatestMeasurement { get; set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
-        AdvertisementHandler? m_advHandler = null;
+        PainSensorAdvertisementHandler? m_advHandler = null;
         MonitorHandler m_monitor;
         IConfigurationRoot m_configuration;
         bool m_isWaitingForPatientId = false;
@@ -107,7 +107,7 @@ namespace MedStorm.Desktop
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            m_advHandler = AdvertisementHandler.CreateAdvertisementHandler("PainSensor");
+            m_advHandler = PainSensorAdvertisementHandler.CreateAdvertisementHandler();
             m_advHandler.NewMeasurement += AddMeasurement;
             ApplicationsComboBox.SelectedIndex = 0;
             PatientIdPopUp.Closed += PatientIdPopUp_Closed;

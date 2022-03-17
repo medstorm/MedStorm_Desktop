@@ -15,7 +15,7 @@ using Serilog;
 
 namespace PSSApplication.Core
 {
-    public class AdvertisementHandler
+    public class PainSensorAdvertisementHandler
     {
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
         public static BLEMeasurement LatestMeasurement { get; private set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
@@ -32,7 +32,7 @@ namespace PSSApplication.Core
         const int NumOfCondItems = 5;
         const int NumBytesFloats = 4;
 
-        //readonly string AdvertisementName;
+        const string AdvertisementName = "PainSensor";
 
         bool m_isBusy = false;
         public bool Listening => m_Watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started;
@@ -60,28 +60,27 @@ namespace PSSApplication.Core
         }
 
         DateTime lastReceivedData = DateTime.MinValue;
-        static AdvertisementHandler()
+        static PainSensorAdvertisementHandler()
         {
             IsRunning = false;
         }
 
-        public static AdvertisementHandler m_advertisementHandlerSingleton = null;
-        public static AdvertisementHandler AdvertisementMgr
+        public static PainSensorAdvertisementHandler m_advertisementHandlerSingleton = null;
+        public static PainSensorAdvertisementHandler AdvertisementMgr
         {
             get => m_advertisementHandlerSingleton; private set => m_advertisementHandlerSingleton = value;
         }
 
-        public static AdvertisementHandler CreateAdvertisementHandler(string advertisementName)
+        public static PainSensorAdvertisementHandler CreateAdvertisementHandler()
         {
             if (m_advertisementHandlerSingleton == null)
-                m_advertisementHandlerSingleton = new AdvertisementHandler(advertisementName);
+                m_advertisementHandlerSingleton = new PainSensorAdvertisementHandler();
 
             return m_advertisementHandlerSingleton;
         }
         
-        private AdvertisementHandler(string advertisementName)
+        private PainSensorAdvertisementHandler()
         {
-            //AdvertisementName = advertisementName;
             Log.Debug("AdvertisementHandler.ctor - createing new watcher");
             m_Watcher = new BluetoothLEAdvertisementWatcher();
             m_Watcher.Received += Watcher_Received;
@@ -226,8 +225,8 @@ namespace PSSApplication.Core
             if (!string.IsNullOrWhiteSpace(args.Advertisement.LocalName))
                 Log.Debug($"AdvertisementHandler.Watcher_Received: Advertisement Discovered from {args.Advertisement.LocalName}");
 
-            //if (args.Advertisement.LocalName != AdvertisementName)
-            //    return;
+            if (args.Advertisement.LocalName != AdvertisementName)
+                return;
 
             try
             {

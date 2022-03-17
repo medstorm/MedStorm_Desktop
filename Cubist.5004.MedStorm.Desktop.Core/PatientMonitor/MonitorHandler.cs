@@ -73,7 +73,7 @@ namespace PSSApplication.Core.PatientMonitor
 
         private BLEMeasurement GetPainData()
         {
-            var paindata = AdvertisementHandler.LatestMeasurement;
+            var paindata = PainSensorAdvertisementHandler.LatestMeasurement;
             return paindata;
         }
     }
