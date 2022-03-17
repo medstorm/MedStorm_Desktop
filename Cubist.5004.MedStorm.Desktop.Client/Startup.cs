@@ -61,7 +61,7 @@ namespace PSSApplication.Client
             {
                 endpoints.MapRazorPages();
                 //endpoints.MapHub<BleEndpoint>("/blehub");
-                endpoints.MapHub<DataExporter>("/dataExporthub");
+                //endpoints.MapHub<DataExporter>("/dataExporthub");
             });
         }
     }
