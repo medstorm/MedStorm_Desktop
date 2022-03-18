@@ -27,8 +27,7 @@ namespace Testing
 
             try
             {
-                //var watcher = new BleHub(configuration.GetValue<string>("AdvertisingName"));
-                var watcher =  AdvertisementHandler.CreateAdvertisementHandler("");
+                var watcher = PainSensorAdvertisementHandler.CreateAdvertisementHandler();
                 var monitor = new MonitorHandler(configuration);
                 Console.WriteLine("Enter 's' to start monitor");
                 Console.WriteLine("Enter 't' to stop monitor");

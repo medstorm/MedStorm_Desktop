@@ -151,8 +151,8 @@
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
 
-        <Popup x:Name="CommentPopUp" Placement="Center">
-            <Grid Background="#FF03303F" Width="400" Height="200" Margin="0,0,0,600">
+        <Popup x:Name="CommentPopUp" Placement="Center" PlacementTarget="{Binding ElementName=ApplicationsComboBox}">
+            <Grid Background="#FF03303F" Width="500" Height="200" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.6*" />
                     <RowDefinition Height="3*" />
@@ -169,8 +169,8 @@
             </Grid>
         </Popup>
 
-        <Popup x:Name="PatientIdPopUp" Placement="Center">
-            <Grid Background="#FF03303F" Width="400" Height="150" Margin="0,0,0,600">
+        <Popup x:Name="PatientIdPopUp" Placement="Center" PlacementTarget="{Binding ElementName=ApplicationsComboBox}">
+            <Grid Background="#FF03303F" Width="500" Height="150">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.6*" />
                     <RowDefinition Height="2*" />
