@@ -1,0 +1,15 @@
+﻿<Window x:Class="NameCrypto.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NameCrypto"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="400" Loaded="Window_Loaded">
+    <DockPanel Background="LightGray" LastChildFill="False">
+        <TextBox x:Name="plainTextBox"  Text="Maskin-navn" Width="300" DockPanel.Dock="Top" Height="25" />
+        <Button x:Name="CryptButton" Click="CryptButton_Click" Content="Crypt" Width="300" DockPanel.Dock="Top" Height="25" />
+        <Button x:Name="DeCryptButton" Click="DeCryptButton_Click" Content="DeCrypt" Width="300" DockPanel.Dock="Top" Height="25" />
+        <TextBox x:Name="cryptedTextBox" Text="" Width="300" DockPanel.Dock="Top" Height="25" />
+    </DockPanel>
+</Window>
