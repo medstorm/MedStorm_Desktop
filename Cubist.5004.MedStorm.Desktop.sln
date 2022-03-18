@@ -22,8 +22,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedStorm.Desktop", "MedStor
 		{BAEDE74C-0E29-4321-9260-487C1716242B} = {BAEDE74C-0E29-4321-9260-487C1716242B}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NameCrypto", "..\NameCrypto\NameCrypto.csproj", "{EC669E99-A6A0-45BA-AE65-DE16F90B7328}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,26 +119,6 @@ Global
 		{15464615-154C-46FE-B97E-068526214734}.Release|x64.Build.0 = Release|Any CPU
 		{15464615-154C-46FE-B97E-068526214734}.Release|x86.ActiveCfg = Release|Any CPU
 		{15464615-154C-46FE-B97E-068526214734}.Release|x86.Build.0 = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|ARM.Build.0 = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|x64.Build.0 = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Debug|x86.Build.0 = Debug|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|ARM.ActiveCfg = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|ARM.Build.0 = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|ARM64.Build.0 = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|x64.ActiveCfg = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|x64.Build.0 = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|x86.ActiveCfg = Release|Any CPU
-		{EC669E99-A6A0-45BA-AE65-DE16F90B7328}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
