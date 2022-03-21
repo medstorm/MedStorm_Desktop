@@ -93,8 +93,12 @@ namespace MedStorm.Desktop
                         .AddJsonFile("appsettings.json");
             m_configuration = builder.Build();
 
+            string logPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
+            string logFileWithPath = System.IO.Path.Combine(logPath, "PainsSensor.log");
+            // Logging file: C:\ProgramData\PSS Application\PainsSensor.log
             Log.Logger = new LoggerConfiguration()
                         .ReadFrom.Configuration(m_configuration)
+                        .WriteTo.File(logFileWithPath, rollingInterval: RollingInterval.Day)
                         .CreateLogger();
 
             Log.Information("Starting MedStrom.Desktop..........................................");

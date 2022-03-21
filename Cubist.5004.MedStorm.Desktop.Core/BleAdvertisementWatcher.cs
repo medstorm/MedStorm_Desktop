@@ -85,9 +85,6 @@ namespace PSSApplication.Core
             m_Watcher = new BluetoothLEAdvertisementWatcher();
             m_Watcher.Received += Watcher_Received;
             m_Watcher.Stopped += Watcher_Stopped;
-
-            //if (string.IsNullOrWhiteSpace(advertisementName))
-            //    throw new ArgumentException("Cannot retrieve AdvertisingName from appsettings.json");
         }
 
         public void CheckStatus(Object stateInfo)
@@ -103,7 +100,6 @@ namespace PSSApplication.Core
         private void Watcher_Stopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
             Log.Debug($"AdvertisementHandler.Watcher_Stopped: status={args.Error}");
-            //StopListening();
         }
 
         public void StartScanningForPainSensors()
