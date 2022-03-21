@@ -53,7 +53,7 @@ namespace Plot
                 instance.PlotUserControl_SizeChanged(null, null);
         }
 
-        double m_maxValue = 1;
+        double m_maxValue = 2.5;
         double m_minValue = 0;
         double m_valueToPixel = 1;
         double m_pixelHeight = 0;
@@ -402,7 +402,7 @@ namespace Plot
             }
             else
             {
-                m_maxValue = 1;
+                m_maxValue = 2.5;
                 DataPoints.ForEach(x => { if (x.Value > m_maxValue) m_maxValue = x.Value; });
 
                 m_minValue = m_maxValue;
