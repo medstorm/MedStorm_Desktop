@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NameCrypto"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400" Loaded="Window_Loaded">
+        Title="Crypt/Decrypt name" Height="170" Width="430" Loaded="Window_Loaded">
     <DockPanel Background="LightGray" LastChildFill="False">
-        <TextBox x:Name="plainTextBox"  Text="Maskin-navn" Width="300" DockPanel.Dock="Top" Height="25" />
-        <Button x:Name="CryptButton" Click="CryptButton_Click" Content="Crypt" Width="300" DockPanel.Dock="Top" Height="25" />
-        <Button x:Name="DeCryptButton" Click="DeCryptButton_Click" Content="DeCrypt" Width="300" DockPanel.Dock="Top" Height="25" />
-        <TextBox x:Name="cryptedTextBox" Text="" Width="300" DockPanel.Dock="Top" Height="25" />
+        <Button x:Name="GetMachineNameButton" Content="Get MachineName" Height="25" VerticalAlignment="Top" DockPanel.Dock="Left" Margin="10"
+                Click="GetMachineNameButton_Click" />
+        <TextBox x:Name="plainTextBox"  Text="Machine-Name" Width="300" DockPanel.Dock="Top" Height="25" Margin="1,10,0,0" />
+        <Button x:Name="CryptButton" Click="CryptButton_Click" Content="Crypt" Width="300" DockPanel.Dock="Top" Height="25" Margin="1" />
+        <Button x:Name="DeCryptButton" Click="DeCryptButton_Click" Content="DeCrypt" Width="300" DockPanel.Dock="Top" Height="25" Margin="1"/>
+        <TextBox x:Name="cryptedTextBox" Text="" Width="300" DockPanel.Dock="Top" Height="25" Margin="1"/>
     </DockPanel>
 </Window>

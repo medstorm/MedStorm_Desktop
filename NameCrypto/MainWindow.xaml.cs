@@ -37,11 +37,14 @@ namespace NameCrypto
 
         private void DeCryptButton_Click(object sender, RoutedEventArgs e)
         {
-            byte[] hexCryptedBytes= Convert.FromBase64String(cryptedTextBox.Text);
-            string? plainText = m_medStormCrypto.DecryptStringFromBytes_Aes(hexCryptedBytes);
+            string? plainText = m_medStormCrypto.DecryptString(cryptedTextBox.Text);
             plainTextBox.Text = plainText;
             cryptedTextBox.Text = "";
         }
 
+        private void GetMachineNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            plainTextBox.Text = Environment.MachineName;
+        }
     }
 }

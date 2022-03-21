@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -52,28 +53,37 @@ namespace PSSApplication.Core
             return encrypted;
         }
 
-        public string? DecryptStringFromBytes_Aes(byte[] cipherText)
+        public string? DecryptString(string cipherText)
         {
-            string? plaintext = null;
-
-            // Create a decryptor to perform the stream transform.
-            ICryptoTransform decryptor = m_AesAlgorithme.CreateDecryptor();
-
-            // Create the streams used for decryption.
-            using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+            try
             {
-                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                {
-                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                    {
+                string? plaintext = null;
+                byte[] hexCryptedBytes = Convert.FromBase64String(cipherText);
 
-                        // Read the decrypted bytes from the decrypting stream
-                        // and place them in a string.
-                        plaintext = srDecrypt.ReadToEnd();
+                // Create a decryptor to perform the stream transform.
+                ICryptoTransform decryptor = m_AesAlgorithme.CreateDecryptor();
+
+                // Create the streams used for decryption.
+                using (MemoryStream msDecrypt = new MemoryStream(hexCryptedBytes))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+
+                            // Read the decrypted bytes from the decrypting stream
+                            // and place them in a string.
+                            plaintext = srDecrypt.ReadToEnd();
+                        }
                     }
                 }
+                return plaintext;
             }
-            return plaintext;
+            catch (Exception ex)
+            {
+                Log.Error($"DecryptStringFromBytes_Aes: exception= {ex.Message}");
+                return null;
+            }
         }
     }
 }

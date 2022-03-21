@@ -88,14 +88,60 @@ namespace MedStorm.Desktop
         RawDataStorage m_rawDataStorage;
         public MainWindow()
         {
-            var builder = new ConfigurationBuilder()
-                        .SetBasePath(Directory.GetCurrentDirectory())
-                        .AddJsonFile("appsettings.json");
-            m_configuration = builder.Build();
+            try
+            {
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json");
+                m_configuration = builder.Build();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wrong configuration (appsettings.json)!\n {ex.Message}");
+                Close();
+                return;
+            }
+
+            bool machineNameIsOk = false;
+            string machineName = Environment.MachineName.ToLower();
+            //if (!string.IsNullOrEmpty(machineName))
+
+            var keySection = m_configuration.GetSection("Keys");   //i.e. Machine names crypted
+            if (machineName.Contains("medstorm") || keySection == null)
+            {
+                machineNameIsOk = true;
+            }
+            else
+            {
+                var keys = keySection?.GetChildren()?.Select(x => x.Value)?.ToList<string>();
+                MedStormCrypto crypto = new MedStormCrypto();
+                if (keys != null)
+                {
+                    foreach (var cryptedMachineName in keys)
+                    {
+                        string? decryptedMachineName = crypto.DecryptString(cryptedMachineName);
+                        if (!string.IsNullOrEmpty(decryptedMachineName) && decryptedMachineName?.ToLower() == machineName)
+                        {
+                            machineNameIsOk = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!machineNameIsOk)
+            {
+                Log.Information($"Computer {Environment.MachineName} is not certified for running this application");
+                MessageBox.Show($"Computer {Environment.MachineName} si not certified for running this application\n" +
+                                $"Please contact MedStorm on: https://med-storm.com/");
+                Close();
+            }
+
+            Log.Information($"Running on computer= {Environment.MachineName} ");
 
             string logPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
             string logFileWithPath = System.IO.Path.Combine(logPath, "PainsSensor.log");
-            // Logging file: C:\ProgramData\PSS Application\PainsSensor.log
+            // Logging file: C:\ProgramData\PSS Application\PainsSensoryyyyMMdd.log
             Log.Logger = new LoggerConfiguration()
                         .ReadFrom.Configuration(m_configuration)
                         .WriteTo.File(logFileWithPath, rollingInterval: RollingInterval.Day)
