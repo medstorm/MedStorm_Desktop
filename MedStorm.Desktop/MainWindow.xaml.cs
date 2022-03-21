@@ -104,10 +104,9 @@ namespace MedStorm.Desktop
 
             bool machineNameIsOk = false;
             string machineName = Environment.MachineName.ToLower();
-            //if (!string.IsNullOrEmpty(machineName))
 
             var keySection = m_configuration.GetSection("Keys");   //i.e. Machine names crypted
-            if (machineName.Contains("medstorm") || keySection == null)
+            if (machineName.Contains("medstorm") || keySection == null || keySection.Value == null)
             {
                 machineNameIsOk = true;
             }
