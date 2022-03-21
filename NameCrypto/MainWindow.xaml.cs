@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSSApplication.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace NameCrypto
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         MedStormCrypto m_medStormCrypto;

@@ -5,6 +5,11 @@
     <TargetFramework>net6.0-windows10.0.20348.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cubist.5004.MedStorm.Desktop.Core\Cubist.5004.MedStorm.Desktop.Core.csproj" />
+  </ItemGroup>
 
 </Project>
