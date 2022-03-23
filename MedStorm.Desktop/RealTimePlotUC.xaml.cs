@@ -25,8 +25,17 @@ namespace Plot
     /// </summary>
     public partial class RealTimePlotUC : UserControl
     {
+
+
+        public string PlotTitle
+        {
+            get { return (string)GetValue( PlotTitleProperty); }
+            set { SetValue( PlotTitleProperty, value); }
+        }
+        public static readonly DependencyProperty  PlotTitleProperty =
+            DependencyProperty.Register("PlotTitle", typeof(string), typeof(RealTimePlotUC), new PropertyMetadata(""));
+
         public Brush FillAreaBrush { get; set; }
-        public string PlotTitle { get; set; } = string.Empty;
         public bool HasFixedVerticalLabels { get; set; } = true;
         public double NoOfSecondsToShow { get; set; } = 15;
         public bool PlotCurveWithArea { get; set; }
