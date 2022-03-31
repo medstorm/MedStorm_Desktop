@@ -1,0 +1,24 @@
+# Visual Studio 2015/2017 cache/options directory
+*.vs*
+.gitignore
+*.[Ll]og
+.config
+*.user
+
+#downloaded nuget packages
+MScode/packages/
+
+#binary folders
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+PublishProfiles/
+SetupPSSDesktopWix/PSSDesktopApp.wxs
