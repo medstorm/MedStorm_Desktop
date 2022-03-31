@@ -106,7 +106,7 @@ namespace MedStorm.Desktop
             string machineName = Environment.MachineName.ToLower();
 
             var keySection = m_configuration.GetSection("Keys");   //i.e. Machine names crypted
-            if (machineName.Contains("medstorm") || keySection == null || keySection.Value == null)
+            if (machineName.Contains("medstorm") || keySection == null)
             {
                 machineNameIsOk = true;
             }
@@ -136,15 +136,19 @@ namespace MedStorm.Desktop
                 Close();
             }
 
-            Log.Information($"Running on computer= {Environment.MachineName} ");
-
             string logPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
             string logFileWithPath = System.IO.Path.Combine(logPath, "PainsSensor.log");
+
             // Logging file: C:\ProgramData\PSS Application\PainsSensoryyyyMMdd.log
             Log.Logger = new LoggerConfiguration()
                         .ReadFrom.Configuration(m_configuration)
                         .WriteTo.File(logFileWithPath, rollingInterval: RollingInterval.Day)
+                        .WriteTo.Debug()
                         .CreateLogger();
+
+            Log.Information($"Running on computer= {Environment.MachineName} ");
+
+
 
             Log.Information("Starting MedStrom.Desktop..........................................");
 
@@ -316,7 +320,7 @@ namespace MedStorm.Desktop
                     Switch(on: false, PlotType.NerveBlock);
                     break;
 
-                case "Icu":
+                case "ICU":
                     Log.Debug("icu");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: true, PlotType.Awakening);
