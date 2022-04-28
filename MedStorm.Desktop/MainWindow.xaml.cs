@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -424,6 +425,27 @@ namespace MedStorm.Desktop
         private void PatientIdButton_Click(object sender, RoutedEventArgs e)
         {
             PatientIdPopUp.IsOpen = true;
+        }
+
+        private void MedstormLogo_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            AboutPopUp.IsOpen = true;
+            Assembly assemblyName = Assembly.GetExecutingAssembly();
+            //var assemblyName = Assembly.GetName();
+            Type? gitVersionInformationType = assemblyName.GetType("GitVersionInformation");
+            var fields = gitVersionInformationType?.GetFields();
+            if (fields != null)
+            {
+                foreach (var field in fields)
+                {
+                    Trace.WriteLine(string.Format("{0}: {1}", field.Name, field.GetValue(null)));
+                }
+            }
+        }
+
+        private void AboutPopUp_OK_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AboutPopUp.IsOpen = false;
         }
     }
 

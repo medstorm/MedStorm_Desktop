@@ -242,7 +242,16 @@
             <Button x:Name="ConnectDisconnectButton" Grid.Row="5" Margin="10,0,0,3" HorizontalAlignment="Stretch"
                     Content="Connect"
                     Click="connect_diconnect_Click"/>
-            <Image Grid.Row="6" Source="logo_medstorm.png" Margin="10" Width="150" HorizontalAlignment="Left"/>
+            <Image Grid.Row="6" Source="logo_medstorm.png" x:Name="MedstormLogo" Margin="10" Width="150" HorizontalAlignment="Left"
+                   MouseDown="MedstormLogo_MouseDown" />
+            <Popup x:Name="AboutPopUp" Placement="Center" PlacementTarget="{Binding ElementName=MedstormLogo}" StaysOpen="False">
+                <StackPanel  Background="#FF03303F" Width="300" Height="150" Margin="2">
+                    <TextBlock Grid.Row="0" Text="About MedStorm Desktop" Foreground="{StaticResource WhiteBrush}" FontSize="16" FontWeight="DemiBold" Margin="10,20,0,5" />
+                    <TextBlock x:Name="VersionInfoTextBox" TextWrapping="Wrap" Foreground="{StaticResource WhiteBrush}" Margin="10,0,0,0"/>
+                    <Button x:Name="AboutPopUp_OK_Button" Click="AboutPopUp_OK_Button_Click"  Width="70" Margin="20"
+                        Content="Ok"/>
+                </StackPanel>
+            </Popup>
         </Grid>
 
         <!-- 1. column, Numbers and labelse -->
