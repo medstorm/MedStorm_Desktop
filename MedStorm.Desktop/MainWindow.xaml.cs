@@ -431,16 +431,20 @@ namespace MedStorm.Desktop
         {
             AboutPopUp.IsOpen = true;
             Assembly assemblyName = Assembly.GetExecutingAssembly();
-            //var assemblyName = Assembly.GetName();
             Type? gitVersionInformationType = assemblyName.GetType("GitVersionInformation");
-            var fields = gitVersionInformationType?.GetFields();
+            FieldInfo[]? fields = gitVersionInformationType?.GetFields();
+            StringBuilder sb = new StringBuilder();
+            List<string> tagsToPrint = new List<string> { "SemVer", "CommitDate" };
             if (fields != null)
             {
                 foreach (var field in fields)
                 {
-                    Trace.WriteLine(string.Format("{0}: {1}", field.Name, field.GetValue(null)));
+                    if (tagsToPrint.Contains(field.Name))
+                        sb.AppendLine($"{field.Name}: {field.GetValue(null)}");
                 }
             }
+            VersionInfoTextBox.Text = sb.ToString();
+
         }
 
         private void AboutPopUp_OK_Button_Click(object sender, RoutedEventArgs e)
