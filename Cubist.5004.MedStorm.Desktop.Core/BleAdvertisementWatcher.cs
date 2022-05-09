@@ -176,7 +176,7 @@ namespace PSSApplication.Core
                 stopwatch.Start();
 
                 //Try to pair for 30 seconds then fails
-                while (!isPaired && stopwatch.ElapsedMilliseconds < 30000)
+                while (!isPaired && stopwatch.ElapsedMilliseconds < 30000 && m_bleDevice!=null)
                 {
                     Log.Debug($"AdvertisementHandler.PairDevice: Pairing...");
                     m_bleDevice.DeviceInformation.Pairing.Custom.PairingRequested += Custom_PairingRequested;

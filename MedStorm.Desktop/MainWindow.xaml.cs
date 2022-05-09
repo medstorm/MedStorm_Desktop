@@ -107,7 +107,7 @@ namespace MedStorm.Desktop
             string machineName = Environment.MachineName.ToLower();
 
             var keySection = m_configuration.GetSection("Keys");   //i.e. Machine names crypted
-            if (machineName.Contains("medstorm") || keySection == null)
+            if (machineName.Contains("medstorm") || keySection.Value == null)
             {
                 machineNameIsOk = true;
             }
@@ -132,8 +132,9 @@ namespace MedStorm.Desktop
             if (!machineNameIsOk)
             {
                 Log.Information($"Computer {Environment.MachineName} is not certified for running this application");
+                Log.CloseAndFlush();
                 MessageBox.Show($"Computer {Environment.MachineName} si not certified for running this application\n" +
-                                $"Please contact MedStorm on: https://med-storm.com/");
+                                $"Please contact MedStorm on: https://med-storm.com/","Fatal Error", MessageBoxButton.OK);
                 Close();
             }
 
@@ -148,8 +149,6 @@ namespace MedStorm.Desktop
                         .CreateLogger();
 
             Log.Information($"Running on computer= {Environment.MachineName} ");
-
-
 
             Log.Information("Starting MedStrom.Desktop..........................................");
 
