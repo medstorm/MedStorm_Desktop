@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8D1779086CF747E3A8E1D96CC59862EF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BA8C460BB8A64D73BA2ED592524F1765"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -136,6 +142,26 @@
             {
             "SourcePath" = "8:..\\MedStorm.Desktop\\StartIcon.ico"
             "TargetName" = "8:StartIcon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_C0C0A7DAB5654E429AEC2987CA7047B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8D1779086CF747E3A8E1D96CC59862EF"
+            {
+            "SourcePath" = "8:..\\MedStorm.Desktop\\bin\\x64\\Release\\net6.0-windows10.0.18362.0\\MedStorm.Desktop.deps.json"
+            "TargetName" = "8:MedStorm.Desktop.deps.json"
             "Tag" = "8:"
             "Folder" = "8:_C0C0A7DAB5654E429AEC2987CA7047B3"
             "Condition" = "8:"
@@ -744,7 +770,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BA8C460BB8A64D73BA2ED592524F1765"
             {
-            "SourcePath" = "8:..\\MedStorm.Desktop\\obj\\x64\\Release\\net6.0-windows10.0.18362.0\\apphost.exe"
+            "SourcePath" = "8:..\\MedStorm.Desktop\\obj\\Release\\net6.0-windows10.0.18362.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_C0C0A7DAB5654E429AEC2987CA7047B3"
