@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PSSApplication.Core
+namespace PSSApplication.Common
 {
     /// <summary>
     /// Object to send to monitor

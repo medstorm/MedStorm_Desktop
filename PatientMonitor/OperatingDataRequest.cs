@@ -16,7 +16,7 @@ namespace PSSApplication.Core.PatientMonitor
             OnOperatingDataRequest = onOperatingDataRequest;
         }
 
-        public IResponseTelegram Process()
+        public ResponseTelegram Process(CancellationToken token)
         {
             var operatingDataResponse = OnOperatingDataRequest();
             //if (operatingDataResponse == null)

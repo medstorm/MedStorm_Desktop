@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using PSSApplication.Common;
+using Serilog;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -8,6 +9,8 @@ namespace PSSApplication.Core
 {
     public struct MeasurementEventArgs
     {
+        const int NumOfCondItems = 5;
+        const int NumBytesFloats = 4;
         static long lastTimestamp = 0;
         public MeasurementEventArgs(byte ppsValue, byte areaValue, byte nerveBlockValue, double[] conductivityItems, byte badSignalValue, float meanRiseTimeValue)
         {
@@ -53,6 +56,27 @@ namespace PSSApplication.Core
             }
 
             return true;
+        }
+
+        public static MeasurementEventArgs ExtractMeasurmentsEvent(byte[] bArray)
+        {
+            byte ppsValue = bArray[0];
+            byte areaValue = bArray[1];
+            double[] ConductivityItems = new double[NumOfCondItems];
+            for (int i = 0; i < NumOfCondItems; i++)
+            {
+                byte[] condItemBytes = new byte[4];
+                Array.Copy(bArray, 2 + i * NumBytesFloats, condItemBytes, 0, NumBytesFloats);
+                double floatToDouble = (double)(new decimal(BitConverter.ToSingle(condItemBytes, 0)));
+                ConductivityItems[i] = floatToDouble;
+            }
+
+            float meanRiseTimeValue = BitConverter.ToSingle(bArray, 22);
+            byte nerveBlockValue = bArray[26];
+            byte badSignalValue = bArray[27];
+
+            MeasurementEventArgs measurementsArgs = new MeasurementEventArgs(ppsValue, areaValue, nerveBlockValue, ConductivityItems, badSignalValue, meanRiseTimeValue);
+            return measurementsArgs;
         }
     }
 }

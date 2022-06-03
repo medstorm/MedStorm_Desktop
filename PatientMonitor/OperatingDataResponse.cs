@@ -1,12 +1,10 @@
 ﻿namespace PSSApplication.Core.PatientMonitor
 {
-    public class OperatingDataResponse : IResponseTelegram
+    public class OperatingDataResponse : ResponseTelegram
     {
-
-        private byte[] data;
         public OperatingDataResponse(byte[] data)
+            : base(data)
         {
-            this.data = data;
         }
 
         private byte[] NumberOfDataBytes()
@@ -25,7 +23,7 @@
                 };
             }
         }
-        public byte[] ToByteArray()
+        override public byte[] ToByteArray()
         {
             var buffer = new CrcBuffer();
             buffer.Add((byte)ResponseTelegramType.OperatingDataResponse);

@@ -3,6 +3,6 @@ namespace PSSApplication.Core.PatientMonitor
 {
     public interface IIvoiRequest
     {
-        IResponseTelegram Process();
+        ResponseTelegram? Process(CancellationToken token);
     }
 }

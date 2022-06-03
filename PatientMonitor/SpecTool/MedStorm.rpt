@@ -1,0 +1,100 @@
+IntelliBridge and VueLink Open Interface - Specification Tool (Version B)
+(c) Copyright 2010 Koninklijke Philips Electronics N.V.
+
+SpecTool.exe (1040) : Thu Jul 08 14:10:02 2021
+ 
+
+INTELLIBRIDGE AND VUELINK OPEN INTERFACE - SPECIFICATION REPORT
+===============================================================
+
+==== SPECIFICATION SOURCE ====
+
+  .\MedStorm.txt
+
+
+==== COMPATIBILITY ====
+
+  Required CMS Rev. : C (9.xx) or higher 
+  Language          : English
+
+
+==== DEVICE IDENTIFICATION ====
+
+  Device Name       : "Pain Monitor"
+  VueLink Type      : "       VENTILATOR       "
+  Softkey Labels    : "" / "VENTILTR"
+
+
+==== VUELINK TASK WINDOW LAYOUT ====
+
+  |-------------------|-------------------|-------------------|
+  |                   |                   | Pain              |
+  |                   |                   |-------------------|
+  |                   |                   | AUC      /s       |
+  |                   |                   |-------------------|
+  |                   |                   | NBV      /s       |
+  |                   |                   |-------------------|
+  |                   |                   | BS       /s       |
+  |                   |                   |-------------------|
+
+==== PROTOCOL DEFINITION ====
+
+  Protocol Type     : SLOW
+  Wave Transfer     : ANALOG
+  RS-232 Setup      : 8 data bits, 1 stop bit, no parity
+  Minimum Baudrate  : 1200 baud
+  Request Frequency : 1 request(s) per 2048 ms
+
+==== LIST of TELEGRAMS ====
+
+SLOW PROTOCOL:
+
+REQUEST TELEGRAM for all SIGNALS:
+  >> 0x02	 request telegram id
+  >> 0x00	 length of telegram
+  >> 0x??	 CRC high byte
+  >> 0x??	 CRC low byte
+
+RESPONSE TELEGRAM:
+  << 0x82	 response telegram id
+  << 0x10	 length of telegram
+  data part for status record:
+  << 0x??	 alarm state (0x00 = alarms suspended; 0x01 = alarms enabled)
+  << 0x??	 general inop indication, ATTENTION: inhibits all other alarms and inops
+		 (0x00 no inop active; else index into general inop list)
+  << 0x??	 unspecific inop indication (0x00 no inop active; else index into inop list)
+  << 0x??	 unspecific alarm indication (0x00 no alarm active; else index into alarm list)
+  << 0xe5	 device identification
+  << 0x81	 device identification
+  << 0x86	 device identification
+  << 0x12	 device identification
+  data part for "Pain" (MEASUREMENT NUMERIC):
+  << 0x??	 mantissa of measured value (high byte) | allowed range: -999 .. 9999
+  << 0x??	 mantissa of measured value (low byte)  | represented range: -999 .. 9999
+  data part for "AUC" (MEASUREMENT NUMERIC):
+  << 0x??	 mantissa of measured value (high byte) | allowed range: -999 .. 9999
+  << 0x??	 mantissa of measured value (low byte)  | represented range: -999 .. 9999
+  data part for "NBV" (MEASUREMENT NUMERIC):
+  << 0x??	 mantissa of measured value (high byte) | allowed range: -999 .. 9999
+  << 0x??	 mantissa of measured value (low byte)  | represented range: -999 .. 9999
+  data part for "BS" (MEASUREMENT NUMERIC):
+  << 0x??	 mantissa of measured value (high byte) | allowed range: -999 .. 9999
+  << 0x??	 mantissa of measured value (low byte)  | represented range: -999 .. 9999
+  << 0x??	 CRC high byte
+  << 0x??	 CRC low byte
+
+
+==== LIST of INOP STRINGS ====
+
+  INDEX	 TEXT				TYPE
+    0	 blank / no inop / no text
+    1	 "BLUETOOTH DISCONN."    	HARD INOP, INVALID USELESS     	(highest priority)
+
+==== INDEX of defined SIGNALS ====
+
+ Signal Type         | Label      (Local.)  | Unit         (Local.)     | [ Label Definition ]
+----------------------------------------------------------------------------------------------------
+ MEASUREMENT NUMERIC | Pain       Pain      |                           | [ Pain level ]
+ MEASUREMENT NUMERIC | AUC        AUC       | /s           /s           | 
+ MEASUREMENT NUMERIC | NBV        NBV       | /s           /s           | 
+ MEASUREMENT NUMERIC | BS         BS        | /s           /s           | 

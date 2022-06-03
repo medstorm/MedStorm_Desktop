@@ -13,10 +13,9 @@ namespace PSSApplication.Core.PatientMonitor
             Data = data;
         }
 
-        public static RequestTelegram Read(BinaryReader reader)
+        public static RequestTelegram Read(BinaryReader reader, CancellationToken token)
         {
-            return TelegramReader
-                .MakeReader(reader)
+            return new TelegramReader(reader, token)
                 .ReadTelegramType()
                 .ReadData()
                 .ReadCrc()

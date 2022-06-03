@@ -1,15 +1,13 @@
 ﻿namespace PSSApplication.Core.PatientMonitor
 {
-    public class SpecificationResponse : IResponseTelegram
+    public class SpecificationResponse : ResponseTelegram
     {
-
-        private byte[] data;
         public SpecificationResponse(byte[] data)
+            : base(data)
         {
-            this.data = data;
         }
 
-        public byte[] ToByteArray()
+        override public byte[] ToByteArray()
         {
             return data;
         }

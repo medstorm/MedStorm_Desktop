@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace PSSApplication.Core.PatientMonitor
 {
     public class TelegramByteReader
     {
-        private BinaryReader binaryReader;
-        private CrcBuffer buffer = new CrcBuffer();
-
-        public TelegramByteReader(BinaryReader reader)
+        private BinaryReader _binaryReader;
+        private CrcBuffer _buffer = new CrcBuffer();
+        CancellationToken _cancelationToken;
+        public TelegramByteReader(BinaryReader reader, CancellationToken token)
         {
-            binaryReader = reader;
+            _cancelationToken = token;
+            _binaryReader = reader;
         }
 
         public byte[] Read(int numberOfBytes)
@@ -28,9 +30,22 @@ namespace PSSApplication.Core.PatientMonitor
         {
             try
             {
-                var result = binaryReader.ReadByte();
-                buffer.Add(result);
-                return result;
+                while (!_cancelationToken.IsCancellationRequested)
+                {
+
+                    try
+                    {
+                        byte result = _binaryReader.ReadByte();
+                        _buffer.Add(result);
+                        Debug.WriteLine("0x{0:X2} - d:{1:d}", result, result);
+                        return result;
+                    }
+                    catch (TimeoutException ex)
+                    {
+                        Task.Delay(100);
+                    }
+                }
+                throw new Exception("TelegramByteReader - read has been canceld");
             }
             catch (UnauthorizedAccessException e)
             {
@@ -48,7 +63,7 @@ namespace PSSApplication.Core.PatientMonitor
 
         public bool CrcOk()
         {
-            return buffer.CrcOk();
+            return _buffer.CrcOk();
         }
     }
 }

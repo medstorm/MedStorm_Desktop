@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Cubist.5004.MedStorm.Desktop.Core\Cubist.5004.MedStorm.Desktop.Core.csproj" />
+    <ProjectReference Include="..\PatientMonitor\PatientMonitor.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,68 @@
+------------------------------------------------------------------------------
+IDENTIFICATION
+------------------------------------------------------------------------------
+
+  GENERAL
+    TYPE :              "VENT"
+    NAME :              "Pain Monitor"
+    PROTOCOL :          SLOW
+
+------------------------------------------------------------------------------
+ALPHANUMERIC
+------------------------------------------------------------------------------
+
+MEASUREMENT NUMERIC
+    LABEL :             "Pain"
+    UNIT :              ""
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 10
+    OPTIMUM RANGE :     0 .. 10
+    ALARM INDICATION :  NO
+    INOP INDICATION :   NO
+    DEFAULT SPI :       YES
+    TASK WINDOW :       RIGHT / 0 / SOLID
+
+  MEASUREMENT NUMERIC
+    LABEL :             CUSTOM "AUC"
+    UNIT :              CUSTOM "/s"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 100
+    OPTIMUM RANGE :     0 .. 100
+    ALARM INDICATION :  NO
+    INOP INDICATION :   NO
+    DEFAULT SPI :       YES
+    TASK WINDOW :       RIGHT / 1 / SOLID
+
+  MEASUREMENT NUMERIC
+    LABEL :             CUSTOM "NBV"
+    UNIT :              CUSTOM "/s"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 10
+    OPTIMUM RANGE :     0 .. 10
+    ALARM INDICATION :  NO
+    INOP INDICATION :   NO
+    DEFAULT SPI :       YES
+    TASK WINDOW :       RIGHT / 2 / SOLID
+
+    MEASUREMENT NUMERIC
+    LABEL :             CUSTOM "BS"
+    UNIT :              CUSTOM "/s"
+    CLASS :             SINGLE / PERIODIC
+    EXPONENT :          0
+    RANGE :             0 .. 1
+    OPTIMUM RANGE :     0 .. 1
+    ALARM INDICATION :  NO
+    INOP INDICATION :   NO
+    DEFAULT SPI :       YES
+    TASK WINDOW :       RIGHT / 3 / SOLID
+
+
+------------------------------------------------------------------------------
+TEXT STRINGS
+------------------------------------------------------------------------------
+
+  LIST OF INOPS
+    HARD INOP: "BLUETOOTH DISCONN.", INVALID USELESS

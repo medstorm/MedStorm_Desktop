@@ -27,8 +27,8 @@ namespace Testing
 
             try
             {
-                var watcher = PainSensorAdvertisementHandler.CreateAdvertisementHandler();
-                var monitor = new MonitorHandler(configuration);
+                var watcher = BleAdvertisementHandler.CreateAdvertisementHandler();
+                var monitor = new MonitorHandler(watcher);
                 Console.WriteLine("Enter 's' to start monitor");
                 Console.WriteLine("Enter 't' to stop monitor");
                 Console.WriteLine("Enter 'p' to start monitor philips monitor");

@@ -12,13 +12,14 @@ using Windows.Storage.Streams;
 using System.Globalization;
 using System.Threading;
 using Serilog;
+using PSSApplication.Common;
 
 namespace PSSApplication.Core
 {
-    public class PainSensorAdvertisementHandler
+    public class BleAdvertisementHandler : IPainSensorAdvertisementHandler
     {
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
-        public static BLEMeasurement LatestMeasurement { get; private set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
+        public BLEMeasurement LatestMeasurement { get; private set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
 
         static readonly string ServiceUuid = "264eaed6-c1da-4436-b98c-db79a7cc97b5";
         static readonly string CombinedUuid = "14abde20-31ed-4e0a-bdcf-7efc40f3fffb";
@@ -28,9 +29,6 @@ namespace PSSApplication.Core
         GattDeviceService m_service = null;
         GattCharacteristic m_characteristic = null;
         BluetoothLEAdvertisementWatcher m_Watcher; // The underlying bluetooth watcher class
-
-        const int NumOfCondItems = 5;
-        const int NumBytesFloats = 4;
 
         const string AdvertisementName = "PainSensor";
 
@@ -60,26 +58,26 @@ namespace PSSApplication.Core
         }
 
         DateTime lastReceivedData = DateTime.MinValue;
-        static PainSensorAdvertisementHandler()
+        static BleAdvertisementHandler()
         {
             IsRunning = false;
         }
 
-        public static PainSensorAdvertisementHandler m_advertisementHandlerSingleton = null;
-        public static PainSensorAdvertisementHandler AdvertisementMgr
+        public static BleAdvertisementHandler m_advertisementHandlerSingleton = null;
+        public static BleAdvertisementHandler AdvertisementMgr
         {
             get => m_advertisementHandlerSingleton; private set => m_advertisementHandlerSingleton = value;
         }
 
-        public static PainSensorAdvertisementHandler CreateAdvertisementHandler()
+        public static BleAdvertisementHandler CreateAdvertisementHandler()
         {
             if (m_advertisementHandlerSingleton == null)
-                m_advertisementHandlerSingleton = new PainSensorAdvertisementHandler();
+                m_advertisementHandlerSingleton = new BleAdvertisementHandler();
 
             return m_advertisementHandlerSingleton;
         }
-        
-        private PainSensorAdvertisementHandler()
+
+        private BleAdvertisementHandler()
         {
             Log.Debug("AdvertisementHandler.ctor - createing new watcher");
             m_Watcher = new BluetoothLEAdvertisementWatcher();
@@ -125,7 +123,7 @@ namespace PSSApplication.Core
             await StopAllBluetoothConnections();
         }
 
-        private async Task<DeviceUnpairingResult> UnpairDevice(bool closeConnection=true)
+        private async Task<DeviceUnpairingResult> UnpairDevice(bool closeConnection = true)
         {
             Log.Debug("AdvertisementHandler.UnpairDevice:");
             if (m_bleDevice?.DeviceInformation?.Pairing == null)
@@ -133,7 +131,7 @@ namespace PSSApplication.Core
                 Log.Error("AdvertisementHandler.UnpairDevice: Not able to get m_bleDevice.DeviceInformation.Pairing ");
                 return null;
             }
-            
+
             DeviceUnpairingResult unpairResult = null;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -176,7 +174,7 @@ namespace PSSApplication.Core
                 stopwatch.Start();
 
                 //Try to pair for 30 seconds then fails
-                while (!isPaired && stopwatch.ElapsedMilliseconds < 30000 && m_bleDevice!=null)
+                while (!isPaired && stopwatch.ElapsedMilliseconds < 30000 && m_bleDevice != null)
                 {
                     Log.Debug($"AdvertisementHandler.PairDevice: Pairing...");
                     m_bleDevice.DeviceInformation.Pairing.Custom.PairingRequested += Custom_PairingRequested;
@@ -295,7 +293,7 @@ namespace PSSApplication.Core
                         Log.Debug($"AdvertisementHandler.ConfigureSensorService: Services Count= {result.Services.Count}", true);
                         m_service = result.Services[0];
 
-                        Log.Debug($"AdvertisementHandler.ConfigureSensorService: Service { m_service.Uuid} found and accessed!");
+                        Log.Debug($"AdvertisementHandler.ConfigureSensorService: Service {m_service.Uuid} found and accessed!");
                         var serviceAccess = await m_service.RequestAccessAsync();
                         GattCharacteristicsResult characteristicResultAllValues = await m_service.GetCharacteristicsForUuidAsync(Guid.Parse(CombinedUuid));
                         if (characteristicResultAllValues.Status == GattCommunicationStatus.Success)
@@ -307,7 +305,7 @@ namespace PSSApplication.Core
                             }
                             m_characteristic = characteristicResultAllValues.Characteristics[0];
                             //characteristicResultAllValues = null;
-                            Log.Debug($"AdvertisementHandler.ConfigureSensorService: Characteristic AllValues { m_characteristic.Uuid} found and accessed!");
+                            Log.Debug($"AdvertisementHandler.ConfigureSensorService: Characteristic AllValues {m_characteristic.Uuid} found and accessed!");
 
                             GattCharacteristicProperties properties = m_characteristic.CharacteristicProperties;
 
@@ -396,22 +394,7 @@ namespace PSSApplication.Core
 
             byte[] bArray = new byte[args.CharacteristicValue.Length];
             DataReader.FromBuffer(args.CharacteristicValue).ReadBytes(bArray);
-            byte ppsValue = bArray[0];
-            byte areaValue = bArray[1];
-            double[] ConductivityItems = new double[NumOfCondItems];
-            for (int i = 0; i < NumOfCondItems; i++)
-            {
-                byte[] condItemBytes = new byte[4];
-                Array.Copy(bArray, 2 + i * NumBytesFloats, condItemBytes, 0, NumBytesFloats);
-                double floatToDouble = (double)(new decimal(BitConverter.ToSingle(condItemBytes, 0)));
-                ConductivityItems[i] = floatToDouble;
-            }
-
-            float meanRiseTimeValue = BitConverter.ToSingle(bArray, 22);
-            byte nerveBlockValue = bArray[26];
-            byte badSignalValue = bArray[27];
-
-            MeasurementEventArgs measurementsArgs = new MeasurementEventArgs(ppsValue, areaValue, nerveBlockValue, ConductivityItems, badSignalValue, meanRiseTimeValue);
+            MeasurementEventArgs measurementsArgs = MeasurementEventArgs.ExtractMeasurmentsEvent(bArray);
             LatestMeasurement = measurementsArgs.Measurement;
             Log.Verbose(measurementsArgs.Message);
             NewMeasurement?.Invoke(this, measurementsArgs);
