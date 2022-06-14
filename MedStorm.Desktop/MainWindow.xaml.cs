@@ -190,15 +190,15 @@ namespace MedStorm.Desktop
             {
                 if (isBadSignal)
                 {
-                    PainNociceptiveValue.Text = "--";
-                    AwakeningValue.Text = "--";
-                    NerveBlockValue.Text = "--";
+                    PainNociceptiveValue.ValueText = "--";
+                    AwakeningValue.ValueText = "--";
+                    NerveBlockValue.ValueText = "--";
                 }
                 else
                 {
-                    PainNociceptiveValue.Text = eventArgs.Measurement.PSS.ToString();
-                    AwakeningValue.Text = eventArgs.Measurement.AUC.ToString();
-                    NerveBlockValue.Text = eventArgs.Measurement.NBV.ToString();
+                    PainNociceptiveValue.ValueText = eventArgs.Measurement.PSS.ToString();
+                    AwakeningValue.ValueText = eventArgs.Measurement.AUC.ToString();
+                    NerveBlockValue.ValueText = eventArgs.Measurement.NBV.ToString();
                 }
             }));
         }

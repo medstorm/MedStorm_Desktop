@@ -263,16 +263,16 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" VerticalAlignment="Center" >
                 <TextBlock x:Name="PainNociceptiveTextBox" Text="Pain-Nociceptive" Foreground="#FF3D7F" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="PainNociceptiveValue" Text="--"
+                <local:TimeCheckTextBlock x:Name="PainNociceptiveValue" ValueText="--"
                            Foreground="#FF3D7F" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="1" VerticalAlignment="Center" >
                 <TextBlock  Text="Awakening" Foreground="#7FC7AF" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="AwakeningValue" Text="--" Foreground="#7FC7AF" FontSize="30" HorizontalAlignment="Center" />
+                <local:TimeCheckTextBlock x:Name="AwakeningValue" ValueText="--" Foreground="#7FC7AF" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="2" VerticalAlignment="Center" >
                 <TextBlock Text="Nerve Block" Foreground="#FEAB5F" FontSize="16" HorizontalAlignment="Center" />
-                <TextBlock x:Name="NerveBlockValue" Text="--" Foreground="#FEAB5F" FontSize="30" HorizontalAlignment="Center" />
+                <local:TimeCheckTextBlock x:Name="NerveBlockValue" ValueText="--" Foreground="#FEAB5F" FontSize="30" HorizontalAlignment="Center" />
             </StackPanel>
         </Grid>
 
