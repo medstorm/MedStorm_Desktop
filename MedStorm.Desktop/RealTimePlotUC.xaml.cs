@@ -25,14 +25,12 @@ namespace Plot
     /// </summary>
     public partial class RealTimePlotUC : UserControl
     {
-
-
         public string PlotTitle
         {
-            get { return (string)GetValue( PlotTitleProperty); }
-            set { SetValue( PlotTitleProperty, value); }
+            get { return (string)GetValue(PlotTitleProperty); }
+            set { SetValue(PlotTitleProperty, value); }
         }
-        public static readonly DependencyProperty  PlotTitleProperty =
+        public static readonly DependencyProperty PlotTitleProperty =
             DependencyProperty.Register("PlotTitle", typeof(string), typeof(RealTimePlotUC), new PropertyMetadata(""));
 
         public Brush FillAreaBrush { get; set; }
@@ -85,6 +83,59 @@ namespace Plot
             m_curveGenerator = new CurveGenerator(m_path);
             DataPoints = new List<Measurement>();
         }
+
+        const int MinuteSeconds = 60;
+        const int HourSeconds = 3600;  //60sec * 60 min; 
+        const int TreeHourSeconds = HourSeconds * 3;
+        const int NineHourSeconds = HourSeconds * 9;
+        public void IncrementTimeToShow()
+        {
+
+            switch (NoOfSecondsToShow)
+            {
+                case MinuteSeconds:
+                    NoOfSecondsToShow = HourSeconds;
+                    break;
+
+                case HourSeconds:
+                    NoOfSecondsToShow = TreeHourSeconds;
+                    break;
+
+                case TreeHourSeconds:
+                    NoOfSecondsToShow = NineHourSeconds;
+                    break;
+
+                default:
+                    break;
+            }
+            Init();
+            AddGrid();
+        }
+
+        public void DecrementTimeToShow()
+        {
+
+            switch (NoOfSecondsToShow)
+            {
+                case HourSeconds:
+                    NoOfSecondsToShow = MinuteSeconds;
+                    break;
+
+                case TreeHourSeconds:
+                    NoOfSecondsToShow = HourSeconds;
+                    break;
+
+                case NineHourSeconds:
+                    NoOfSecondsToShow = TreeHourSeconds;
+                    break;
+
+                default:
+                    break;
+            }
+            Init();
+            AddGrid();
+        }
+
         private void Init()
         {
             m_pixelHeight = plotCanvas.ActualHeight;
@@ -121,7 +172,7 @@ namespace Plot
                 // Remove old data
                 for (int i = DataPoints.Count - 1; i >= 0; i--)
                 {
-                    if (DataPoints[i].TimeStamp < (m_startTime - TimeSpan.FromSeconds(1)))
+                    if (DataPoints[i].TimeStamp < (m_startTime - TimeSpan.FromSeconds(NineHourSeconds)))
                         DataPoints.RemoveAt(i);
                 }
             }
@@ -240,12 +291,26 @@ namespace Plot
 
             // Add time-labels
             timeLabels.Children.Clear();
-            int secondStep = (int)NoOfSecondsToShow / (int)(NoOfVerticalGridLines);
+            int noOfSecondsToShow = (int)NoOfSecondsToShow;
+            int timeStep = (int)NoOfSecondsToShow / (int)(NoOfVerticalGridLines);
+            if (NoOfSecondsToShow > 3600)  // More than an hour?
+            {
+                timeStep = timeStep / 3600; 
+                TimeUnitTextBlock.Text = "Hour";
+            }
+            else if (NoOfSecondsToShow > 60) // More than a minute?
+            {
+                timeStep = timeStep / 60;
+                TimeUnitTextBlock.Text = "Min.";
+            }
+            else
+                TimeUnitTextBlock.Text = "Sec.";
+
             for (int i = NoOfVerticalGridLines; i >= 0; i--)
             {
                 timeLabels.Children.Add(new TextBlock
                 {
-                    Text = (secondStep * -i).ToString(),
+                    Text = (timeStep * -i).ToString(),
                     FontFamily = new FontFamily("Courier"),
                     FontSize = 10,
                     Foreground = m_whiteBrush,
@@ -337,7 +402,11 @@ namespace Plot
             {
                 if (DataPoints.Count > 2)
                 {
-                    List<Point> valuePoints = MakeValuePoints();
+                    int noOfSamlesToColapse = 1;
+                    if (m_valueToPixel < 0)
+                        noOfSamlesToColapse = (int)(1.0 / m_valueToPixel);
+
+                    List<Point> valuePoints = MakeValuePoints(noOfSamlesToColapse);
                     if (valuePoints.Count == 0)
                         return;
 
@@ -401,7 +470,7 @@ namespace Plot
             }
         }
 
-        private List<Point> MakeValuePoints()
+        private List<Point> MakeValuePoints(int noOfSamplesToCollapse = 1)
         {
             m_valueToPixel = m_pixelHeight / m_maxValue;
             if (HasFixedVerticalLabels)
@@ -425,17 +494,48 @@ namespace Plot
                 scale = 100; // Max. scale
 
             List<Point> valuePoints = new List<Point>();
-            foreach (var item in DataPoints)
+
+            // Do datareduction
+            List<Measurement> dataPoints;
+            if (noOfSamplesToCollapse > 1)
             {
-                if (item.TimeStamp > (m_startTime - TimeSpan.FromSeconds(1)))
+                List<Measurement> reduestDataPoints = new List<Measurement>();
+                for (int i = 0; i < DataPoints.Count; i += noOfSamplesToCollapse)
                 {
-                    TimeSpan timeSpan = item.TimeStamp - m_startTime;
+                    double newValue = 0;
+                    double maxValue = 0;
+                    bool isBadSignal = false;
+                    DateTime timeStamp = DataPoints[i].TimeStamp;
+                    for (int ii = 0; ii < noOfSamplesToCollapse && ii + i < DataPoints.Count; ii++)
+                    {
+                        int index = i + ii;
+                        if (!isBadSignal)
+                            isBadSignal = DataPoints[index].IsBadSignal;
+
+                        if (DataPoints[index].Value > maxValue)
+                        {
+                            newValue = DataPoints[index].Value;
+                            maxValue = newValue;
+                        }
+                        reduestDataPoints.Add(new Measurement() { Value = newValue, IsBadSignal = isBadSignal, TimeStamp = DataPoints[i].TimeStamp });
+                    }
+                }
+                dataPoints = reduestDataPoints;
+            }
+            else
+                dataPoints = DataPoints;
+
+            foreach (var measurement in dataPoints)
+            {
+                if (measurement.TimeStamp > (m_startTime - TimeSpan.FromSeconds(1)))
+                {
+                    TimeSpan timeSpan = measurement.TimeStamp - m_startTime;
                     double x = timeSpan.TotalSeconds * m_secondToPixel;
                     double y;
                     if (HasFixedVerticalLabels)
-                        y = m_pixelHeight - item.Value * m_valueToPixel;
+                        y = m_pixelHeight - measurement.Value * m_valueToPixel;
                     else
-                        y = m_pixelHeight - (item.Value - m_minValue) * scale * m_valueToPixel;
+                        y = m_pixelHeight - (measurement.Value - m_minValue) * scale * m_valueToPixel;
 
                     valuePoints.Add(new Point(x, y));
                 }

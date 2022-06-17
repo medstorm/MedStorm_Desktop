@@ -34,6 +34,6 @@
                Height="{Binding ElementName=PlotControl,Path=ActualHeight}">
             <StackPanel x:Name="valueLabels" Orientation="Vertical" />
         </Grid>
-        <TextBlock Text="sec." Foreground="{StaticResource WhiteBrush}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,8" />
+        <TextBlock x:Name="TimeUnitTextBlock" Text="sec." Foreground="{StaticResource WhiteBrush}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0,0,8" />
     </Grid>
 </UserControl>

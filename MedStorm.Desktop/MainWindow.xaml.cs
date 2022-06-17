@@ -63,7 +63,6 @@ namespace MedStorm.Desktop
             DependencyProperty.Register("AwakeningRow", typeof(GridLength), typeof(MainWindow), new PropertyMetadata(GridLength.Auto));
 
 
-
         public Visibility NerveBlockVisibility
         {
             get { return (Visibility)GetValue(NerveBlockVisibilityProperty); }
@@ -80,8 +79,14 @@ namespace MedStorm.Desktop
         public static readonly DependencyProperty NerveBlockRowProperty =
             DependencyProperty.Register("NerveBlockRow", typeof(GridLength), typeof(MainWindow), new PropertyMetadata(GridLength.Auto));
 
+        const string ConnectSensor = "Connect Sensor";
+        const string DisconnectSensor = "Disconnect Sensor";
+
+        const string ConnectMonitor = "Connect Monitor";
+        const string DisconnectMonitor = "Disconnect Monitor";
+
         string? Application => ((ComboBoxItem)ApplicationsComboBox.SelectedItem)?.Content?.ToString();
-        bool IsRunning => ConnectDisconnectButton.Content.ToString() == "Disconnect";
+        bool IsRunning => ConnectSensorButton.Content.ToString() == DisconnectSensor;
         static BLEMeasurement LatestMeasurement { get; set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
         BleAdvertisementHandler? m_advHandler = null;
         MonitorHandler m_monitor;
@@ -157,6 +162,8 @@ namespace MedStorm.Desktop
            
 
             InitializeComponent();
+            ConnectMonitorButton.Content = ConnectMonitor;
+            ConnectSensorButton.Content = ConnectSensor;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -223,13 +230,13 @@ namespace MedStorm.Desktop
                     Log.Debug("MainWindow: connect-Click, creating Excel-File");
                     m_rawDataStorage.CreateRawDataFile();
                     m_advHandler?.StartScanningForPainSensors();
-                    ConnectDisconnectButton.Content = "Disconnect";
+                    ConnectSensorButton.Content = DisconnectSensor;
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = $"Not able to Connect to sensor, error={ex.Message}";
                     MessageBox.Show(errorMsg, "Connection Error", MessageBoxButton.OK);
-                    ConnectDisconnectButton.Content = "Connect";
+                    ConnectSensorButton.Content = ConnectSensor;
                     Log.Error($"MainWindow: Error={errorMsg}");
                 }
             }
@@ -242,13 +249,13 @@ namespace MedStorm.Desktop
                     m_advHandler?.StopScanningForPainSensors();
                     m_isWaitingForPatientId = true;
                     PatientIdPopUp.IsOpen = true;
-                    ConnectDisconnectButton.Content = "Connect";
+                    ConnectSensorButton.Content = ConnectSensor;
                 }
                 catch (Exception ex)
                 {
                     string errMsg = $"Not able to Disconnect to sensor!\n error={ex.Message}";
                     MessageBox.Show(errMsg, "Connection Error", MessageBoxButton.OK);
-                    ConnectDisconnectButton.Content = "Connect";
+                    ConnectSensorButton.Content = ConnectSensor;
                     Log.Error($"MainWindow: diconnect-Click, error={errMsg}");
                 }
             }
@@ -369,13 +376,13 @@ namespace MedStorm.Desktop
         {
             try
             {
-                if (ConnectMonitorButton.Content.ToString() == "Connect Monitor")
+                if (ConnectMonitorButton.Content.ToString() == ConnectMonitor)
                 {
                     bool connectionSuccessful = m_monitor.ConnectToMonitor();
                     if (connectionSuccessful)
                     {
                         Log.Debug("MainWindow: Connected to monitor");
-                        ConnectMonitorButton.Content = "Disconnect Monitor";
+                        ConnectMonitorButton.Content = DisconnectMonitor;
                     }
                     else
                     {
@@ -385,7 +392,7 @@ namespace MedStorm.Desktop
                 else
                 {
                     m_monitor.DisconnectMonitor();
-                    ConnectMonitorButton.Content = "Connect Monitor";
+                    ConnectMonitorButton.Content = ConnectMonitor;
                     Log.Debug("MainWindow: Disconnected from monitor");
                 }
             }
@@ -413,7 +420,7 @@ namespace MedStorm.Desktop
             CommentTextBox.Text = "";
         }
 
-        private void CanelPatientIdButton_Click(object sender, RoutedEventArgs e)
+        private void CanselPatientIdButton_Click(object sender, RoutedEventArgs e)
         {
             PatientIdPopUp.IsOpen = false;
         }
@@ -451,6 +458,20 @@ namespace MedStorm.Desktop
         private void AboutPopUp_OK_Button_Click(object sender, RoutedEventArgs e)
         {
             AboutPopUp.IsOpen = false;
+        }
+
+        private void DecreaseTimeScaleButton_Click(object sender, RoutedEventArgs e)
+        {
+            PainNociceptive.DecrementTimeToShow();
+            Awakening.DecrementTimeToShow();
+            NerveBlock.DecrementTimeToShow();
+        }
+
+        private void IncreaseTimeScaleButton_Click(object sender, RoutedEventArgs e)
+        {
+            PainNociceptive.IncrementTimeToShow();
+            Awakening.IncrementTimeToShow();
+            NerveBlock.IncrementTimeToShow();
         }
     }
 

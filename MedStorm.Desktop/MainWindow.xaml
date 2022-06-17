@@ -10,14 +10,16 @@
         Title="PainSensor - Desktop" x:Name="TopWindow" Height="650" Width="900">
     <Window.Resources>
         <SolidColorBrush x:Key="WhiteBrush" Color="#c5e3ee" />
+        <SolidColorBrush x:Key="GreenBackgroundBrush" Color="#FF03303F" />
+        <SolidColorBrush x:Key="NormalBorderBrush" Color="Gray" />
 
         <Style TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border BorderBrush="{StaticResource WhiteBrush}" BorderThickness="0.5">
+                        <Border BorderBrush="{StaticResource WhiteBrush}" BorderThickness="0.5" Margin="0,15,0,0">
                             <Grid Background="#FF03303F">
-                                <TextBlock Text="{TemplateBinding Content}" 
+                                <TextBlock Text="{TemplateBinding Content}" FontSize="16"
                                                Foreground="{StaticResource WhiteBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
@@ -154,55 +156,61 @@
         </Grid.ColumnDefinitions>
 
         <Popup x:Name="CommentPopUp" Placement="Center" PlacementTarget="{Binding ElementName=ApplicationsComboBox}">
-            <Grid Background="#FF03303F" Width="500" Height="200" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.6*" />
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Add comment:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="{StaticResource WhiteBrush}" VerticalAlignment="Bottom"/>
-                <TextBox Grid.Row="1" x:Name="CommentTextBox" TextWrapping="Wrap" Background="{StaticResource WhiteBrush}" Margin="10" />
-                <StackPanel Grid.Row="2" Orientation="Horizontal" >
-                    <Button x:Name="CancelCommentButton" Click="CancelCommentButton_Click" Margin="10,0,0,10" Width="70"
+            <Border Width="500" Height="250" CornerRadius="0" Background="{StaticResource GreenBackgroundBrush}"
+                    BorderThickness="1,1,1,1" BorderBrush="{StaticResource NormalBorderBrush}">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Add comment:" FontSize="16" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="{StaticResource WhiteBrush}" VerticalAlignment="Bottom"/>
+                    <TextBox Grid.Row="1" x:Name="CommentTextBox" TextWrapping="Wrap" Background="{StaticResource WhiteBrush}" Margin="10" />
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" >
+                        <Button x:Name="CancelCommentButton" Click="CancelCommentButton_Click" Margin="10,0,0,10" Width="120" Height="70"
                         Content="Cancel"/>
-                    <Button x:Name="SaveCommentButton" Click="SaveCommentButton_Click" Margin="10,0,0,10" Width="70" 
+                        <Button x:Name="SaveCommentButton" Click="SaveCommentButton_Click" Margin="10,0,0,10" Width="120" 
                         Content="Save"/>
-                </StackPanel>
-            </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </Popup>
 
         <Popup x:Name="PatientIdPopUp" Placement="Center" PlacementTarget="{Binding ElementName=ApplicationsComboBox}">
-            <Grid Background="#FF03303F" Width="500" Height="150">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.6*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Enter Patient Id:" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="{StaticResource WhiteBrush}" VerticalAlignment="Bottom"/>
-                <TextBox Grid.Row="1" x:Name="PatientIdTextBox" Margin="10" Background="{StaticResource WhiteBrush}"/>
-                <StackPanel Grid.Row="2" Orientation="Horizontal">
-                    <Button x:Name="CanelPatientIdButton" Click="CanelPatientIdButton_Click"  Margin="10,0,0,10" Width="70"
-                        Content="Cancel"/>
-                    <Button x:Name="SavePatientIdButton"  Margin="10,0,0,10" Width="70" 
-                        Content="Save" Click="SavePatientIdButton_Click" />
-                </StackPanel>
-            </Grid>
+            <Border Width="500" Height="200" CornerRadius="0" Background="{StaticResource GreenBackgroundBrush}"
+                    BorderThickness="1,1,1,1" BorderBrush="{StaticResource NormalBorderBrush}">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.6*" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Enter Patient Id:" FontSize="16" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="{StaticResource WhiteBrush}" VerticalAlignment="Bottom"/>
+                    <TextBox Grid.Row="1" x:Name="PatientIdTextBox" Margin="10" Background="{StaticResource WhiteBrush}"/>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <Button x:Name="CanselPatientIdButton" Click="CanselPatientIdButton_Click"  Margin="10,0,0,10" Width="120"
+                            Content="Cancel"/>
+                        <Button x:Name="SavePatientIdButton"  Margin="10,0,0,10" Width="120" Height="70" 
+                            Content="Save" Click="SavePatientIdButton_Click" />
+                    </StackPanel>
+                </Grid>
+            </Border>
         </Popup>
 
         <!-- 0. column, Skin Condiction and buttons -->
         <Grid Margin='0,10,10,0'>
             <Grid.RowDefinitions>
+                <RowDefinition Height="14*"/>
                 <RowDefinition Height="11*"/>
-                <RowDefinition Height="11*"/>
-                <RowDefinition Height="100*"/>
+                <RowDefinition Height="35*"/>
                 <RowDefinition Height="11*"/>
                 <RowDefinition Height="11*"/>
                 <RowDefinition Height="11*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Button x:Name="PatientIdButton" Click="PatientIdButton_Click" Grid.Row="0" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
+            <Button x:Name="PatientIdButton" Click="PatientIdButton_Click" Grid.Row="0" Margin="10,10,0,10"  HorizontalAlignment="Stretch"
                     Content="Enter Patient ID" />
-            <ComboBox x:Name="ApplicationsComboBox" Foreground="{StaticResource WhiteBrush}" Grid.Row="1" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
+            <ComboBox Height="100" x:Name="ApplicationsComboBox" Foreground="{StaticResource WhiteBrush}" FontSize="16" Grid.Row="1" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
                       SelectionChanged="ApplicationsComboBox_SelectionChanged">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
@@ -228,29 +236,63 @@
             <Grid Grid.Row="3" Margin="10,0,0,3" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="CloseButton" Grid.Column="0" Click="CloseButton_Click" Content="Close" />
-                <Button x:Name="CommentButton" Grid.Column="1" Click="CommentButton_Click" Margin="3,0,0,0"
+                <Button x:Name="CloseButton" Grid.Column="0" Click="CloseButton_Click" Content="Close" Margin="0,0,10,0" />
+                <Button x:Name="CommentButton" Grid.Column="1" Click="CommentButton_Click" Margin="10,0,0,0"
                     Content="Comment"  />
             </Grid>
 
-            <Button x:Name="ConnectMonitorButton" Grid.Row="4" Margin="10,0,0,3" HorizontalAlignment="Stretch"
-                    Content="Connect Monitor" 
+            <Grid Grid.Row="4" Margin="10,0,0,3" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="ConnectMonitorButton" Margin="0,0,10,0" HorizontalAlignment="Stretch"
                     Click="ConnectMonitorButton_Click"/>
 
-            <Button x:Name="ConnectDisconnectButton" Grid.Row="5" Margin="10,0,0,3" HorizontalAlignment="Stretch"
-                    Content="Connect"
+                <Button x:Name="ConnectSensorButton" Grid.Column="1"  Margin="10,0,0,0" HorizontalAlignment="Stretch"
                     Click="connect_diconnect_Click"/>
+            </Grid>
+
+            <Grid Grid.Row="5" Margin="10,15,0,3" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="DecreaseTimeScaleButton"  BorderBrush="{StaticResource WhiteBrush}" BorderThickness="0.5" Background="#FF03303F" Margin="0,0,10,0"
+                        MouseDown="DecreaseTimeScaleButton_Click">
+                    <Grid  Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                        <TextBlock FontSize="40" Foreground="{StaticResource WhiteBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        FontFamily="Segoe MDL2 Assets" Text="&#xE71F;" />
+                    </Grid>
+                </Border>
+
+
+                <Border x:Name="IncreaseTimeScaleButton" Grid.Column="1" BorderBrush="{StaticResource WhiteBrush}" BorderThickness="0.5" Background="#FF03303F" Margin="10,0,0,0"
+                        MouseDown="IncreaseTimeScaleButton_Click" >
+                    <Grid Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                        <TextBlock FontSize="40" Foreground="{StaticResource WhiteBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        FontFamily="Segoe MDL2 Assets" Text="&#xE8A3;" />
+                    </Grid>
+                </Border>
+            </Grid>
+
             <Image Grid.Row="6" Source="logo_medstorm.png" x:Name="MedstormLogo" Margin="10" Width="150" HorizontalAlignment="Left"
                    MouseDown="MedstormLogo_MouseDown" />
             <Popup x:Name="AboutPopUp" Placement="Center" PlacementTarget="{Binding ElementName=MedstormLogo}" StaysOpen="False">
-                <StackPanel  Background="#FF03303F" Width="300" Height="150" Margin="2">
-                    <TextBlock Grid.Row="0" Text="About MedStorm Desktop" Foreground="{StaticResource WhiteBrush}" FontSize="16" FontWeight="DemiBold" Margin="10,20,0,5" />
-                    <TextBlock x:Name="VersionInfoTextBox" TextWrapping="Wrap" Foreground="{StaticResource WhiteBrush}" Margin="10,0,0,0"/>
-                    <Button x:Name="AboutPopUp_OK_Button" Click="AboutPopUp_OK_Button_Click"  Width="70" Margin="20"
-                        Content="Ok"/>
-                </StackPanel>
+                <Border Width="300" Height="200" CornerRadius="0" Background="{StaticResource GreenBackgroundBrush}"
+                    BorderThickness="1,1,1,1" BorderBrush="{StaticResource NormalBorderBrush}">
+                    <Grid>
+                        <StackPanel Margin="20,0,0,0" HorizontalAlignment="Left">
+                            <TextBlock Grid.Row="0" Text="About MedStorm Desktop" Foreground="{StaticResource WhiteBrush}" FontSize="16" FontWeight="DemiBold" Margin="10,20,0,5" />
+                            <TextBlock x:Name="VersionInfoTextBox" TextWrapping="Wrap" Foreground="{StaticResource WhiteBrush}" Margin="10,0,0,0"/>
+                            <Button x:Name="AboutPopUp_OK_Button" Click="AboutPopUp_OK_Button_Click"  Width="120" Height="70" Margin="20"
+                                Content="Ok"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
             </Popup>
         </Grid>
 
@@ -262,17 +304,17 @@
                 <RowDefinition Height="{Binding ElementName=TopWindow,Path=NerveBlockRow}"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" VerticalAlignment="Center" >
-                <TextBlock x:Name="PainNociceptiveTextBox" Text="Pain-Nociceptive" Foreground="#FF3D7F" FontSize="16" HorizontalAlignment="Center" />
+                <TextBlock x:Name="PainNociceptiveTextBox" Text="Pain-Nociceptive" Foreground="#FF3D7F" FontSize="24" HorizontalAlignment="Center" FontWeight="SemiBold" />
                 <local:TimeCheckTextBlock x:Name="PainNociceptiveValue" ValueText="--"
-                           Foreground="#FF3D7F" FontSize="30" HorizontalAlignment="Center" />
+                           Foreground="#FF3D7F" FontSize="100" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="1" VerticalAlignment="Center" >
-                <TextBlock  Text="Awakening" Foreground="#7FC7AF" FontSize="16" HorizontalAlignment="Center" />
-                <local:TimeCheckTextBlock x:Name="AwakeningValue" ValueText="--" Foreground="#7FC7AF" FontSize="30" HorizontalAlignment="Center" />
+                <TextBlock  Text="Awakening" Foreground="#7FC7AF" FontSize="24" HorizontalAlignment="Center" FontWeight="SemiBold"  />
+                <local:TimeCheckTextBlock x:Name="AwakeningValue" ValueText="--" Foreground="#7FC7AF" FontSize="100" HorizontalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="2" VerticalAlignment="Center" >
-                <TextBlock Text="Nerve Block" Foreground="#FEAB5F" FontSize="16" HorizontalAlignment="Center" />
-                <local:TimeCheckTextBlock x:Name="NerveBlockValue" ValueText="--" Foreground="#FEAB5F" FontSize="30" HorizontalAlignment="Center" />
+                <TextBlock Text="Nerve Block" Foreground="#FEAB5F" FontSize="24" HorizontalAlignment="Center" FontWeight="SemiBold" />
+                <local:TimeCheckTextBlock x:Name="NerveBlockValue" ValueText="--" Foreground="#FEAB5F" FontSize="100" HorizontalAlignment="Center" />
             </StackPanel>
         </Grid>
 
