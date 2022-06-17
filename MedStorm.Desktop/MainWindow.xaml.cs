@@ -93,6 +93,7 @@ namespace MedStorm.Desktop
         IConfigurationRoot m_configuration;
         bool m_isWaitingForPatientId = false;
         RawDataStorage m_rawDataStorage;
+        string m_logFileWithPath = "";
         public MainWindow()
         {
             try
@@ -145,12 +146,12 @@ namespace MedStorm.Desktop
             }
 
             string logPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
-            string logFileWithPath = System.IO.Path.Combine(logPath, "PainsSensor.log");
+            m_logFileWithPath = System.IO.Path.Combine(logPath, "PainsSensor.log");
 
             // Logging file: C:\ProgramData\PSS Application\PainsSensoryyyyMMdd.log
             Log.Logger = new LoggerConfiguration()
                         .ReadFrom.Configuration(m_configuration)
-                        .WriteTo.File(logFileWithPath, rollingInterval: RollingInterval.Day)
+                        .WriteTo.File(m_logFileWithPath, rollingInterval: RollingInterval.Day)
                         .WriteTo.Debug()
                         .CreateLogger();
 
@@ -450,6 +451,8 @@ namespace MedStorm.Desktop
                     if (tagsToPrint.Contains(field.Name))
                         sb.AppendLine($"{field.Name}: {field.GetValue(null)}");
                 }
+                sb.AppendLine("LogFile:");
+                sb.AppendLine(m_logFileWithPath);
             }
             VersionInfoTextBox.Text = sb.ToString();
 
