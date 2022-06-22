@@ -130,6 +130,18 @@ namespace PSSApplication.Core
             }
             m_currentRow += 1;
         }
+        private static void InsertCell(string columnName, Row row, CellValue value, EnumValue<CellValues> dataType)
+        {
+            string cellReference = columnName + m_currentRow;
+            Cell refCell = row.Descendants<Cell>().LastOrDefault();
+
+            Cell newCell = new Cell() { CellReference = cellReference };
+            row.InsertAfter(newCell, refCell);
+
+            newCell.CellValue = value;
+            newCell.DataType = dataType;
+        }
+
         private static void InsertCell(string columnName, uint rowIndex, CellValue value, EnumValue<CellValues> dataType)
         {
             string cellReference = columnName + rowIndex;
@@ -152,20 +164,35 @@ namespace PSSApplication.Core
 
         private static void InsertDataPackage(DateTime timeStamp, BLEMeasurement data)
         {
-            InsertCell("A", m_currentRow, new CellValue(timeStamp), CellValues.String);
-            InsertCell("B", m_currentRow, new CellValue(data.PSS), CellValues.Number);
-            InsertCell("C", m_currentRow, new CellValue(data.AUC), CellValues.Number);
-            InsertCell("D", m_currentRow, new CellValue(data.NBV), CellValues.Number);
-            InsertCell("E", m_currentRow, new CellValue(data.BS == 0 ? "False" : "True"), CellValues.String);
+            Row row = GetOrAddRow(m_currentRow);
 
-            InsertCell("F", m_currentRow, new CellValue(Math.Round(data.SC[0], 3)), CellValues.String);
-            InsertCell("G", m_currentRow, new CellValue(Math.Round(data.SC[1], 3)), CellValues.String);
-            InsertCell("H", m_currentRow, new CellValue(Math.Round(data.SC[2], 3)), CellValues.String);
-            InsertCell("I", m_currentRow, new CellValue(Math.Round(data.SC[3], 3)), CellValues.String);
-            InsertCell("J", m_currentRow, new CellValue(Math.Round(data.SC[4], 3)), CellValues.String);
+            InsertCell("A", row, new CellValue(timeStamp), CellValues.String);
+            InsertCell("B", row, new CellValue(data.PSS), CellValues.Number);
+            InsertCell("C", row, new CellValue(data.AUC), CellValues.Number);
+            InsertCell("D", row, new CellValue(data.NBV), CellValues.Number);
+            InsertCell("E", row, new CellValue(data.BS == 0 ? "False" : "True"), CellValues.String);
+
+            InsertCell("F", row, new CellValue(Math.Round(data.SC[0], 3)), CellValues.String);
+            InsertCell("G", row, new CellValue(Math.Round(data.SC[1], 3)), CellValues.String);
+            InsertCell("H", row, new CellValue(Math.Round(data.SC[2], 3)), CellValues.String);
+            InsertCell("I", row, new CellValue(Math.Round(data.SC[3], 3)), CellValues.String);
+            InsertCell("J", row, new CellValue(Math.Round(data.SC[4], 3)), CellValues.String);
 
             m_currentRow += 1;
         }
+
+        private static Row GetOrAddRow(uint rowIndex)
+        {
+            Row row = m_sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).FirstOrDefault();
+            if (row == default(Row))
+            {
+                row = new Row() { RowIndex = rowIndex };
+                m_sheetData.Append(row);
+            }
+
+            return row;
+        }
+
         private static void UpdateCell(string columnName, uint rowIndex, CellValue value)
         {
             Row row = m_sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).FirstOrDefault();

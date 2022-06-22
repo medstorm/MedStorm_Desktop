@@ -450,6 +450,7 @@ namespace MedStorm.Desktop
         private void SaveRecordingButton_Click(object sender, RoutedEventArgs e)
         {
             SaveRecordingPopUp.IsOpen = false;
+            m_patientId = SaveRecordingPatientIdTextBox.Text;
             m_rawDataStorage.UpdatePatientId(m_patientId);
             m_rawDataStorage.SaveRawDataFile(m_patientId);
             //m_rawDataStorage.(m_patientId);

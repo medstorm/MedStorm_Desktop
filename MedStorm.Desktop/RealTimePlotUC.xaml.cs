@@ -312,7 +312,7 @@ namespace Plot
                 {
                     Text = (timeStep * -i).ToString(),
                     FontFamily = new FontFamily("Courier"),
-                    FontSize = 10,
+                    FontSize = 14,
                     Foreground = m_whiteBrush,
                     Width = 30,
                     Margin = new Thickness(0, 0, m_pixelWidth / NoOfVerticalGridLines - 30, 0)
