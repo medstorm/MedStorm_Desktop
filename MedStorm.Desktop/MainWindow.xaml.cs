@@ -62,14 +62,6 @@ namespace MedStorm.Desktop
         public static readonly DependencyProperty AwakeningRowProperty =
             DependencyProperty.Register("AwakeningRow", typeof(GridLength), typeof(MainWindow), new PropertyMetadata(GridLength.Auto));
 
-        //public string PatientId
-        //{
-        //    get { return (string)GetValue(PatientIdProperty); }
-        //    set { SetValue(PatientIdProperty, value); }
-        //}
-        //public static readonly DependencyProperty PatientIdProperty =
-        //    DependencyProperty.Register("PatientId", typeof(string), typeof(MainWindow), new PropertyMetadata("?"));
-
         public Visibility NerveBlockVisibility
         {
             get { return (Visibility)GetValue(NerveBlockVisibilityProperty); }
@@ -85,8 +77,6 @@ namespace MedStorm.Desktop
         }
         public static readonly DependencyProperty PatientIdButtonTextProperty =
             DependencyProperty.Register("PatientIdButtonText", typeof(string), typeof(MainWindow), new PropertyMetadata("Enter Patient ID"));
-
-
 
         public GridLength NerveBlockRow
         {
@@ -108,10 +98,10 @@ namespace MedStorm.Desktop
         BleAdvertisementHandler? m_advHandler = null;
         MonitorHandler m_monitor;
         IConfigurationRoot m_configuration;
-        bool m_isWaitingForPatientId = false;
+        //bool m_isWaitingSaveRecordingDialog = false;
         RawDataStorage m_rawDataStorage;
         string m_logFileWithPath = "";
-        string m_patientId="";
+        string m_patientId = "";
         public MainWindow()
         {
             try
@@ -160,7 +150,7 @@ namespace MedStorm.Desktop
                 Log.Information($"Computer {Environment.MachineName} is not certified for running this application");
                 Log.CloseAndFlush();
                 MessageBox.Show($"Computer {Environment.MachineName} si not certified for running this application\n" +
-                                $"Please contact MedStorm on: https://med-storm.com/","Fatal Error", MessageBoxButton.OK);
+                                $"Please contact MedStorm on: https://med-storm.com/", "Fatal Error", MessageBoxButton.OK);
                 Close();
             }
 
@@ -188,7 +178,7 @@ namespace MedStorm.Desktop
         {
             m_advHandler = BleAdvertisementHandler.CreateAdvertisementHandler();
             m_advHandler.NewMeasurement += AddMeasurement;
-            m_monitor = new MonitorHandler(m_advHandler);  
+            m_monitor = new MonitorHandler(m_advHandler);
             ApplicationsComboBox.SelectedIndex = 0;
             PatientIdPopUp.Closed += PatientIdPopUp_Closed;
         }
@@ -230,17 +220,6 @@ namespace MedStorm.Desktop
 
         private void PatientIdPopUp_Closed(object? sender, EventArgs e)
         {
-            if (m_isWaitingForPatientId)    // Happend at disconnect
-            {
-                m_isWaitingForPatientId = false;
-                m_rawDataStorage.SaveRawDataFile(PatientIdTextBox.Text);
-                
-                // Reset patient information
-                PatientIdTextBox.Text = "";
-                CommentTextBox.Text = "";
-                m_patientId = "";
-                SetNameOnPatientIdButton();
-            }
         }
         private void connect_diconnect_Click(object sender, RoutedEventArgs e)
         {
@@ -271,8 +250,9 @@ namespace MedStorm.Desktop
                     Log.Debug("MainWindow: diconnect-Click");
                     Log.Debug("--------------------------------------------------------------------");
                     m_advHandler?.StopScanningForPainSensors();
-                    m_isWaitingForPatientId = true;
-                    PatientIdPopUp.IsOpen = true;
+                    //m_isWaitingSaveRecordingDialog = true;
+                    SaveRecordingPatientIdTextBox.Text = m_patientId;
+                    SaveRecordingPopUp.IsOpen = true;
                     ConnectSensorButton.Content = ConnectSensor;
                 }
                 catch (Exception ex)
@@ -444,11 +424,19 @@ namespace MedStorm.Desktop
             CommentTextBox.Text = "";
         }
 
+        private void ClearPatientInfo()
+        {
+            // Reset patient information
+            PatientIdTextBox.Text = "";
+            CommentTextBox.Text = "";
+            m_patientId = "";
+            SetNameOnPatientIdButton();
+        }
+
         private void SavePatientIdButton_Click(object sender, RoutedEventArgs e)
         {
             m_patientId = PatientIdTextBox.Text;
             SetNameOnPatientIdButton();
-            m_rawDataStorage.UpdatePatientId(m_patientId);
             PatientIdPopUp.IsOpen = false;
         }
 
@@ -457,6 +445,23 @@ namespace MedStorm.Desktop
             PatientIdTextBox.Text = m_patientId;
             PatientIdPopUp.IsOpen = false;
             SetNameOnPatientIdButton();
+        }
+
+        private void SaveRecordingButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveRecordingPopUp.IsOpen = false;
+            m_rawDataStorage.UpdatePatientId(m_patientId);
+            m_rawDataStorage.SaveRawDataFile(m_patientId);
+            //m_rawDataStorage.(m_patientId);
+
+            ClearPatientInfo();
+        }
+
+        private void NoSaveRecordingButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveRecordingPopUp.IsOpen = false;
+            m_rawDataStorage.DeleteRawDataFile();
+            ClearPatientInfo();
         }
 
         private void SetNameOnPatientIdButton()
@@ -507,16 +512,16 @@ namespace MedStorm.Desktop
 
         private void DecreaseTimeScaleButton_Click(object sender, RoutedEventArgs e)
         {
-            PainNociceptive.DecrementTimeToShow();
-            Awakening.DecrementTimeToShow();
-            NerveBlock.DecrementTimeToShow();
+            PainNociceptive.IncrementTimeToShow();
+            Awakening.IncrementTimeToShow();
+            NerveBlock.IncrementTimeToShow();
         }
 
         private void IncreaseTimeScaleButton_Click(object sender, RoutedEventArgs e)
         {
-            PainNociceptive.IncrementTimeToShow();
-            Awakening.IncrementTimeToShow();
-            NerveBlock.IncrementTimeToShow();
+            PainNociceptive.DecrementTimeToShow();
+            Awakening.DecrementTimeToShow();
+            NerveBlock.DecrementTimeToShow();
         }
     }
 

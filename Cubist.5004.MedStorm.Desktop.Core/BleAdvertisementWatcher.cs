@@ -179,6 +179,9 @@ namespace PSSApplication.Core
                     Log.Debug($"AdvertisementHandler.PairDevice: Pairing...");
                     m_bleDevice.DeviceInformation.Pairing.Custom.PairingRequested += Custom_PairingRequested;
                     devicePairingResult = await m_bleDevice.DeviceInformation.Pairing.Custom.PairAsync(DevicePairingKinds.ConfirmOnly);
+                    if (m_bleDevice == null)
+                        continue;
+
                     m_bleDevice.DeviceInformation.Pairing.Custom.PairingRequested -= Custom_PairingRequested;
                     Log.Debug($"AdvertisementHandler.PairDevice: result: {devicePairingResult.Status}");
 

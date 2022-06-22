@@ -30,6 +30,17 @@ namespace PSSApplication.Core
         {
 
         }
+
+        public void DeleteRawDataFile()
+        {
+            if (m_outputStream != null)
+            {
+                m_outputStream.Close();
+                File.Delete(m_fullFileRawFileName);
+                m_outputStream = null;
+            }
+        }
+
         public void SaveRawDataFile(string patientId, bool makeExelFile = true)
         {
             if (m_outputStream != null)

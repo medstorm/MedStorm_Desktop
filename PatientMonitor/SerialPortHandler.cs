@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.IO.Ports;
+using System.Management;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,24 +22,38 @@ namespace PSSApplication.Core.PatientMonitor
         /// <returns></returns>
         private static bool GetPainMonitorComPort()
         {
+
+
+
             bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             if (isWindows)
             {
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher(
+                "root\\CIMV2", "SELECT * FROM Win32_PnPEntity WHERE ClassGuid=\"{4d36e978-e325-11ce-bfc1-08002be10318}\"");
+
+                List<string> portList = new List<string>();
+                foreach (ManagementObject item in searcher.Get())
+                {
+                    portList.Add(item["Caption"].ToString());
+                }
+
                 Log.Information("Searching for available COM port");
-                string[] ports = SerialPort.GetPortNames();
-                if (ports.Length == 0)
+                //string[] ports = SerialPort.GetPortNames();
+                if (portList.Count == 0)
                 {
                     Log.Warning("Unable to find any COM ports");
                     return false;
                 }
-                foreach (var portName in ports)
+                foreach (var portName in portList)
                 {
                     if (!portName.Contains("COM"))
                         continue;
 
-                    if (portName.Contains("Prolific USB-to-Serial Comm Port") || portName.Contains("COM22"))
+                    if (portName.Contains("Prolific USB-to-Serial Comm Port"))
                     {
-                        ComPortName = portName;
+                        string[] portNameSplit= portName.Split(new char[] { '(',')' });
+                        ComPortName = portNameSplit[1];
+
                         return true;
                     }
                 }
@@ -62,7 +77,7 @@ namespace PSSApplication.Core.PatientMonitor
                 return;
             }
 
-            Log.Information($"Found port to Philip Monitor: {ComPortName}");
+            Log.Information($"Found port to Philips Monitor: {ComPortName}");
             _port = new SerialPort
             {
                 PortName = ComPortName,
