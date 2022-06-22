@@ -62,6 +62,13 @@ namespace MedStorm.Desktop
         public static readonly DependencyProperty AwakeningRowProperty =
             DependencyProperty.Register("AwakeningRow", typeof(GridLength), typeof(MainWindow), new PropertyMetadata(GridLength.Auto));
 
+        //public string PatientId
+        //{
+        //    get { return (string)GetValue(PatientIdProperty); }
+        //    set { SetValue(PatientIdProperty, value); }
+        //}
+        //public static readonly DependencyProperty PatientIdProperty =
+        //    DependencyProperty.Register("PatientId", typeof(string), typeof(MainWindow), new PropertyMetadata("?"));
 
         public Visibility NerveBlockVisibility
         {
@@ -70,6 +77,16 @@ namespace MedStorm.Desktop
         }
         public static readonly DependencyProperty NerveBlockVisibilityProperty =
             DependencyProperty.Register("NerveBlockVisibility", typeof(Visibility), typeof(MainWindow), new PropertyMetadata(Visibility.Collapsed));
+
+        public string PatientIdButtonText
+        {
+            get { return (string)GetValue(PatientIdButtonTextProperty); }
+            set { SetValue(PatientIdButtonTextProperty, value); }
+        }
+        public static readonly DependencyProperty PatientIdButtonTextProperty =
+            DependencyProperty.Register("PatientIdButtonText", typeof(string), typeof(MainWindow), new PropertyMetadata("Enter Patient ID"));
+
+
 
         public GridLength NerveBlockRow
         {
@@ -94,6 +111,7 @@ namespace MedStorm.Desktop
         bool m_isWaitingForPatientId = false;
         RawDataStorage m_rawDataStorage;
         string m_logFileWithPath = "";
+        string m_patientId="";
         public MainWindow()
         {
             try
@@ -136,6 +154,7 @@ namespace MedStorm.Desktop
                 }
             }
 
+            // Check if we are running on a MedStorm certified machine
             if (!machineNameIsOk)
             {
                 Log.Information($"Computer {Environment.MachineName} is not certified for running this application");
@@ -156,11 +175,9 @@ namespace MedStorm.Desktop
                         .CreateLogger();
 
             Log.Information($"Running on computer= {Environment.MachineName} ");
-
             Log.Information("Starting MedStrom.Desktop..........................................");
 
             m_rawDataStorage = new RawDataStorage();
-           
 
             InitializeComponent();
             ConnectMonitorButton.Content = ConnectMonitor;
@@ -213,23 +230,29 @@ namespace MedStorm.Desktop
 
         private void PatientIdPopUp_Closed(object? sender, EventArgs e)
         {
-            if (m_isWaitingForPatientId)
+            if (m_isWaitingForPatientId)    // Happend at disconnect
             {
                 m_isWaitingForPatientId = false;
                 m_rawDataStorage.SaveRawDataFile(PatientIdTextBox.Text);
+                
+                // Reset patient information
+                PatientIdTextBox.Text = "";
+                CommentTextBox.Text = "";
+                m_patientId = "";
+                SetNameOnPatientIdButton();
             }
         }
         private void connect_diconnect_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsRunning)
+            if (!IsRunning) // Connect
             {
                 try
                 {
-                    CommentTextBox.Text = "";
-                    PatientIdTextBox.Text = "";
+                    //CommentTextBox.Text = "";
+                    //PatientIdTextBox.Text = "";
                     Log.Debug("--------------------------------------------------------------------");
                     Log.Debug("MainWindow: connect-Click, creating Excel-File");
-                    m_rawDataStorage.CreateRawDataFile();
+                    m_rawDataStorage.CreateRawDataFile(m_patientId);
                     m_advHandler?.StartScanningForPainSensors();
                     ConnectSensorButton.Content = DisconnectSensor;
                 }
@@ -421,14 +444,33 @@ namespace MedStorm.Desktop
             CommentTextBox.Text = "";
         }
 
-        private void CanselPatientIdButton_Click(object sender, RoutedEventArgs e)
+        private void SavePatientIdButton_Click(object sender, RoutedEventArgs e)
         {
+            m_patientId = PatientIdTextBox.Text;
+            SetNameOnPatientIdButton();
+            m_rawDataStorage.UpdatePatientId(m_patientId);
             PatientIdPopUp.IsOpen = false;
         }
 
-        private void SavePatientIdButton_Click(object sender, RoutedEventArgs e)
+        private void CancelPatientIdButton_Click(object sender, RoutedEventArgs e)
         {
+            PatientIdTextBox.Text = m_patientId;
             PatientIdPopUp.IsOpen = false;
+            SetNameOnPatientIdButton();
+        }
+
+        private void SetNameOnPatientIdButton()
+        {
+            if (string.IsNullOrEmpty(m_patientId))
+            {
+                PatientIdButton.Content = "Enter PatientId";
+                PatientIdTextBox.Text = "";
+            }
+            else
+            {
+                PatientIdButton.Content = $"PatientID: {m_patientId}";
+                PatientIdTextBox.Text = m_patientId;
+            }
         }
 
         private void PatientIdButton_Click(object sender, RoutedEventArgs e)

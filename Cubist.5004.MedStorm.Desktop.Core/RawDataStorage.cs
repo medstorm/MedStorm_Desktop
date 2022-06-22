@@ -39,7 +39,7 @@ namespace PSSApplication.Core
                 m_outputStream = null;
             }
         }
-        public void CreateRawDataFile()
+        public void CreateRawDataFile(string patientId=null)
         {
             try
             {
@@ -54,6 +54,10 @@ namespace PSSApplication.Core
                 Directory.CreateDirectory(Path.GetDirectoryName(m_fullFileRawFileName));
                 m_outputStream = new StreamWriter(m_fullFileRawFileName);
                 m_outputStream.AutoFlush = true;
+
+                // Add patienId if it wasn't already registered
+                if (!string.IsNullOrEmpty(patientId))
+                    UpdatePatientId(patientId);
             }
             catch (Exception ex)
             {
