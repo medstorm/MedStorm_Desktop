@@ -21,19 +21,16 @@ namespace MedStorm.Desktop
             set
             {
                 SetValue(ValueTextProperty, value);
-                m_lastTimeStamp = DateTime.UtcNow;
+                NewValuTextChanged(value.ToString());
             }
         }
         public static readonly DependencyProperty ValueTextProperty =
-            DependencyProperty.Register("ValueText", typeof(string), typeof(TimeCheckTextBlock), new PropertyMetadata("--", ValuTextChanged));
+        DependencyProperty.Register("ValueText", typeof(string), typeof(TimeCheckTextBlock), new PropertyMetadata("--"));
 
-        public static void ValuTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void NewValuTextChanged(string newValue)
         {
-            TimeCheckTextBlock? timeCheckTextBlock = d as TimeCheckTextBlock;
-            if (timeCheckTextBlock != null)
-            {
-                timeCheckTextBlock.Text = e.NewValue.ToString();
-            }
+            m_lastTimeStamp = DateTime.UtcNow;
+            Text = newValue;
         }
 
         public TimeCheckTextBlock()
