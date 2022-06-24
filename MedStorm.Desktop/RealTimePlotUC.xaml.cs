@@ -472,34 +472,11 @@ namespace Plot
 
         private List<Point> MakeValuePoints(int noOfSamplesToCollapse = 1)
         {
-            m_valueToPixel = m_pixelHeight / m_maxValue;
-            if (HasFixedVerticalLabels)
-            {
-                m_maxValue = MaxValue;
-                m_minValue = 0;
-            }
-            else
-            {
-                m_maxValue = 2.5;
-                DataPoints.ForEach(x => { if (x.Value > m_maxValue) m_maxValue = x.Value; });
-
-                m_minValue = m_maxValue;
-                DataPoints.ForEach(x => { if (x.Value < m_minValue) m_minValue = x.Value; });
-            }
-            double valueRange = m_maxValue - m_minValue;
-            double scale;
-            if (valueRange > 0.001)
-                scale = m_maxValue / (m_maxValue - m_minValue);
-            else
-                scale = 100; // Max. scale
-
-            List<Point> valuePoints = new List<Point>();
-
             // Do datareduction
             List<Measurement> dataPoints;
             if (noOfSamplesToCollapse > 1)
             {
-                List<Measurement> reduestDataPoints = new List<Measurement>();
+                List<Measurement> reducedDataPoints = new List<Measurement>();
                 for (int i = 0; i < DataPoints.Count; i += noOfSamplesToCollapse)
                 {
                     double newValue = 0;
@@ -517,13 +494,44 @@ namespace Plot
                             newValue = DataPoints[index].Value;
                             maxValue = newValue;
                         }
-                        reduestDataPoints.Add(new Measurement() { Value = newValue, IsBadSignal = isBadSignal, TimeStamp = DataPoints[i].TimeStamp });
+                        reducedDataPoints.Add(new Measurement() { Value = newValue, IsBadSignal = isBadSignal, TimeStamp = DataPoints[i].TimeStamp });
                     }
                 }
-                dataPoints = reduestDataPoints;
+                dataPoints = reducedDataPoints;
             }
             else
-                dataPoints = DataPoints;
+            {
+                dataPoints = new List<Measurement>();
+                for (int i = 0; i < DataPoints.Count; i++)
+                {
+                    if (DataPoints[i].TimeStamp > DateTime.Now - TimeSpan.FromSeconds(NoOfSecondsToShow))
+                        dataPoints.Add(DataPoints[i]);
+                }
+            }
+
+            if (HasFixedVerticalLabels)
+            {
+                m_maxValue = MaxValue;
+                m_minValue = 0;
+            }
+            else
+            {
+                m_maxValue = 2.5;
+                dataPoints.ForEach(x => { if (x.Value > m_maxValue) m_maxValue = x.Value; });
+
+                m_minValue = m_maxValue;
+                dataPoints.ForEach(x => { if (x.Value < m_minValue) m_minValue = x.Value; });
+            }
+
+            m_valueToPixel = m_pixelHeight / m_maxValue;
+            double valueRange = m_maxValue - m_minValue;
+            double scale;
+            if (valueRange > 0.001)
+                scale = m_maxValue / (m_maxValue - m_minValue);
+            else
+                scale = 100; // Max. scale
+
+            List<Point> valuePoints = new List<Point>();
 
             foreach (var measurement in dataPoints)
             {
