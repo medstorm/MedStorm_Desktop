@@ -47,7 +47,7 @@ namespace PSSApplication.Core
         static SheetData m_sheetData;
         static Sheet m_sheet;
 
-        public static void ExportRowDataToExcel(string fileName, string patientId)
+        public static string ExportRawDataToExcel(string fileName, string patientId)
         {
             m_currentRow = 3;
             string outFileName = fileName.Replace(".txt", ".xlsx");
@@ -120,6 +120,8 @@ namespace PSSApplication.Core
             m_spreadSheet.Save();
             m_spreadSheet.Close();
             m_spreadSheet = null;
+            reader.Close();
+            return outFileName;
         }
         private static void CreateColumns(string patientId)
         {

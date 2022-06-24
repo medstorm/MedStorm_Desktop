@@ -24,7 +24,8 @@ namespace PSSApplication.Core
     {
         StreamWriter m_outputStream = null;
         static object m_lockKey = new object();
-        string m_fullFileRawFileName = "";
+        string m_fullRawFileName = ""; 
+        string m_fileName = "";
 
         public RawDataStorage()
         {
@@ -36,7 +37,7 @@ namespace PSSApplication.Core
             if (m_outputStream != null)
             {
                 m_outputStream.Close();
-                File.Delete(m_fullFileRawFileName);
+                File.Delete(m_fullRawFileName);
                 m_outputStream = null;
             }
         }
@@ -46,24 +47,32 @@ namespace PSSApplication.Core
             if (m_outputStream != null)
             {
                 m_outputStream.Close();
-                RawDataToExcel.ExportRowDataToExcel(m_fullFileRawFileName, patientId);
+                string xlsxFileName = RawDataToExcel.ExportRawDataToExcel(m_fullRawFileName, patientId);
+                if (!string.IsNullOrEmpty(patientId))
+                {
+                    string targetPath = GetTargetPath();
+                    string rawFileNameWithPatientId = Path.Combine(targetPath, patientId + "_" + m_fileName);
+                    File.Move(xlsxFileName, rawFileNameWithPatientId.Replace(".txt", ".xlsx"));
+                    File.Move(m_fullRawFileName, rawFileNameWithPatientId);
+                }
+
                 m_outputStream = null;
             }
         }
-        public void CreateRawDataFile(string patientId=null)
+        public void CreateRawDataFile(string patientId = null)
         {
             try
             {
                 DateTime currentDateTime = DateTime.Now;
-                var fileName = currentDateTime.ToString("HH_mm_ss___dd_MM_yyyy") + "_PainData.txt";
+                m_fileName = currentDateTime.ToString("HH_mm_ss___dd_MM_yyyy") + "_PainData.txt";
 
-                // Use the PSS Application directory
-                string targetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
-                m_fullFileRawFileName = Path.Combine(targetPath, fileName);
+                // Get the Application directory
+                string targetPath = GetTargetPath();
+                m_fullRawFileName = Path.Combine(targetPath, m_fileName);
 
                 // Make the directry if it dosn't excist
-                Directory.CreateDirectory(Path.GetDirectoryName(m_fullFileRawFileName));
-                m_outputStream = new StreamWriter(m_fullFileRawFileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(m_fullRawFileName));
+                m_outputStream = new StreamWriter(m_fullRawFileName);
                 m_outputStream.AutoFlush = true;
 
                 // Add patienId if it wasn't already registered
@@ -76,13 +85,18 @@ namespace PSSApplication.Core
             }
         }
 
+        private static string GetTargetPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PSS Application");
+        }
+
         public void InsertDataPackage(BLEMeasurement data)
         {
             lock (m_lockKey)
             {
                 try
                 {
-                    var header = new RawDataHeader{ Time = DateTime.Now, DataType = DataType.RawData };
+                    var header = new RawDataHeader { Time = DateTime.Now, DataType = DataType.RawData };
                     string jsonHeader = JsonSerializer.Serialize(header);
                     string jsonString = JsonSerializer.Serialize(data);
 
@@ -102,7 +116,7 @@ namespace PSSApplication.Core
             {
                 var header = new RawDataHeader { Time = DateTime.Now, DataType = DataType.Comment };
                 string jsonHeader = JsonSerializer.Serialize(header);
-                var jsonComment= JsonSerializer.Serialize(new DataComment { Comment = comment });
+                var jsonComment = JsonSerializer.Serialize(new DataComment { Comment = comment });
 
                 m_outputStream?.Write($"{jsonHeader}\n");
                 m_outputStream?.Write($"{jsonComment}\n");
