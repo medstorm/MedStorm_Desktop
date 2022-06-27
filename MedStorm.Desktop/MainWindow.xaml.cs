@@ -122,7 +122,7 @@ namespace MedStorm.Desktop
             string machineName = Environment.MachineName.ToLower();
 
             var keySection = m_configuration.GetSection("Keys");   //i.e. Machine names crypted
-            if (machineName.Contains("medstorm") || keySection.Value == null)
+            if (machineName.Contains("medstorm") || keySection == null)
             {
                 machineNameIsOk = true;
             }
