@@ -72,7 +72,7 @@ namespace PSSApplication.Core
             };
             sheets.Append(m_sheet);
 
-            var id = string.IsNullOrEmpty(patientId) ? "?" : patientId;
+            var id = string.IsNullOrEmpty(patientId) ? "" : patientId;
             CreateColumns(id);
 
             StreamReader reader = new StreamReader(fileName);

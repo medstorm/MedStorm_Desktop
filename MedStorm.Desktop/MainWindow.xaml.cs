@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -95,7 +96,7 @@ namespace MedStorm.Desktop
         string? Application => ((ComboBoxItem)ApplicationsComboBox.SelectedItem)?.Content?.ToString();
         bool IsRunning => ConnectSensorButton.Content.ToString() == DisconnectSensor;
         static BLEMeasurement LatestMeasurement { get; set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
-        BleAdvertisementHandler? m_advHandler = null;
+        IPainSensorAdvertisementHandler? m_advHandler = null;
         MonitorHandler m_monitor;
         IConfigurationRoot m_configuration;
         //bool m_isWaitingSaveRecordingDialog = false;
@@ -176,7 +177,13 @@ namespace MedStorm.Desktop
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            m_advHandler = BleAdvertisementHandler.CreateAdvertisementHandler();
+            string? UseUSBdongleString = m_configuration.GetSection("UseUSBdongle")?.Value;
+
+            if (!string.IsNullOrEmpty(UseUSBdongleString) && UseUSBdongleString.ToLower() == "true" )
+                m_advHandler = DongleSensorAdvertisementHandler.CreateAdvertisementHandler();
+            else
+                m_advHandler = BleAdvertisementHandler.CreateAdvertisementHandler();
+
             m_advHandler.NewMeasurement += AddMeasurement;
             m_monitor = new MonitorHandler(m_advHandler);
             ApplicationsComboBox.SelectedIndex = 0;
@@ -369,9 +376,10 @@ namespace MedStorm.Desktop
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            m_advHandler?.Close();
             if (IsRunning)
             {
-                m_rawDataStorage?.SaveRawDataFile("?");
+                m_rawDataStorage?.SaveRawDataFile("");
             }
             Close();
         }

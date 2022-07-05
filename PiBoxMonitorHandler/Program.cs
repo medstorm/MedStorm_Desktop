@@ -4,10 +4,11 @@ using System;
 using System.Device.Gpio;
 using System.Threading;
 using System.IO.Ports;
-using PiBoxMonitorHandler;
 using PSSApplication.Core.PatientMonitor;
 using Serilog;
 using Microsoft.Extensions.Configuration;
+using PSSApplication.Core;
+using PSSApplication.Common;
 
 MonitorHandler m_monitorHandler;
 

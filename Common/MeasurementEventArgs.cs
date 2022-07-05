@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 
-namespace PSSApplication.Core
+namespace PSSApplication.Common
 {
     public struct MeasurementEventArgs
     {
@@ -61,6 +61,7 @@ namespace PSSApplication.Core
         public static MeasurementEventArgs ExtractMeasurmentsEvent(byte[] bArray)
         {
             byte ppsValue = bArray[0];
+
             byte areaValue = bArray[1];
             double[] ConductivityItems = new double[NumOfCondItems];
             for (int i = 0; i < NumOfCondItems; i++)
