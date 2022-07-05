@@ -29,6 +29,7 @@ namespace PSSApplication.Core
         GattDeviceService m_service = null;
         GattCharacteristic m_characteristic = null;
         BluetoothLEAdvertisementWatcher m_Watcher; // The underlying bluetooth watcher class
+        public static BleAdvertisementHandler m_advertisementHandlerSingleton = null;
 
         const string AdvertisementName = "PainSensor";
 
@@ -63,13 +64,12 @@ namespace PSSApplication.Core
             IsRunning = false;
         }
 
-        public static BleAdvertisementHandler m_advertisementHandlerSingleton = null;
         public static BleAdvertisementHandler AdvertisementMgr
         {
             get => m_advertisementHandlerSingleton; private set => m_advertisementHandlerSingleton = value;
         }
 
-        public static BleAdvertisementHandler CreateAdvertisementHandler()
+        public static IPainSensorAdvertisementHandler CreateAdvertisementHandler()
         {
             if (m_advertisementHandlerSingleton == null)
                 m_advertisementHandlerSingleton = new BleAdvertisementHandler();
@@ -470,6 +470,10 @@ namespace PSSApplication.Core
         {
             lastReceivedData = DateTime.Now;
             SendMessageToClient(args);
+        }
+
+        public void Close()
+        {
         }
     }
 }

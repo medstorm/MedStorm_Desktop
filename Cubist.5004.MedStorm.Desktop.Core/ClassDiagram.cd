@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PSSApplication.Core.BleAdvertisementHandler">
+    <Position X="4.75" Y="2.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>IQAADBAAAgoEAQAIAQBiQBQTIAAAAIEAACCAgSEAEAA=</HashCode>
+      <FileName>BleAdvertisementWatcher.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PSSApplication.Core.DongleSensorAdvertisementHandler">
+    <Position X="1.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PSSApplication.Common.BLEMeasurement">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="PSSApplication.Common.IPainSensorAdvertisementHandler">
+    <Position X="5.5" Y="0.5" Width="2" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="LatestMeasurement" />
+    </ShowAsAssociation>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
