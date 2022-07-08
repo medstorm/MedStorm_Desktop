@@ -20,6 +20,7 @@ namespace PSSApplication.Core
     {
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
         public BLEMeasurement LatestMeasurement { get; private set; } = new BLEMeasurement(0, 0, 0, new double[5], 0);
+        public int RSSI { get; private set; }
 
         static readonly string ServiceUuid = "264eaed6-c1da-4436-b98c-db79a7cc97b5";
         static readonly string CombinedUuid = "14abde20-31ed-4e0a-bdcf-7efc40f3fffb";
@@ -30,6 +31,7 @@ namespace PSSApplication.Core
         GattCharacteristic m_characteristic = null;
         BluetoothLEAdvertisementWatcher m_Watcher; // The underlying bluetooth watcher class
         public static BleAdvertisementHandler m_advertisementHandlerSingleton = null;
+
 
         const string AdvertisementName = "PainSensor";
 
@@ -241,7 +243,7 @@ namespace PSSApplication.Core
                     m_Watcher.Start();
                     return;
                 }
-
+                RSSI = args.RawSignalStrengthInDBm;
                 Log.Information($"AdvertisementHandler.Watcher_Received: Attached BluetoothAddress={m_bleDevice.BluetoothAddress}, Connection={m_bleDevice.ConnectionStatus}");
 
                 m_bleDevice.ConnectionStatusChanged += ConnectionStatusChangeHandler;
@@ -258,7 +260,7 @@ namespace PSSApplication.Core
                 DevicePairingResult result = await PairDevice();
                 if (result != null && result.Status == DevicePairingResultStatus.Paired)
                 {
-                    Log.Information($"AdvertisementHandler.Watcher_Received: Paired to {args.BluetoothAddress}, connectionOk= {m_bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected}");
+                    Log.Information($"AdvertisementHandler.Watcher_Received: Paired to {args.BluetoothAddress}, RSSI={args.RawSignalStrengthInDBm}, connectionOk= {m_bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected}");
                     m_isBusy = false;
                 }
                 else

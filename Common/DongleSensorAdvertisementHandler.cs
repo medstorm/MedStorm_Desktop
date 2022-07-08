@@ -15,6 +15,7 @@ namespace PSSApplication.Common
     public class DongleSensorAdvertisementHandler : IPainSensorAdvertisementHandler
     {
         public static IPainSensorAdvertisementHandler m_advertisementHandlerSingleton = null;
+        public int RSSI => 0;
 
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
         public SerialPort? m_donglePort = null;
