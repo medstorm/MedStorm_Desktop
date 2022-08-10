@@ -317,6 +317,10 @@
                         <StackPanel Margin="20,20,0,0" HorizontalAlignment="Left" >
                             <TextBlock Text="About MedStorm Desktop" Foreground="{StaticResource WhiteBrush}" FontSize="16" FontWeight="DemiBold" Margin="0,0,0,10" />
                             <TextBlock x:Name="VersionInfoTextBox" TextWrapping="Wrap" Foreground="{StaticResource WhiteBrush}" />
+                            <TextBlock x:Name="RSSItextBox" Foreground="{StaticResource WhiteBrush}" >
+                                <Run Text="RSSI= " />
+                                <Run Text="{Binding ElementName=TopWindow, Path=RSSI, Mode=OneWay}" />
+                            </TextBlock>
                             <Button x:Name="AboutPopUp_OK_Button" Click="AboutPopUp_OK_Button_Click"  Width="120" Height="70" 
                                 Content="Ok"/>
                         </StackPanel>

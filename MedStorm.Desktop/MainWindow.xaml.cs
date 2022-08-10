@@ -79,6 +79,8 @@ namespace MedStorm.Desktop
         public static readonly DependencyProperty PatientIdButtonTextProperty =
             DependencyProperty.Register("PatientIdButtonText", typeof(string), typeof(MainWindow), new PropertyMetadata("Enter Patient ID"));
 
+        public int RSSI => (m_advHandler != null) ? m_advHandler.RSSI : 0;
+
         public GridLength NerveBlockRow
         {
             get { return (GridLength)GetValue(NerveBlockRowProperty); }
@@ -265,7 +267,7 @@ namespace MedStorm.Desktop
                 catch (Exception ex)
                 {
                     string errMsg = $"Not able to Disconnect to sensor!\n error={ex.Message}";
-                    MessageBox.Show(errMsg, "Connection Error", MessageBoxButton.OK);
+                    MessageBox.Show(errMsg, "Disconnect Error", MessageBoxButton.OK);
                     ConnectSensorButton.Content = ConnectSensor;
                     Log.Error($"MainWindow: diconnect-Click, error={errMsg}");
                 }

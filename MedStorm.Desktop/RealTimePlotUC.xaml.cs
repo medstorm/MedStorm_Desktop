@@ -209,6 +209,7 @@ namespace Plot
                         valueLabels.Children.Clear();
                         string valueLabelText = "";
                         double valueRange = m_maxValue - m_minValue;
+                        //if (valueRange < 5) valueRange = 5;
                         double valueStep = valueRange / NoOfHorizontalGridLines;
                         for (int i = 0; i <= NoOfHorizontalGridLines; i++)
                         {
@@ -521,6 +522,10 @@ namespace Plot
 
                 m_minValue = m_maxValue;
                 dataPoints.ForEach(x => { if (x.Value < m_minValue) m_minValue = x.Value; });
+
+                // Done to ensure that we at least have a minum scale of 2.5 
+                if (m_maxValue < m_minValue + 2.5) 
+                    m_maxValue = m_minValue + 2.5;
             }
 
             m_valueToPixel = m_pixelHeight / m_maxValue;

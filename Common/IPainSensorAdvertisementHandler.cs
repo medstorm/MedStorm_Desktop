@@ -10,7 +10,7 @@ namespace PSSApplication.Common
     public interface IPainSensorAdvertisementHandler
     {
         public BLEMeasurement LatestMeasurement { get; }
-
+        public int RSSI { get;}
         public event EventHandler<MeasurementEventArgs> NewMeasurement;
         public void StartScanningForPainSensors();
         public void StopScanningForPainSensors();
