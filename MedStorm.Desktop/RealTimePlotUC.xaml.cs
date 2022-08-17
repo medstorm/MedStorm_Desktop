@@ -524,7 +524,7 @@ namespace Plot
                 dataPoints.ForEach(x => { if (x.Value < m_minValue) m_minValue = x.Value; });
 
                 // Done to ensure that we at least have a minum scale of 2.5 
-                if (m_maxValue < m_minValue + 2.5)
+                if (m_maxValue < m_minValue + 1.25)
                 {
                     if (m_minValue > 1.25)
                     {

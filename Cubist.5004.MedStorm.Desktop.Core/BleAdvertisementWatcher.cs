@@ -217,6 +217,9 @@ namespace PSSApplication.Core
 
         private async void Watcher_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
         {
+            //string localName = args.Advertisement.LocalName;
+            //Log.Debug("AdvertisementHandler.Watcher_Received: BluetoothAddress={0:x}",args.BluetoothAddress);
+            //Log.Debug($"LocalName={localName}");
             //Log.Debug($"AdvertisementHandler.Watcher_Received: m_busy={m_isBusy}, BluetoothAddress={args.BluetoothAddress} ");
             if (m_isBusy)
                 return;
