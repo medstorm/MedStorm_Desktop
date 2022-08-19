@@ -152,7 +152,7 @@ namespace PSSApplication.Core
             if (closeConnection && m_bleDevice != null)
             {
                 Log.Debug($"AdvertisementHandler.UnpairDevice: Closing connection, m_bleDevice.ID= {m_bleDevice.GetHashCode()}");
-                m_bleDevice.Dispose();
+                m_bleDevice?.Dispose();
                 m_bleDevice = null;
             }
             Log.Information($"AdvertisementHandler.UnpairDevice: unpairResult={unpairResult?.Status}");

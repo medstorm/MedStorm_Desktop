@@ -532,7 +532,10 @@ namespace Plot
                         m_minValue = m_minValue - 1.25;
                     }
                     else
+                    {
                         m_maxValue = m_minValue + 2.5;
+                        m_minValue = 0;
+                    }
                 }
             }
 
