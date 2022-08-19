@@ -214,7 +214,7 @@ namespace Plot
                         for (int i = 0; i <= NoOfHorizontalGridLines; i++)
                         {
                             double labelValue = valueStep * (NoOfHorizontalGridLines - i) + m_minValue;
-                            if (valueRange <= 10)
+                            if (m_maxValue < 100)
                                 valueLabelText = string.Format("{0:f1}", labelValue);
                             else
                                 valueLabelText = string.Format("{0:f0}", labelValue);
@@ -245,16 +245,16 @@ namespace Plot
             // Draw axis
             Path axsisPath = new Path() { Stroke = m_whiteBrush, StrokeThickness = 1.5 };
             PathFigure axisFigure = MakePathFigure(axsisPath);
-            axisFigure.StartPoint = new Point(x: 0, y: -10);
+            axisFigure.StartPoint = new Point(x: 0, y: 0);
             axisFigure.Segments.Add(new LineSegment(new Point(x: 0, y: m_pixelHeight + 10), isStroked: true));
-            axisFigure.Segments.Add(new LineSegment(new Point(x: -10, y: m_pixelHeight), isStroked: false));
-            axisFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth + 10, y: m_pixelHeight), isStroked: true));
+            axisFigure.Segments.Add(new LineSegment(new Point(x: 0, y: m_pixelHeight), isStroked: false));
+            axisFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth , y: m_pixelHeight), isStroked: true));
             gridCanvas.Children.Add(axsisPath);
 
             // Draw GridLines
             Path gridPath = new Path() { Stroke = m_whiteBrush, StrokeThickness = 0.5 };
             PathFigure gridFigure = MakePathFigure(gridPath);
-            gridFigure.StartPoint = new Point(-10, m_pixelHeight);
+            gridFigure.StartPoint = new Point(0, m_pixelHeight);
 
             // Add horizontal lines
             double step;
@@ -264,8 +264,8 @@ namespace Plot
                 foreach (var i in m_horizontalAxisValues)
                 {
                     double y = m_pixelHeight - i * step;
-                    gridFigure.Segments.Add(new LineSegment(new Point(x: -10, y), isStroked: false));
-                    gridFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth + 10, y: y), isStroked: true));
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: 0, y), isStroked: false));
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth, y: y), isStroked: true));
                 }
             }
             else
@@ -273,8 +273,8 @@ namespace Plot
                 step = m_pixelHeight / NoOfHorizontalGridLines;
                 for (int i = NoOfHorizontalGridLines; i >= 0; i--)
                 {
-                    gridFigure.Segments.Add(new LineSegment(new Point(x: -10, y: i * step), isStroked: false));
-                    gridFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth + 10, y: i * step), isStroked: true));
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: 0, y: i * step), isStroked: false));
+                    gridFigure.Segments.Add(new LineSegment(new Point(x: m_pixelWidth, y: i * step), isStroked: true));
                 }
             }
 
@@ -285,7 +285,7 @@ namespace Plot
             step = m_pixelWidth / NoOfVerticalGridLines;
             for (int i = 0; i <= NoOfVerticalGridLines; i++)
             {
-                gridFigure.Segments.Add(new LineSegment(new Point(x: i * step, y: -10), isStroked: false));
+                gridFigure.Segments.Add(new LineSegment(new Point(x: i * step, y: 0), isStroked: false));
                 gridFigure.Segments.Add(new LineSegment(new Point(x: i * step, y: m_pixelHeight + 10), isStroked: true));
             }
             gridCanvas.Children.Add(gridPath);

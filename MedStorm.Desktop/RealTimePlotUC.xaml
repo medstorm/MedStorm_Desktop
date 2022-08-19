@@ -24,7 +24,7 @@
             </Grid>
 
         </Canvas>
-        <Grid  Margin="27,0,10,7"
+        <Grid  Margin="17,0,10,7"
                Height="13" VerticalAlignment="Bottom"
                Width="{Binding ElementName=PlotControl,Path=ActualWidth}">
             <StackPanel x:Name="timeLabels" Orientation="Horizontal"/>
