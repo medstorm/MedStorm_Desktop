@@ -17,7 +17,7 @@
         <Canvas Margin="30" x:Name="plotCanvas" Background="Black" />
         <Canvas x:Name="leftSlad" Width="30" HorizontalAlignment="Left" Background="Black"/>
         <Canvas x:Name="rightSlad" Width="5" HorizontalAlignment="Right" Background="Black"/>
-        <Canvas Margin="30" x:Name="gridCanvas" Background="Transparent" >
+        <Canvas Margin="30,30,30,30" x:Name="gridCanvas" Background="Transparent" >
             <Grid Canvas.Top="-20" Canvas.Left="0">
                 <TextBlock Width="80" Text="{Binding PlotTitle, ElementName=PlotControl}"  
                        Foreground="{StaticResource WhiteBrush}" Background="Black" FontSize="12" FontFamily="Courier" />
@@ -30,7 +30,7 @@
             <StackPanel x:Name="timeLabels" Orientation="Horizontal"/>
         </Grid>
         <Grid  Margin="0,23,0,10"
-               Width="18" HorizontalAlignment="Left"
+               Width="25" HorizontalAlignment="Left"
                Height="{Binding ElementName=PlotControl,Path=ActualHeight}">
             <StackPanel x:Name="valueLabels" Orientation="Vertical" />
         </Grid>

@@ -209,12 +209,11 @@ namespace Plot
                         valueLabels.Children.Clear();
                         string valueLabelText = "";
                         double valueRange = m_maxValue - m_minValue;
-                        //if (valueRange < 5) valueRange = 5;
                         double valueStep = valueRange / NoOfHorizontalGridLines;
                         for (int i = 0; i <= NoOfHorizontalGridLines; i++)
                         {
                             double labelValue = valueStep * (NoOfHorizontalGridLines - i) + m_minValue;
-                            if (m_maxValue < 100)
+                            if (valueRange < 10)
                                 valueLabelText = string.Format("{0:f1}", labelValue);
                             else
                                 valueLabelText = string.Format("{0:f0}", labelValue);
@@ -523,8 +522,13 @@ namespace Plot
                 m_minValue = m_maxValue;
                 dataPoints.ForEach(x => { if (x.Value < m_minValue) m_minValue = x.Value; });
 
-                // Done to ensure that we at least have a minum scale of 2.5 
-                if (m_maxValue < m_minValue + 1.25)
+                // Done to ensure that we have a minum scale of 2.5 
+                if (m_maxValue <= 2.5001)
+                {
+                    m_maxValue = 2.5;
+                    m_minValue = 0.0;
+                }
+                else if (m_maxValue < m_minValue + 1.25)
                 {
                     if (m_minValue > 1.25)
                     {
