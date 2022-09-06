@@ -13,6 +13,10 @@ using System.Globalization;
 using System.Threading;
 using Serilog;
 using PSSApplication.Common;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Vml;
+using WinRT;
 
 namespace PSSApplication.Core
 {
@@ -25,7 +29,6 @@ namespace PSSApplication.Core
         static readonly string ServiceUuid = "264eaed6-c1da-4436-b98c-db79a7cc97b5";
         static readonly string CombinedUuid = "14abde20-31ed-4e0a-bdcf-7efc40f3fffb";
 
-        readonly object m_ThreadLock = new object();
         BluetoothLEDevice m_bleDevice = null;
         GattDeviceService m_service = null;
         GattCharacteristic m_characteristic = null;
@@ -152,7 +155,16 @@ namespace PSSApplication.Core
             if (closeConnection && m_bleDevice != null)
             {
                 Log.Debug($"AdvertisementHandler.UnpairDevice: Closing connection, m_bleDevice.ID= {m_bleDevice.GetHashCode()}");
-                m_bleDevice?.Dispose();
+
+                try { m_characteristic?.Service?.Dispose(); }
+                catch (System.ObjectDisposedException) {; }// Nothing to do
+
+                try { m_service?.Dispose(); }
+                catch (System.ObjectDisposedException) {; }// Nothing to do
+
+                try { m_bleDevice?.Dispose(); }
+                catch (System.ObjectDisposedException) {; }// Nothing to do
+
                 m_bleDevice = null;
             }
             Log.Information($"AdvertisementHandler.UnpairDevice: unpairResult={unpairResult?.Status}");
@@ -263,7 +275,7 @@ namespace PSSApplication.Core
                 DevicePairingResult result = await PairDevice();
                 if (result != null && result.Status == DevicePairingResultStatus.Paired)
                 {
-                    Log.Information($"AdvertisementHandler.Watcher_Received: Paired to {args.BluetoothAddress}, RSSI={args.RawSignalStrengthInDBm}, connectionOk= {m_bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected}");
+                    Log.Information($"AdvertisementHandler.Watcher_Received: Paired to {args.BluetoothAddress}, RSSI={args.RawSignalStrengthInDBm}, connectionOk= {m_bleDevice?.ConnectionStatus == BluetoothConnectionStatus.Connected}");
                     m_isBusy = false;
                 }
                 else
