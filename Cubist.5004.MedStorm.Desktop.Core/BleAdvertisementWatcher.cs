@@ -283,6 +283,7 @@ namespace PSSApplication.Core
                     //Failed to connect - Disconnect gracefully
                     Log.Error($"AdvertisementHandler.Watcher_Received: Failed to paire, result={result?.Status}");
                     m_isBusy = false;
+                    m_Watcher.Start();
                 }
             }
             catch (Exception ex)
@@ -290,8 +291,8 @@ namespace PSSApplication.Core
                 Log.Error($"AdvertisementHandler.Watcher_Received error: ex.Message={ex.Message},");
                 await UnpairDevice();
                 Log.Error($"AdvertisementHandler.Watcher_Received: Starting Watcher");
-                m_Watcher.Start();
                 m_isBusy = false;
+                m_Watcher.Start();
             }
         }
 
@@ -347,7 +348,7 @@ namespace PSSApplication.Core
                                 GattCommunicationStatus status = GattCommunicationStatus.ProtocolError;
                                 try
                                 {
-                                    while (status != GattCommunicationStatus.Success && loopCounter-- > 0)
+                                    while (status != GattCommunicationStatus.Success && m_bleDevice != null && loopCounter-- > 0)
                                     {
                                         if (m_bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
                                         {

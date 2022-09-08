@@ -50,7 +50,7 @@ namespace PSSApplication.Common
             {
                 if (i > scMax || i < 0)
                 {
-                    Log.Warning("Accepted range failure. All values are not within accepted range.");
+                    //Log.Warning("Accepted range failure. All values are not within accepted range.");
                     return false;
                 }
             }
