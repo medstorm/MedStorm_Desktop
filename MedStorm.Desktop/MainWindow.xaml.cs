@@ -23,6 +23,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using NHapi.Base.Parser;
+using NHapi.Model.V251.Message;
+using NHapi.Model.V251.Segment;
+using NHapi.Base.Model;
+
+using System.Net;
+using System.Net.Sockets;
+
+
+
 namespace MedStorm.Desktop
 {
     /// <summary>
@@ -210,7 +220,7 @@ namespace MedStorm.Desktop
             Awakening.AddData(new Measurement { Value = eventArgs.Measurement.AUC, TimeStamp = now, IsBadSignal = isBadSignal });
             NerveBlock.AddData(new Measurement { Value = eventArgs.Measurement.NBV, TimeStamp = now, IsBadSignal = isBadSignal });
 
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(() =>
             {
                 if (isBadSignal)
                 {
@@ -224,8 +234,129 @@ namespace MedStorm.Desktop
                     AwakeningValue.ValueText = eventArgs.Measurement.AUC.ToString();
                     NerveBlockValue.ValueText = eventArgs.Measurement.NBV.ToString();
                 }
-            }));
+            });
+
+            // Create and send HL7 message
+            var hl7Message = CreateHL7ORUMessage(eventArgs.Measurement);
+            SendHL7Message(hl7Message);
         }
+
+        private ORU_R01 CreateHL7ORUMessage(BLEMeasurement measurement)
+        {
+            var oruMessage = new ORU_R01();
+
+            // Populate MSH segment
+            var msh = oruMessage.MSH;
+            msh.FieldSeparator.Value = "|";
+            msh.EncodingCharacters.Value = "^~\\&";
+            msh.SendingApplication.NamespaceID.Value = "MedStormDesktopApp";
+            msh.SendingFacility.NamespaceID.Value = "MedStormTablet";
+            msh.ReceivingApplication.NamespaceID.Value = "HospitalEMRorMirthConnect"; // Adjust as needed
+            msh.DateTimeOfMessage.Time.Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+            msh.MessageType.MessageCode.Value = "ORU";
+            msh.MessageType.TriggerEvent.Value = "R01";
+            msh.MessageControlID.Value = Guid.NewGuid().ToString();
+            msh.ProcessingID.ProcessingID.Value = "P";
+            msh.VersionID.VersionID.Value = "2.5.1";
+
+            // Add this line after setting MSH.VersionID.VersionID
+            msh.GetCharacterSet(0).Value = "UTF-8";
+
+
+            // Get the patient result group
+            var patientResult = oruMessage.GetPATIENT_RESULT();
+
+            // Populate PID segment
+            var pid = patientResult.PATIENT.PID;
+            pid.SetIDPID.Value = "1";
+            pid.PatientID.IDNumber.Value = m_patientId;
+
+            // Populate OBR segment
+            var orderObservation = patientResult.GetORDER_OBSERVATION();
+            var obr = orderObservation.OBR;
+            obr.SetIDOBR.Value = "1";
+            obr.UniversalServiceIdentifier.Identifier.Value = "PainSensorMeasurement";
+            obr.UniversalServiceIdentifier.Text.Value = "Pain Sensor Measurement";
+            obr.ObservationDateTime.Time.Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            // Populate OBX segments
+            var observations = orderObservation;
+
+            // Helper method to add OBX segment
+            void AddObx(string setId, string identifier, string text, string value, string units)
+            {
+                var obx = observations.AddOBSERVATION().OBX;
+                obx.SetIDOBX.Value = setId;
+                obx.ValueType.Value = "NM";
+                obx.ObservationIdentifier.Identifier.Value = identifier;
+                obx.ObservationIdentifier.Text.Value = text;
+                obx.GetObservationValue(0).Data = new NHapi.Model.V251.Datatype.NM(oruMessage)
+                {
+                    Value = value
+                };
+                obx.Units.Identifier.Value = units;
+                obx.ObservationResultStatus.Value = "F";
+            }
+
+            // Add OBX segments for each measurement
+            AddObx("1", "PSS", "Pain Index", measurement.PSS.ToString(), "Score");
+            AddObx("2", "AUC", "Awakening Index", measurement.AUC.ToString(), "Score");
+            AddObx("3", "NBV", "Nerve Block Value", measurement.NBV.ToString(), "Score");
+            AddObx("4", "BS", "Bad Signal", measurement.BS.ToString(), "Flag");
+            // Using "uS" as units
+            AddObx("5", "SC", "Skin Conductance", measurement.SC[0].ToString(), "uS");
+
+            // Or, using "microS" as units
+            // AddObx("5", "SC", "Skin Conductance", measurement.SC[0].ToString(), "microS");
+
+
+            return oruMessage;
+        }
+
+        private async void SendHL7Message(ORU_R01 message)
+        {
+            try
+            {
+                // Encode the HL7 message
+                PipeParser parser = new PipeParser();
+                string encodedMessage = parser.Encode(message);
+
+                // Add Start Block and End Block characters (as per MLLP protocol)
+                string mllpMessage = $"\u000b{encodedMessage}\u001c\u000d";
+
+                // Retrieve IP and port from configuration with error handling
+                string ip = m_configuration["HL7Settings:ReceiverIP"] ?? "127.0.0.1";
+                int port;
+                if (!int.TryParse(m_configuration["HL7Settings:ReceiverPort"], out port))
+                {
+                    port = 6661; // Default port
+                }
+
+                // Log the IP and port being used
+                Log.Information($"Sending HL7 message to {ip}:{port}");
+
+                // Send the message over TCP
+                await Task.Run(() =>
+                {
+                    using (TcpClient client = new TcpClient())
+                    {
+                        client.Connect(ip, port);
+                        using (NetworkStream stream = client.GetStream())
+                        {
+                            byte[] messageBytes = Encoding.UTF8.GetBytes(mllpMessage);
+                            stream.Write(messageBytes, 0, messageBytes.Length);
+                            stream.Flush();
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error sending HL7 message: {ex.Message}");
+            }
+        }
+
+
 
         private void PatientIdPopUp_Closed(object? sender, EventArgs e)
         {
