@@ -356,6 +356,81 @@ namespace MedStorm.Desktop
             }
         }
 
+        // Event handler for QA-log button click
+        private void QALogButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Instantiate and open QA-log entry window
+            var qaLogWindow = new QALogWindow();
+            qaLogWindow.Owner = this;
+
+            if (qaLogWindow.ShowDialog() == true)
+            {
+                // User confirmed and saved QA-log
+                var logEntries = qaLogWindow.GetLogEntries();
+
+                // Construct and send HL7 message with QA-log data
+                var qaHL7Message = CreateQAHL7Message(logEntries);
+                SendHL7Message(qaHL7Message);
+
+                Log.Information("QA-log data sent via HL7.");
+            }
+        }
+
+        // Method to create HL7 message specifically for QA-log data
+        private ORU_R01 CreateQAHL7Message(Dictionary<string, string> qaLogEntries)
+        {
+            var oruMessage = new ORU_R01();
+
+            // Populate MSH segment
+            var msh = oruMessage.MSH;
+            msh.FieldSeparator.Value = "|";
+            msh.EncodingCharacters.Value = "^~\\&";
+            msh.SendingApplication.NamespaceID.Value = "MedStormDesktopApp";
+            msh.SendingFacility.NamespaceID.Value = "MedStormTablet";
+            msh.ReceivingApplication.NamespaceID.Value = "HospitalEMRorMirthConnect";
+            msh.DateTimeOfMessage.Time.Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+            msh.MessageType.MessageCode.Value = "ORU";
+            msh.MessageType.TriggerEvent.Value = "R01";
+            msh.MessageControlID.Value = Guid.NewGuid().ToString();
+            msh.ProcessingID.ProcessingID.Value = "P";
+            msh.VersionID.VersionID.Value = "2.5.1";
+            msh.GetCharacterSet(0).Value = "UTF-8";
+
+            // PID Segment
+            var patientResult = oruMessage.GetPATIENT_RESULT();
+            var pid = patientResult.PATIENT.PID;
+            pid.SetIDPID.Value = "1";
+            pid.PatientID.IDNumber.Value = m_patientId;
+
+            // OBR Segment
+            var orderObservation = patientResult.GetORDER_OBSERVATION();
+            var obr = orderObservation.OBR;
+            obr.SetIDOBR.Value = "1";
+            obr.UniversalServiceIdentifier.Identifier.Value = "QALogData";
+            obr.UniversalServiceIdentifier.Text.Value = "QA Log Data";
+            obr.ObservationDateTime.Time.Value = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            // Add OBX segments for QA-log entries
+            int obxCounter = 1;
+            foreach (var entry in qaLogEntries)
+            {
+                var obx = orderObservation.AddOBSERVATION().OBX;
+                obx.SetIDOBX.Value = obxCounter.ToString();
+                obx.ValueType.Value = "ST"; // String type for QA-log
+                obx.ObservationIdentifier.Identifier.Value = entry.Key.Replace(" ", "");
+                obx.ObservationIdentifier.Text.Value = entry.Key;
+                obx.GetObservationValue(0).Data = new NHapi.Model.V251.Datatype.ST(oruMessage)
+                {
+                    Value = entry.Value
+                };
+                obx.Units.Identifier.Value = "N/A";
+                obx.ObservationResultStatus.Value = "F";
+                obxCounter++;
+            }
+
+            return oruMessage;
+        }
+
 
 
         private void PatientIdPopUp_Closed(object? sender, EventArgs e)
