@@ -6,6 +6,7 @@ using PSSApplication.Core.PatientMonitor;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -356,33 +357,27 @@ namespace MedStorm.Desktop
             }
         }
 
-        // Event handler for QA-log button click
+
+
+        // 1) Show the QA-Log window, gather its data, send via HL7
         private void QALogButton_Click(object sender, RoutedEventArgs e)
         {
-            // Instantiate and open QA-log entry window
-            var qaLogWindow = new QALogWindow();
-            qaLogWindow.Owner = this;
-
-            if (qaLogWindow.ShowDialog() == true)
+            var qaWin = new QALogWindow { Owner = this };
+            if (qaWin.ShowDialog() == true)
             {
-                // User confirmed and saved QA-log
-                var logEntries = qaLogWindow.GetLogEntries();
-
-                // Construct and send HL7 message with QA-log data
-                var qaHL7Message = CreateQAHL7Message(logEntries);
-                SendHL7Message(qaHL7Message);
-
+                var data = qaWin.GetResult();
+                var msg = CreateQAHL7Message(data);
+                SendHL7Message(msg);
                 Log.Information("QA-log data sent via HL7.");
             }
         }
 
-        // Method to create HL7 message specifically for QA-log data
-        private ORU_R01 CreateQAHL7Message(Dictionary<string, string> qaLogEntries)
+        // 2) Build an ORU^R01 from the QALogData
+        private ORU_R01 CreateQAHL7Message(QALogData data)
         {
-            var oruMessage = new ORU_R01();
-
-            // Populate MSH segment
-            var msh = oruMessage.MSH;
+            var oru = new ORU_R01();
+            var msh = oru.MSH;
+            // … your usual MSH setup …
             msh.FieldSeparator.Value = "|";
             msh.EncodingCharacters.Value = "^~\\&";
             msh.SendingApplication.NamespaceID.Value = "MedStormDesktopApp";
@@ -396,39 +391,43 @@ namespace MedStorm.Desktop
             msh.VersionID.VersionID.Value = "2.5.1";
             msh.GetCharacterSet(0).Value = "UTF-8";
 
-            // PID Segment
-            var patientResult = oruMessage.GetPATIENT_RESULT();
-            var pid = patientResult.PATIENT.PID;
+            // PID
+            var patResult = oru.GetPATIENT_RESULT();
+            var pid = patResult.PATIENT.PID;
             pid.SetIDPID.Value = "1";
             pid.PatientID.IDNumber.Value = m_patientId;
 
-            // OBR Segment
-            var orderObservation = patientResult.GetORDER_OBSERVATION();
-            var obr = orderObservation.OBR;
+            // OBR
+            var orderObs = patResult.GetORDER_OBSERVATION();
+            var obr = orderObs.OBR;
             obr.SetIDOBR.Value = "1";
             obr.UniversalServiceIdentifier.Identifier.Value = "QALogData";
             obr.UniversalServiceIdentifier.Text.Value = "QA Log Data";
             obr.ObservationDateTime.Time.Value = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            // Add OBX segments for QA-log entries
-            int obxCounter = 1;
-            foreach (var entry in qaLogEntries)
+            // Helper for OBX segments
+            void AddObx(int idx, string id, string text, string val)
             {
-                var obx = orderObservation.AddOBSERVATION().OBX;
-                obx.SetIDOBX.Value = obxCounter.ToString();
-                obx.ValueType.Value = "ST"; // String type for QA-log
-                obx.ObservationIdentifier.Identifier.Value = entry.Key.Replace(" ", "");
-                obx.ObservationIdentifier.Text.Value = entry.Key;
-                obx.GetObservationValue(0).Data = new NHapi.Model.V251.Datatype.ST(oruMessage)
-                {
-                    Value = entry.Value
-                };
+                var obx = orderObs.AddOBSERVATION().OBX;
+                obx.SetIDOBX.Value = idx.ToString();
+                obx.ValueType.Value = "ST";
+                obx.ObservationIdentifier.Identifier.Value = id;
+                obx.ObservationIdentifier.Text.Value = text;
+                obx.GetObservationValue(0).Data = new NHapi.Model.V251.Datatype.ST(oru) { Value = val };
                 obx.Units.Identifier.Value = "N/A";
                 obx.ObservationResultStatus.Value = "F";
-                obxCounter++;
             }
 
-            return oruMessage;
+            int ctr = 1;
+            AddObx(ctr++, "Intervention", "Intervention", data.Intervention);
+            foreach (var e in data.InputEntries)
+                AddObx(ctr++, e.Parameter.Replace(" ", ""), e.Parameter, e.Value);
+            foreach (var e in data.OutcomeEntries)
+                AddObx(ctr++, e.Parameter.Replace(" ", ""), e.Parameter, e.Value);
+            if (!string.IsNullOrWhiteSpace(data.Comments))
+                AddObx(ctr++, "Comments", "Comments", data.Comments);
+
+            return oru;
         }
 
 

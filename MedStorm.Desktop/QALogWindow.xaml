@@ -1,24 +1,116 @@
 ﻿<Window x:Class="MedStorm.Desktop.QALogWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="QA-log Entry" Height="300" Width="400">
+        Title="QA-log Entry"
+        SizeToContent="Height" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <!-- Editable, white-background ComboBox for interventions & parameters -->
+        <Style x:Key="EditableComboStyle" TargetType="ComboBox">
+            <Setter Property="IsEditable" Value="True"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>
+    </Window.Resources>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <!-- Intervention -->
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <!-- Inputs label -->
+            <RowDefinition Height="120"/>
+            <!-- Inputs grid -->
             <RowDefinition Height="Auto"/>
+            <!-- Outcomes label -->
+            <RowDefinition Height="120"/>
+            <!-- Outcomes grid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Comments label -->
+            <RowDefinition Height="80"/>
+            <!-- Comments box -->
+            <RowDefinition Height="Auto"/>
+            <!-- Buttons -->
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Parameter:"/>
-        <TextBox Grid.Row="1" x:Name="ParameterTextBox" Margin="0,5,0,5"/>
+        <!-- 1) Intervention -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Intervention:" Width="90" VerticalAlignment="Center"/>
+            <ComboBox x:Name="InterventionBox"
+                Style="{StaticResource EditableComboStyle}"
+                Width="260"
+                ItemsSource="{Binding Interventions}"
+                Text="{Binding SelectedIntervention, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
 
-        <TextBlock Grid.Row="2" Text="Value:"/>
-        <TextBox Grid.Row="2" x:Name="ValueTextBox" Margin="0,25,0,5"/>
+        <!-- 2) Input parameters -->
+        <TextBlock Grid.Row="1" Text="Input Parameters:" FontWeight="SemiBold"/>
+        <DataGrid Grid.Row="2"
+              ItemsSource="{Binding InputEntries}"
+              AutoGenerateColumns="False"
+              CanUserAddRows="True"
+              HeadersVisibility="Column"
+              Margin="0,4,0,10">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Parameter" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Parameter}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox Style="{StaticResource EditableComboStyle}"
+                        ItemsSource="{Binding AvailableParameters, RelativeSource={RelativeSource AncestorType=Window}}"
+                        Text="{Binding Parameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Value"
+                            Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Cancel" Click="Cancel_Click" Width="75" Margin="5"/>
-            <Button Content="Save" Click="Save_Click" Width="75" Margin="5"/>
+        <!-- 3) Outcome parameters -->
+        <TextBlock Grid.Row="3" Text="Outcome Parameters:" FontWeight="SemiBold"/>
+        <DataGrid Grid.Row="4"
+              ItemsSource="{Binding OutcomeEntries}"
+              AutoGenerateColumns="False"
+              CanUserAddRows="True"
+              HeadersVisibility="Column"
+              Margin="0,4,0,10">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Parameter" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Parameter}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox Style="{StaticResource EditableComboStyle}"
+                        ItemsSource="{Binding AvailableParameters, RelativeSource={RelativeSource AncestorType=Window}}"
+                        Text="{Binding Parameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Value"
+                            Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- 4) Comments -->
+        <TextBlock Grid.Row="5" Text="Comments:" FontWeight="SemiBold"/>
+        <TextBox x:Name="CommentsBox" Grid.Row="6" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+        <!-- 5) Buttons -->
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Cancel"      Width="75"  Click="Cancel_Click"/>
+            <Button Content="Send to EMR" Width="100" Margin="8,0,0,0" Click="Send_Click"/>
         </StackPanel>
     </Grid>
 </Window>
