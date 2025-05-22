@@ -12,15 +12,7 @@ namespace MedStorm.Desktop
         public string Value { get; set; } = "";
     }
 
-    public class QALogData
-    {
-        public string Intervention { get; set; } = "";
-        public ObservableCollection<LogEntry> InputEntries { get; } = new();
-        public ObservableCollection<LogEntry> OutcomeEntries { get; } = new();
-        public string Comments { get; set; } = "";
-    }
-
-    public class QALogConfig
+    class QALogConfig
     {
         public ObservableCollection<string> Interventions { get; set; } = new();
         public ObservableCollection<string> AvailableParameters { get; set; } = new();
@@ -28,47 +20,41 @@ namespace MedStorm.Desktop
 
     public partial class QALogWindow : Window
     {
-        const string CONFIG_FILE = "qa-config.json";
-
-        // ← new, to survive beyond constructor
-        readonly string _configDir;
+        const string ConfigFileName = "qa-config.json";
         readonly string _configPath;
-
-        readonly QALogConfig _cfg;
-        readonly QALogData _result = new();
+        QALogConfig _cfg;
 
         public ObservableCollection<string> Interventions => _cfg.Interventions;
         public ObservableCollection<string> AvailableParameters => _cfg.AvailableParameters;
 
-        public string SelectedIntervention
-        {
-            get => _result.Intervention;
-            set => _result.Intervention = value ?? "";
-        }
+        public string SelectedIntervention { get; set; }
 
-        public ObservableCollection<LogEntry> InputEntries => _result.InputEntries;
-        public ObservableCollection<LogEntry> OutcomeEntries => _result.OutcomeEntries;
+        public ObservableCollection<LogEntry> InputEntries { get; } = new();
+        public ObservableCollection<LogEntry> OutcomeEntries { get; } = new();
 
         public QALogWindow()
         {
             InitializeComponent();
 
-            // set up config paths once
-            _configDir = Path.Combine(
+            // build path in %AppData%\MedStorm\qa-config.json
+            var dir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "MedStorm"
             );
-            _configPath = Path.Combine(_configDir, CONFIG_FILE);
+            Directory.CreateDirectory(dir);
+            _configPath = Path.Combine(dir, ConfigFileName);
 
-            // load or start empty
+            // load or start fresh
             if (File.Exists(_configPath))
             {
+                var txt = File.ReadAllText(_configPath);
                 _cfg = JsonConvert
-                    .DeserializeObject<QALogConfig>(File.ReadAllText(_configPath))!;
+                       .DeserializeObject<QALogConfig>(txt)
+                       ?? new QALogConfig();
             }
             else
             {
-                _cfg = new QALogConfig();
+                _cfg = new QALogConfig(); // no presets
             }
 
             DataContext = this;
@@ -76,37 +62,26 @@ namespace MedStorm.Desktop
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            _result.Comments = CommentsBox.Text.Trim();
-
-            // persist any new intervention
-            if (!string.IsNullOrWhiteSpace(_result.Intervention)
-                && !_cfg.Interventions.Contains(_result.Intervention))
+            // 1) add any new intervention
+            if (!string.IsNullOrWhiteSpace(SelectedIntervention)
+                && !_cfg.Interventions.Contains(SelectedIntervention))
             {
-                _cfg.Interventions.Add(_result.Intervention);
+                _cfg.Interventions.Add(SelectedIntervention);
             }
 
-            // persist any new parameters
-            foreach (var row in InputEntries)
-            {
-                if (!string.IsNullOrWhiteSpace(row.Parameter)
-                    && !_cfg.AvailableParameters.Contains(row.Parameter))
-                {
-                    _cfg.AvailableParameters.Add(row.Parameter);
-                }
-            }
-            foreach (var row in OutcomeEntries)
-            {
-                if (!string.IsNullOrWhiteSpace(row.Parameter)
-                    && !_cfg.AvailableParameters.Contains(row.Parameter))
-                {
-                    _cfg.AvailableParameters.Add(row.Parameter);
-                }
-            }
+            // 2) add any new parameters from both grids
+            foreach (var r in InputEntries)
+                if (!string.IsNullOrWhiteSpace(r.Parameter)
+                    && !_cfg.AvailableParameters.Contains(r.Parameter))
+                    _cfg.AvailableParameters.Add(r.Parameter);
 
-            // write out config
-            Directory.CreateDirectory(_configDir);
-            File.WriteAllText(
-                _configPath,
+            foreach (var r in OutcomeEntries)
+                if (!string.IsNullOrWhiteSpace(r.Parameter)
+                    && !_cfg.AvailableParameters.Contains(r.Parameter))
+                    _cfg.AvailableParameters.Add(r.Parameter);
+
+            // 3) persist
+            File.WriteAllText(_configPath,
                 JsonConvert.SerializeObject(_cfg, Formatting.Indented)
             );
 
@@ -119,8 +94,21 @@ namespace MedStorm.Desktop
         }
 
         /// <summary>
-        /// After ShowDialog()==true call this to get the user’s entries.
+        /// Call after ShowDialog()==true to gather user data.
         /// </summary>
-        public QALogData GetResult() => _result;
+        public (
+            string intervention,
+            ObservableCollection<LogEntry> inputs,
+            ObservableCollection<LogEntry> outcomes,
+            string comments
+        ) GetResult()
+        {
+            return (
+                SelectedIntervention ?? "",
+                InputEntries,
+                OutcomeEntries,
+                CommentsBox.Text.Trim()
+            );
+        }
     }
 }

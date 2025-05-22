@@ -199,6 +199,7 @@ namespace MedStorm.Desktop
 
             m_advHandler.NewMeasurement += AddMeasurement;
             m_monitor = new MonitorHandler(m_advHandler);
+          
             ApplicationsComboBox.SelectedIndex = 0;
             PatientIdPopUp.Closed += PatientIdPopUp_Closed;
         }
@@ -359,25 +360,28 @@ namespace MedStorm.Desktop
 
 
 
-        // 1) Show the QA-Log window, gather its data, send via HL7
+        // 1) Show QA-log, gather its result, send HL7
         private void QALogButton_Click(object sender, RoutedEventArgs e)
         {
-            var qaWin = new QALogWindow { Owner = this };
-            if (qaWin.ShowDialog() == true)
+            var qa = new QALogWindow { Owner = this };
+            if (qa.ShowDialog() == true)
             {
-                var data = qaWin.GetResult();
-                var msg = CreateQAHL7Message(data);
+                var (intervention, inputs, outcomes, comments) = qa.GetResult();
+                var msg = CreateQAHL7Message(intervention, inputs, outcomes, comments);
                 SendHL7Message(msg);
                 Log.Information("QA-log data sent via HL7.");
             }
         }
 
-        // 2) Build an ORU^R01 from the QALogData
-        private ORU_R01 CreateQAHL7Message(QALogData data)
+        // 2) Build HL7 ORU^R01 from the QA-log data
+        private ORU_R01 CreateQAHL7Message(
+            string intervention,
+            ObservableCollection<LogEntry> inputs,
+            ObservableCollection<LogEntry> outcomes,
+            string comments)
         {
             var oru = new ORU_R01();
             var msh = oru.MSH;
-            // … your usual MSH setup …
             msh.FieldSeparator.Value = "|";
             msh.EncodingCharacters.Value = "^~\\&";
             msh.SendingApplication.NamespaceID.Value = "MedStormDesktopApp";
@@ -392,20 +396,20 @@ namespace MedStorm.Desktop
             msh.GetCharacterSet(0).Value = "UTF-8";
 
             // PID
-            var patResult = oru.GetPATIENT_RESULT();
-            var pid = patResult.PATIENT.PID;
+            var patientResult = oru.GetPATIENT_RESULT();
+            var pid = patientResult.PATIENT.PID;
             pid.SetIDPID.Value = "1";
             pid.PatientID.IDNumber.Value = m_patientId;
 
             // OBR
-            var orderObs = patResult.GetORDER_OBSERVATION();
+            var orderObs = patientResult.GetORDER_OBSERVATION();
             var obr = orderObs.OBR;
             obr.SetIDOBR.Value = "1";
             obr.UniversalServiceIdentifier.Identifier.Value = "QALogData";
             obr.UniversalServiceIdentifier.Text.Value = "QA Log Data";
             obr.ObservationDateTime.Time.Value = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            // Helper for OBX segments
+            // helper to add OBX
             void AddObx(int idx, string id, string text, string val)
             {
                 var obx = orderObs.AddOBSERVATION().OBX;
@@ -413,19 +417,20 @@ namespace MedStorm.Desktop
                 obx.ValueType.Value = "ST";
                 obx.ObservationIdentifier.Identifier.Value = id;
                 obx.ObservationIdentifier.Text.Value = text;
-                obx.GetObservationValue(0).Data = new NHapi.Model.V251.Datatype.ST(oru) { Value = val };
+                obx.GetObservationValue(0).Data =
+                    new NHapi.Model.V251.Datatype.ST(oru) { Value = val };
                 obx.Units.Identifier.Value = "N/A";
                 obx.ObservationResultStatus.Value = "F";
             }
 
             int ctr = 1;
-            AddObx(ctr++, "Intervention", "Intervention", data.Intervention);
-            foreach (var e in data.InputEntries)
+            AddObx(ctr++, "Intervention", "Intervention", intervention);
+            foreach (var e in inputs)
                 AddObx(ctr++, e.Parameter.Replace(" ", ""), e.Parameter, e.Value);
-            foreach (var e in data.OutcomeEntries)
+            foreach (var e in outcomes)
                 AddObx(ctr++, e.Parameter.Replace(" ", ""), e.Parameter, e.Value);
-            if (!string.IsNullOrWhiteSpace(data.Comments))
-                AddObx(ctr++, "Comments", "Comments", data.Comments);
+            if (!string.IsNullOrWhiteSpace(comments))
+                AddObx(ctr++, "Comments", "Comments", comments);
 
             return oru;
         }
@@ -532,11 +537,11 @@ namespace MedStorm.Desktop
             PainNociceptive.UpperLimit = 3;
             switch (Application)
             {
-                case "Anaesthesia":
-                    Log.Debug("anaesthesia");
+                case "Unconscious OR":
+                    Log.Debug("unconscious");
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: true, PlotType.Awakening);
-                    Switch(on: true, PlotType.NerveBlock);
+                    //Switch(on: true, PlotType.NerveBlock);
                     break;
 
                 case "PostOperative":

@@ -226,47 +226,55 @@
             </Border>
         </Popup>
 
-        <!-- 0. column, Skin Condiction and buttons -->
-        <Grid Margin='0,10,10,0'>
+        <!-- 0. column, Skin Condition and buttons -->
+        <Grid Margin="0,10,10,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="14*"/>
-                <!-- Row 0: PatientIdButton -->
-                <RowDefinition Height="11*"/>
-                <!-- Row 1: QALogButton -->
-                <RowDefinition Height="11*"/>
-                <!-- Row 2: ApplicationsComboBox -->
-                <RowDefinition Height="35*"/>
-                <!-- Row 3: skinPlot -->
-                <RowDefinition Height="11*"/>
-                <!-- Row 4: Close/Comment -->
-                <RowDefinition Height="11*"/>
-                <!-- Row 5: Connect Monitor/Sensor -->
-                <RowDefinition Height="11*"/>
-                <!-- Row 6: +/- TimeScale -->
                 <RowDefinition Height="Auto"/>
-                <!-- Row 7: Logo -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="11*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="PatientIdButton" Click="PatientIdButton_Click" Grid.Row="0" Margin="10,10,0,10"  HorizontalAlignment="Stretch"
-                      Content="Enter PatientId"/>
-            <Button x:Name="QALogButton" Click="QALogButton_Click" Grid.Row="1"
-            Margin="10,10,0,10" HorizontalAlignment="Stretch"
-            Content="QA-log"/>
-            
-            <ComboBox Height="100" x:Name="ApplicationsComboBox" Foreground="{StaticResource WhiteBrush}" FontSize="16" Grid.Row="2" Margin="10,0,0,3"  HorizontalAlignment="Stretch"
-                      SelectionChanged="ApplicationsComboBox_SelectionChanged" >
+            <Button x:Name="PatientIdButton"
+        Grid.Row="0"
+        Height="60"
+        Margin="10,10,10,5"
+        HorizontalAlignment="Stretch"
+        Click="PatientIdButton_Click"
+        Content="Enter PatientId"/>
+            <Button x:Name="QALogButton"
+        Grid.Row="2"
+        Height="60"
+        Margin="10,5,10,5"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Click="QALogButton_Click"
+        Content="QA-log"/>
+            <ComboBox x:Name="ApplicationsComboBox"
+          Grid.Row="1"
+          Height="60"
+          Margin="10,5,10,10"
+          HorizontalAlignment="Stretch"
+          Foreground="{StaticResource WhiteBrush}"
+          FontSize="16"
+          SelectionChanged="ApplicationsComboBox_SelectionChanged">
+                
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
                         <GradientStop Color="#FF022E3D" Offset="1"/>
                     </LinearGradientBrush>
                 </ComboBox.Background>
-                <ComboBoxItem>Anaesthesia</ComboBoxItem>
+                <ComboBoxItem>Unconscious OR</ComboBoxItem>
                 <ComboBoxItem>PostOperative</ComboBoxItem>
                 <ComboBoxItem>ICU</ComboBoxItem>
                 <ComboBoxItem>Infants</ComboBoxItem>
                 <ComboBoxItem>Withdrawal</ComboBoxItem>
-                <ComboBoxItem>NeuralBlock</ComboBoxItem>
+                <ComboBoxItem>Regional Nerve Block</ComboBoxItem>
             </ComboBox>
 
             <plot:RealTimePlotUC Grid.Row="3" x:Name="skinPlot" Margin='5,15,-15,15'
