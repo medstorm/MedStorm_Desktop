@@ -192,15 +192,17 @@ namespace MedStorm.Desktop
         {
             string? UseUSBdongleString = m_configuration.GetSection("UseUSBdongle")?.Value;
 
-            if (!string.IsNullOrEmpty(UseUSBdongleString) && UseUSBdongleString.ToLower() == "true" )
+            if (!string.IsNullOrEmpty(UseUSBdongleString) && UseUSBdongleString.ToLower() == "true")
                 m_advHandler = DongleSensorAdvertisementHandler.CreateAdvertisementHandler();
             else
                 m_advHandler = BleAdvertisementHandler.CreateAdvertisementHandler();
 
             m_advHandler.NewMeasurement += AddMeasurement;
             m_monitor = new MonitorHandler(m_advHandler);
-          
+
             ApplicationsComboBox.SelectedIndex = 0;
+            Switch(on: false, PlotType.NerveBlock);
+
             PatientIdPopUp.Closed += PatientIdPopUp_Closed;
         }
 
@@ -542,6 +544,8 @@ namespace MedStorm.Desktop
                     Switch(on: true, PlotType.PainNociceptive);
                     Switch(on: true, PlotType.Awakening);
                     //Switch(on: true, PlotType.NerveBlock);
+                    Switch(on: false, PlotType.NerveBlock);
+
                     break;
 
                 case "PostOperative":
@@ -574,12 +578,13 @@ namespace MedStorm.Desktop
                     Switch(on: false, PlotType.NerveBlock);
                     break;
 
-                case "NeuralBlock":
-                    Log.Debug("neuralBlock");
+                case "Regional Nerve Block":
+                    Log.Debug("Regional Nerve Block");
                     Switch(on: false, PlotType.PainNociceptive);
                     Switch(on: false, PlotType.Awakening);
                     Switch(on: true, PlotType.NerveBlock);
                     break;
+
 
                 default:
                     break;

@@ -262,7 +262,7 @@
           Foreground="{StaticResource WhiteBrush}"
           FontSize="16"
           SelectionChanged="ApplicationsComboBox_SelectionChanged">
-                
+
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>

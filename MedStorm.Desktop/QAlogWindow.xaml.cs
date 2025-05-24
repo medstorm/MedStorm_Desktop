@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace MedStorm.Desktop
@@ -48,9 +50,7 @@ namespace MedStorm.Desktop
             if (File.Exists(_configPath))
             {
                 var txt = File.ReadAllText(_configPath);
-                _cfg = JsonConvert
-                       .DeserializeObject<QALogConfig>(txt)
-                       ?? new QALogConfig();
+                _cfg = JsonConvert.DeserializeObject<QALogConfig>(txt) ?? new QALogConfig();
             }
             else
             {
@@ -62,14 +62,11 @@ namespace MedStorm.Desktop
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            // 1) add any new intervention
+            // Update config lists
             if (!string.IsNullOrWhiteSpace(SelectedIntervention)
                 && !_cfg.Interventions.Contains(SelectedIntervention))
-            {
                 _cfg.Interventions.Add(SelectedIntervention);
-            }
 
-            // 2) add any new parameters from both grids
             foreach (var r in InputEntries)
                 if (!string.IsNullOrWhiteSpace(r.Parameter)
                     && !_cfg.AvailableParameters.Contains(r.Parameter))
@@ -80,10 +77,59 @@ namespace MedStorm.Desktop
                     && !_cfg.AvailableParameters.Contains(r.Parameter))
                     _cfg.AvailableParameters.Add(r.Parameter);
 
-            // 3) persist
             File.WriteAllText(_configPath,
                 JsonConvert.SerializeObject(_cfg, Formatting.Indented)
             );
+
+            // NEW: Save CSV to PSS Application folder (MyDocuments)
+            try
+            {
+                string baseFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    "PSS Application"
+                );
+                Directory.CreateDirectory(baseFolder);
+
+                // You can separate files for Input/Outcome, or put all in one file
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+                string interventionName = (SelectedIntervention ?? "Unknown").Replace(" ", "_");
+                string fileBase = $"{interventionName}_{timestamp}";
+
+                // Save InputEntries
+                if (InputEntries.Count > 0)
+                    CsvExporter.ExportToCsv(InputEntries, Path.Combine(baseFolder, $"{fileBase}_Inputs.csv"));
+
+                // Save OutcomeEntries
+                if (OutcomeEntries.Count > 0)
+                    CsvExporter.ExportToCsv(OutcomeEntries, Path.Combine(baseFolder, $"{fileBase}_Outcomes.csv"));
+
+                // Optionally: also save a summary log as a CSV
+                var summary = new[]
+                {
+                    new
+                    {
+                        Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                        Intervention = SelectedIntervention ?? "",
+                        InputParameters = string.Join("; ", InputEntries.Where(e => !string.IsNullOrWhiteSpace(e.Parameter)).Select(e => $"{e.Parameter}: {e.Value}")),
+                        OutcomeParameters = string.Join("; ", OutcomeEntries.Where(e => !string.IsNullOrWhiteSpace(e.Parameter)).Select(e => $"{e.Parameter}: {e.Value}")),
+                        Comments = CommentsBox.Text?.Trim() ?? ""
+                    }
+                };
+                CsvExporter.ExportToCsv(summary, Path.Combine(baseFolder, $"{fileBase}_Summary.csv"));
+
+                MessageBox.Show(
+                    $"All data exported to: \n{baseFolder}",
+                    "QA Log Export", MessageBoxButton.OK, MessageBoxImage.Information
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error saving CSV files: " + ex.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error
+                );
+            }
 
             DialogResult = true;
         }

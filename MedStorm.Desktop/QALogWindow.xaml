@@ -9,41 +9,44 @@
         ResizeMode="CanResize"
         WindowStartupLocation="CenterOwner"
         WindowStyle="SingleBorderWindow"
-        Background="#FF03303F">
+        Background="#A7C1CA">
+    <!-- Your attached color -->
 
     <Window.Resources>
         <!-- Brushes -->
-        <SolidColorBrush x:Key="MedStormBlue" Color="#FF03303F" />
-        <SolidColorBrush x:Key="MedStormAccent" Color="#c5e3ee"/>
-        <SolidColorBrush x:Key="GridLineBrush" Color="#224A5E"/>
-        <SolidColorBrush x:Key="RowHighlightBrush" Color="#1C3440"/>
+        <SolidColorBrush x:Key="QAWindowBackground" Color="#A7C1CA"/>
+        <!-- From your screenshot -->
+        <SolidColorBrush x:Key="QABlack" Color="#14191B"/>
+        <!-- Very dark, nearly black -->
+        <SolidColorBrush x:Key="QAGridLine" Color="#86A5B3"/>
+        <!-- Slightly darker blue-grey for gridlines -->
 
-        <!-- Style for DataGridColumnHeader -->
+        <!-- DataGrid Header -->
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#13313F"/>
-            <Setter Property="Foreground" Value="{StaticResource MedStormAccent}"/>
+            <Setter Property="Background" Value="#BCD4DE"/>
+            <Setter Property="Foreground" Value="{StaticResource QABlack}"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="BorderBrush" Value="#c5e3ee"/>
+            <Setter Property="BorderBrush" Value="{StaticResource QAGridLine}"/>
             <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Padding" Value="10,4"/>
         </Style>
 
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource MedStormAccent}"/>
+            <Setter Property="Foreground" Value="{StaticResource QABlack}"/>
             <Setter Property="FontSize" Value="16"/>
         </Style>
         <Style TargetType="Label">
-            <Setter Property="Foreground" Value="{StaticResource MedStormAccent}"/>
+            <Setter Property="Foreground" Value="{StaticResource QABlack}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="15"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource MedStormBlue}"/>
-            <Setter Property="Foreground" Value="{StaticResource MedStormAccent}"/>
+            <Setter Property="Background" Value="#BCD4DE"/>
+            <Setter Property="Foreground" Value="{StaticResource QABlack}"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderBrush" Value="#c5e3ee"/>
+            <Setter Property="BorderBrush" Value="{StaticResource QAGridLine}"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="Height" Value="42"/>
             <Setter Property="Margin" Value="8,0,0,0"/>
@@ -56,8 +59,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="12"
-                                SnapsToDevicePixels="True"
-                                >
+                                SnapsToDevicePixels="True">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -66,32 +68,32 @@
             <Setter Property="FontSize" Value="15"/>
         </Style>
         <Style TargetType="ComboBox">
-            <Setter Property="Foreground" Value="#c5e3ee"/>
-            <Setter Property="Background" Value="#122F3A"/>
-            <Setter Property="BorderBrush" Value="#c5e3ee"/>
+            <Setter Property="Foreground" Value="{StaticResource QABlack}"/>
+            <Setter Property="Background" Value="#E3EDF2"/>
+            <Setter Property="BorderBrush" Value="{StaticResource QAGridLine}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Padding" Value="8,2"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Foreground" Value="#13313F"/>
-            <Setter Property="Background" Value="#c5e3ee"/>
+            <Setter Property="Foreground" Value="{StaticResource QABlack}"/>
+            <Setter Property="Background" Value="#E3EDF2"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="BorderBrush" Value="#c5e3ee"/>
+            <Setter Property="BorderBrush" Value="{StaticResource QAGridLine}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,4"/>
         </Style>
         <Style TargetType="DataGrid">
-            <Setter Property="RowBackground" Value="#142C38"/>
-            <Setter Property="AlternatingRowBackground" Value="#18384B"/>
-            <Setter Property="Background" Value="#FF03303F"/>
-            <Setter Property="Foreground" Value="#c5e3ee"/>
-            <Setter Property="BorderBrush" Value="#c5e3ee"/>
+            <Setter Property="RowBackground" Value="#DEEBF2"/>
+            <Setter Property="AlternatingRowBackground" Value="#D0DEE6"/>
+            <Setter Property="Background" Value="#BCD4DE"/>
+            <Setter Property="Foreground" Value="{StaticResource QABlack}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource QAGridLine}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="RowHeaderWidth" Value="0"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource GridLineBrush}"/>
-            <Setter Property="VerticalGridLinesBrush" Value="{StaticResource GridLineBrush}"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource QAGridLine}"/>
+            <Setter Property="VerticalGridLinesBrush" Value="{StaticResource QAGridLine}"/>
         </Style>
     </Window.Resources>
 
@@ -109,11 +111,11 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Border Grid.Row="0" Background="#123343" CornerRadius="0,0,16,16" Padding="18,16,18,10">
+        <Border Grid.Row="0" Background="#BCD4DE" CornerRadius="0,0,16,16" Padding="18,16,18,10">
             <StackPanel>
-                <TextBlock Text="Quality Assurance Log Entry" FontSize="22" FontWeight="Bold" Foreground="#c5e3ee"/>
-                <TextBlock Text="Please record all relevant QA information for this session." 
-                           FontSize="14" Margin="0,3,0,0" Foreground="#8dc8dd"/>
+                <TextBlock Text="Quality Assurance Log Entry" FontSize="22" FontWeight="Bold" Foreground="{StaticResource QABlack}"/>
+                <TextBlock Text="Please record all relevant QA information for this session."
+                           FontSize="14" Margin="0,3,0,0" Foreground="#344349"/>
             </StackPanel>
         </Border>
 
@@ -206,7 +208,8 @@
         <!-- Buttons -->
         <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,24,8">
             <Button Content="Cancel" Width="110" Click="Cancel_Click"/>
-            <Button Content="Send to EMR" Width="145" Click="Send_Click"/>
+            <Button Content="Save / Send to EMR" Width="145" Click="Send_Click"/>
+
         </StackPanel>
     </Grid>
 </Window>
