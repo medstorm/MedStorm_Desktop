@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
+
+
+
+using Microsoft.Extensions.Configuration;
 using Plot;
 using PSSApplication.Common;
 using PSSApplication.Core;
@@ -361,26 +365,48 @@ namespace MedStorm.Desktop
         }
 
 
-
-        // 1) Show QA-log, gather its result, send HL7
         private void QALogButton_Click(object sender, RoutedEventArgs e)
         {
-            var qa = new QALogWindow { Owner = this };
-            if (qa.ShowDialog() == true)
+            while (true)
             {
-                var (intervention, inputs, outcomes, comments) = qa.GetResult();
-                var msg = CreateQAHL7Message(intervention, inputs, outcomes, comments);
+                // Step 1: Show use case window
+                var ucwin = new QALogUseCaseWindow { Owner = this };
+                var result = ucwin.ShowDialog();
+                if (result != true || !ucwin.SelectedUseCase.HasValue)
+                    return; // user cancelled at use case
+
+                // Step 2: Show main QA Log for selected use case
+                var template = QALogTemplates.Templates[ucwin.SelectedUseCase.Value];
+                var qaWin = new QALogWindow(template) { Owner = this };
+                var qaResult = qaWin.ShowDialog();
+
+                // If user pressed BACK on QA Log, continue loop to show use case window again
+                if (qaWin.DialogResult == null && qaWin.Tag as string == "Back")
+                    continue; // show use case selection again
+
+                // If user pressed Cancel, exit
+                if (qaResult != true)
+                    return;
+
+                // If user pressed Save/Send, handle result
+                var (intervention, inputs, outcomes) = qaWin.GetResult();
+                var msg = CreateQAHL7Message(
+                    intervention,
+                    inputs.ToList(),
+                    outcomes.ToList()
+                );
                 SendHL7Message(msg);
                 Log.Information("QA-log data sent via HL7.");
+                break; // finished, exit loop
             }
         }
 
-        // 2) Build HL7 ORU^R01 from the QA-log data
+        // Accepts List<(string name, string value)>
         private ORU_R01 CreateQAHL7Message(
             string intervention,
-            ObservableCollection<LogEntry> inputs,
-            ObservableCollection<LogEntry> outcomes,
-            string comments)
+            List<(string name, string value)> inputs,
+            List<(string name, string value)> outcomes
+        )
         {
             var oru = new ORU_R01();
             var msh = oru.MSH;
@@ -428,14 +454,13 @@ namespace MedStorm.Desktop
             int ctr = 1;
             AddObx(ctr++, "Intervention", "Intervention", intervention);
             foreach (var e in inputs)
-                AddObx(ctr++, e.Parameter.Replace(" ", ""), e.Parameter, e.Value);
+                AddObx(ctr++, e.name.Replace(" ", ""), e.name, e.value);
             foreach (var e in outcomes)
-                AddObx(ctr++, e.Parameter.Replace(" ", ""), e.Parameter, e.Value);
-            if (!string.IsNullOrWhiteSpace(comments))
-                AddObx(ctr++, "Comments", "Comments", comments);
+                AddObx(ctr++, e.name.Replace(" ", ""), e.name, e.value);
 
             return oru;
         }
+
 
 
 

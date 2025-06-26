@@ -1,160 +1,95 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MedStorm.Desktop
 {
-    public class LogEntry
+    public class ParamValue : INotifyPropertyChanged
     {
-        public string Parameter { get; set; } = "";
-        public string Value { get; set; } = "";
-    }
-
-    class QALogConfig
-    {
-        public ObservableCollection<string> Interventions { get; set; } = new();
-        public ObservableCollection<string> AvailableParameters { get; set; } = new();
-    }
-
-    public partial class QALogWindow : Window
-    {
-        const string ConfigFileName = "qa-config.json";
-        readonly string _configPath;
-        QALogConfig _cfg;
-
-        public ObservableCollection<string> Interventions => _cfg.Interventions;
-        public ObservableCollection<string> AvailableParameters => _cfg.AvailableParameters;
-
-        public string SelectedIntervention { get; set; }
-
-        public ObservableCollection<LogEntry> InputEntries { get; } = new();
-        public ObservableCollection<LogEntry> OutcomeEntries { get; } = new();
-
-        public QALogWindow()
+        public string Name { get; set; }
+        string _value;
+        public string Value
         {
-            InitializeComponent();
+            get => _value;
+            set { _value = value; OnPropertyChanged(nameof(Value)); }
+        }
+        public ParamValue(string n) { Name = n; Value = ""; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string n) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
+    }
 
-            // build path in %AppData%\MedStorm\qa-config.json
-            var dir = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "MedStorm"
+    public partial class QALogWindow : Window, INotifyPropertyChanged
+    {
+        public ObservableCollection<string> Interventions { get; }
+        public string SelectedIntervention { get; set; }
+        public ObservableCollection<ParamValue> InputParameterValues { get; }
+        public ObservableCollection<ParamValue> OutcomeParameterValues { get; }
+
+        public QALogWindow(QALogTemplate template)
+        {
+            Interventions = new ObservableCollection<string>(template.Interventions);
+            SelectedIntervention = Interventions.FirstOrDefault();
+            InputParameterValues = new ObservableCollection<ParamValue>(
+                template.InputParameters.Select(p => new ParamValue(p))
             );
-            Directory.CreateDirectory(dir);
-            _configPath = Path.Combine(dir, ConfigFileName);
-
-            // load or start fresh
-            if (File.Exists(_configPath))
-            {
-                var txt = File.ReadAllText(_configPath);
-                _cfg = JsonConvert.DeserializeObject<QALogConfig>(txt) ?? new QALogConfig();
-            }
-            else
-            {
-                _cfg = new QALogConfig(); // no presets
-            }
-
+            OutcomeParameterValues = new ObservableCollection<ParamValue>(
+                template.OutcomeParameters.Select(p => new ParamValue(p))
+            );
             DataContext = this;
+            InitializeComponent();
+        }
+
+        public (string intervention, (string name, string value)[] inputs, (string name, string value)[] outcomes) GetResult()
+        {
+            return (
+                SelectedIntervention ?? "",
+                InputParameterValues.Select(p => (p.Name, p.Value)).ToArray(),
+                OutcomeParameterValues.Select(p => (p.Name, p.Value)).ToArray()
+            );
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            // Update config lists
-            if (!string.IsNullOrWhiteSpace(SelectedIntervention)
-                && !_cfg.Interventions.Contains(SelectedIntervention))
-                _cfg.Interventions.Add(SelectedIntervention);
-
-            foreach (var r in InputEntries)
-                if (!string.IsNullOrWhiteSpace(r.Parameter)
-                    && !_cfg.AvailableParameters.Contains(r.Parameter))
-                    _cfg.AvailableParameters.Add(r.Parameter);
-
-            foreach (var r in OutcomeEntries)
-                if (!string.IsNullOrWhiteSpace(r.Parameter)
-                    && !_cfg.AvailableParameters.Contains(r.Parameter))
-                    _cfg.AvailableParameters.Add(r.Parameter);
-
-            File.WriteAllText(_configPath,
-                JsonConvert.SerializeObject(_cfg, Formatting.Indented)
-            );
-
-            // NEW: Save CSV to PSS Application folder (MyDocuments)
-            try
+            // Validate numbers
+            bool allValid = InputParameterValues.Concat(OutcomeParameterValues).All(x => string.IsNullOrWhiteSpace(x.Value) || double.TryParse(x.Value, out _));
+            if (!allValid)
             {
-                string baseFolder = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "PSS Application"
-                );
-                Directory.CreateDirectory(baseFolder);
-
-                // You can separate files for Input/Outcome, or put all in one file
-                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-
-                string interventionName = (SelectedIntervention ?? "Unknown").Replace(" ", "_");
-                string fileBase = $"{interventionName}_{timestamp}";
-
-                // Save InputEntries
-                if (InputEntries.Count > 0)
-                    CsvExporter.ExportToCsv(InputEntries, Path.Combine(baseFolder, $"{fileBase}_Inputs.csv"));
-
-                // Save OutcomeEntries
-                if (OutcomeEntries.Count > 0)
-                    CsvExporter.ExportToCsv(OutcomeEntries, Path.Combine(baseFolder, $"{fileBase}_Outcomes.csv"));
-
-                // Optionally: also save a summary log as a CSV
-                var summary = new[]
-                {
-                    new
-                    {
-                        Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                        Intervention = SelectedIntervention ?? "",
-                        InputParameters = string.Join("; ", InputEntries.Where(e => !string.IsNullOrWhiteSpace(e.Parameter)).Select(e => $"{e.Parameter}: {e.Value}")),
-                        OutcomeParameters = string.Join("; ", OutcomeEntries.Where(e => !string.IsNullOrWhiteSpace(e.Parameter)).Select(e => $"{e.Parameter}: {e.Value}")),
-                        Comments = CommentsBox.Text?.Trim() ?? ""
-                    }
-                };
-                CsvExporter.ExportToCsv(summary, Path.Combine(baseFolder, $"{fileBase}_Summary.csv"));
-
-                MessageBox.Show(
-                    $"All data exported to: \n{baseFolder}",
-                    "QA Log Export", MessageBoxButton.OK, MessageBoxImage.Information
-                );
+                MessageBox.Show("All parameter values must be numbers or left blank.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Error saving CSV files: " + ex.Message,
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error
-                );
-            }
-
             DialogResult = true;
+            Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+            Close();
         }
 
-        /// <summary>
-        /// Call after ShowDialog()==true to gather user data.
-        /// </summary>
-        public (
-            string intervention,
-            ObservableCollection<LogEntry> inputs,
-            ObservableCollection<LogEntry> outcomes,
-            string comments
-        ) GetResult()
+        // Back button event: closes this window and can be customized to reopen use case selection
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
-            return (
-                SelectedIntervention ?? "",
-                InputEntries,
-                OutcomeEntries,
-                CommentsBox.Text.Trim()
-            );
+            DialogResult = false; // Signal parent to re-show use case selection
+            Close();
         }
+
+        // Allow only digits, dot, comma (for decimals)
+        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsNumericInput(e.Text);
+        }
+        private bool IsNumericInput(string input)
+        {
+            foreach (char c in input)
+                if (!char.IsDigit(c) && c != '.' && c != ',') return false;
+            return true;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string n) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
 }
