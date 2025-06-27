@@ -365,30 +365,32 @@ namespace MedStorm.Desktop
         }
 
 
+        // In MainWindow.xaml.cs
         private void QALogButton_Click(object sender, RoutedEventArgs e)
         {
             while (true)
             {
-                // Step 1: Show use case window
+                // 1. Show use case window
                 var ucwin = new QALogUseCaseWindow { Owner = this };
                 var result = ucwin.ShowDialog();
                 if (result != true || !ucwin.SelectedUseCase.HasValue)
-                    return; // user cancelled at use case
+                    return;
 
-                // Step 2: Show main QA Log for selected use case
+                // 2. Show main QA Log window
                 var template = QALogTemplates.Templates[ucwin.SelectedUseCase.Value];
                 var qaWin = new QALogWindow(template) { Owner = this };
                 var qaResult = qaWin.ShowDialog();
 
-                // If user pressed BACK on QA Log, continue loop to show use case window again
-                if (qaWin.DialogResult == null && qaWin.Tag as string == "Back")
-                    continue; // show use case selection again
+                // **Back button fix**
+                // If user pressed BACK (set Tag="Back"), return to use case selection
+                if (qaWin.Tag as string == "Back")
+                    continue;
 
-                // If user pressed Cancel, exit
+                // If Cancel or window closed, exit
                 if (qaResult != true)
                     return;
 
-                // If user pressed Save/Send, handle result
+                // If Save, handle result
                 var (intervention, inputs, outcomes) = qaWin.GetResult();
                 var msg = CreateQAHL7Message(
                     intervention,
@@ -397,9 +399,11 @@ namespace MedStorm.Desktop
                 );
                 SendHL7Message(msg);
                 Log.Information("QA-log data sent via HL7.");
-                break; // finished, exit loop
+                break;
             }
         }
+
+
 
         // Accepts List<(string name, string value)>
         private ORU_R01 CreateQAHL7Message(

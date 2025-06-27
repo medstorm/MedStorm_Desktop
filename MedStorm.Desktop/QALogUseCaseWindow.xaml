@@ -1,39 +1,140 @@
 ﻿<Window x:Class="MedStorm.Desktop.QALogUseCaseWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Select QA Log Use Case"
-        Width="600" Height="400"
-        MinWidth="420" MinHeight="300"
-        WindowStartupLocation="CenterOwner"
+        Title="QA Log Use Case"
+        MinWidth="420" MinHeight="340"
         ResizeMode="CanResize"
-        Background="#E1EDF2">
+        WindowStartupLocation="CenterOwner"
+        Background="#B1C9D1">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-         <!--Title and Back--> 
-        <DockPanel VerticalAlignment="Center" Grid.Row="0" LastChildFill="True">
-            <Button Content="⟵" 
-                    Width="46" Height="38" 
-                    Margin="10,8,0,8"
-                    VerticalAlignment="Center"
-                    FontSize="22"
-                    Background="#D8E6EC"
-                    Click="Cancel_Click"/>
-            <TextBlock Text="Select QA Log Use Case"
-                       FontSize="23"
-                       FontWeight="Bold"
-                       Foreground="#1C425A"
-                       Margin="16,0,0,0"
-                       VerticalAlignment="Center"/>
-        </DockPanel>
-         <!--Use case buttons--> 
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,18">
-            <Button Content="Preterm Infants (Postop, Opioids)" Tag="PretermInfants" Width="360" Height="48" FontSize="18" Click="UseCase_Click" Margin="0,0,0,8"/>
-            <Button Content="ICU Patients (Postop, Opioids)" Tag="ICU" Width="360" Height="48" FontSize="18" Click="UseCase_Click" Margin="0,0,0,8"/>
-            <Button Content="Surgery / Operating Theatre (Opioids)" Tag="OperatingTheatre" Width="360" Height="48" FontSize="18" Click="UseCase_Click" Margin="0,0,0,8"/>
-        </StackPanel>
+
+        <!-- Header Row -->
+        <Border Background="#D1E6EE" CornerRadius="0,0,14,14" Padding="10,16,8,10" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Width="36" Height="36" Click="Cancel_Click"
+                        Background="Transparent" BorderThickness="0" Padding="0"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                        ToolTip="Back">
+                    <Path Data="M13,9 L5,9 M5,9 L9,5 M5,9 L9,13"
+                          Stroke="#284859" StrokeThickness="2.4"
+                          StrokeLineJoin="Round" StrokeEndLineCap="Round"/>
+                </Button>
+                <TextBlock Text="Select QA Log Use Case" FontWeight="SemiBold" FontSize="21"
+                           VerticalAlignment="Center" Margin="13,0,0,0" Foreground="#284859"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Use Case Buttons, centered and larger -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="340">
+                <TextBlock Text="Please select the QA log use case:"
+                           FontWeight="SemiBold" FontSize="16" Margin="0,0,0,20" Foreground="#284859" HorizontalAlignment="Center"/>
+                <Button Content="Preterm Infants" Tag="PretermInfants" Click="UseCase_Click"
+                        Padding="0" FontSize="18"
+                        Background="#D1E6EE" Foreground="#284859" BorderThickness="0"
+                        HorizontalContentAlignment="Center" FontWeight="Bold"
+                        Margin="0,0,0,18"
+                        Cursor="Hand"
+                        Height="60"
+                        Width="340">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="15"
+                                    BorderBrush="#B1C9D1" BorderThickness="1">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#CDE2F1"/>
+                                    <Setter TargetName="border" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect BlurRadius="12" Opacity="0.14"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#B1C9D1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Content="ICU" Tag="ICU" Click="UseCase_Click"
+                        Padding="0" FontSize="18"
+                        Background="#D1E6EE" Foreground="#284859" BorderThickness="0"
+                        HorizontalContentAlignment="Center" FontWeight="Bold"
+                        Margin="0,0,0,18"
+                        Cursor="Hand"
+                        Height="60"
+                        Width="340">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="15"
+                                    BorderBrush="#B1C9D1" BorderThickness="1">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#CDE2F1"/>
+                                    <Setter TargetName="border" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect BlurRadius="12" Opacity="0.14"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#B1C9D1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Content="Operating Theatre" Tag="OperatingTheatre" Click="UseCase_Click"
+                        Padding="0" FontSize="18"
+                        Background="#D1E6EE" Foreground="#284859" BorderThickness="0"
+                        HorizontalContentAlignment="Center" FontWeight="Bold"
+                        Margin="0"
+                        Cursor="Hand"
+                        Height="60"
+                        Width="340">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="15"
+                                    BorderBrush="#B1C9D1" BorderThickness="1">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#CDE2F1"/>
+                                    <Setter TargetName="border" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect BlurRadius="12" Opacity="0.14"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#B1C9D1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
-
