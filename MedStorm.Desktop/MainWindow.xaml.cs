@@ -2,7 +2,12 @@
 
 
 
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Extensions.Configuration;
+using NHapi.Base.Model;
+using NHapi.Base.Parser;
+using NHapi.Model.V251.Message;
+using NHapi.Model.V251.Segment;
 using Plot;
 using PSSApplication.Common;
 using PSSApplication.Core;
@@ -12,11 +17,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,13 +37,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using NHapi.Base.Parser;
-using NHapi.Model.V251.Message;
-using NHapi.Model.V251.Segment;
-using NHapi.Base.Model;
+using MedStorm.Desktop.Sdc;
 
-using System.Net;
-using System.Net.Sockets;
 
 
 
@@ -120,6 +124,9 @@ namespace MedStorm.Desktop
         RawDataStorage m_rawDataStorage;
         string m_logFileWithPath = "";
         string m_patientId = "";
+
+        private SdcBridgeClient? _sdcBridge;
+
         public MainWindow()
         {
             try
@@ -187,6 +194,13 @@ namespace MedStorm.Desktop
 
             m_rawDataStorage = new RawDataStorage();
 
+            // SDC Bridge wiring (reads config; safe defaults)
+            var baseUrl = m_configuration["SdcBridge:BaseUrl"] ?? "http://127.0.0.1:8080";
+            var timeout = int.TryParse(m_configuration["SdcBridge:TimeoutMs"], out var t) ? t : 500;
+            var enabled = bool.TryParse(m_configuration["SdcBridge:Enabled"], out var e) ? e : true;
+            _sdcBridge = new SdcBridgeClient(baseUrl, timeout, enabled);
+
+
             InitializeComponent();
             ConnectMonitorButton.Content = ConnectMonitor;
             ConnectSensorButton.Content = ConnectSensor;
@@ -244,10 +258,33 @@ namespace MedStorm.Desktop
                 }
             });
 
+
+            // Build payload for SDC Bridge (1 Hz)
+            double sc0 = (eventArgs.Measurement.SC != null && eventArgs.Measurement.SC.Length > 0)
+                ? eventArgs.Measurement.SC[0]
+                : 0.0;
+
+            var dto = new
+            {
+                pain = eventArgs.Measurement.PSS,   // 0..10
+                awk = eventArgs.Measurement.AUC,   // 0..100
+                nbv = eventArgs.Measurement.NBV,   // 0..10
+                sc = sc0,                         // 0..250 µS
+                badSignal = eventArgs.Measurement.BS,    // 0/1
+                ts = DateTime.UtcNow
+            };
+
+            // Fire-and-forget; never block UI/BLE
+            _sdcBridge?.TryPost(dto);
+
+
+
+
             // Create and send HL7 message
             var hl7Message = CreateHL7ORUMessage(eventArgs.Measurement);
             SendHL7Message(hl7Message);
         }
+
 
         private ORU_R01 CreateHL7ORUMessage(BLEMeasurement measurement)
         {
@@ -403,6 +440,8 @@ namespace MedStorm.Desktop
             }
         }
 
+
+        
 
 
         // Accepts List<(string name, string value)>
@@ -628,6 +667,9 @@ namespace MedStorm.Desktop
                 m_rawDataStorage?.SaveRawDataFile("");
             }
             Close();
+
+            _sdcBridge?.Dispose();
+
         }
 
         private void ConnectMonitorButton_Click(object sender, RoutedEventArgs e)

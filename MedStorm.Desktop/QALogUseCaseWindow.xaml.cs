@@ -9,7 +9,7 @@ namespace MedStorm.Desktop
         public QALogUseCaseWindow()
         {
             InitializeComponent();
-        }
+        } 
 
         private void UseCase_Click(object sender, RoutedEventArgs e)
         {
